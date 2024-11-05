@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sistema Agroganadero</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+	<style>
+		.dropdown-menu i {
+			color: black;
+			/* Cambia todos los íconos a negro */
+		}
+
+		.sidebar {
+			min-height: 100vh;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s;
+			background-color: #000000 !important;
+			color: white;
+		}
+
+		.sidebar-collapsed {
+			width: 70px;
+		}
+
+		.sidebar-expanded {
+			width: 250px;
+		}
+
+		.nav-link {
+			display: flex;
+			align-items: center;
+			padding: 10px 15px;
+			color: #ffffff !important;
+			transition: all 0.3s;
+		}
+
+		.nav-link:hover {
+			background-color: #333333;
+			color: #198754 !important;
+		}
+
+		.nav-link.active {
+			background-color: #333333;
+			color: #198754 !important;
+		}
+
+		.nav-link i {
+			width: 20px;
+			text-align: center;
+			margin-right: 10px;
+		}
+
+		.profile-img {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 2px solid #198754;
+		}
+
+		.main-content {
+			transition: margin-left 0.3s;
+		}
+
+		.navbar {
+			background-color: #044a24 !important;
+		}
+
+		.navbar h5,
+		.navbar .btn-link,
+		.navbar i {
+			color: white !important;
+		}
+
+		#sidebar .text-muted {
+			color: #cccccc !important;
+		}
+
+		#sidebar h6 {
+			color: white;
+		}
+
+		@media (max-width: 768px) {
+			.sidebar {
+				margin-left: -250px;
+			}
+
+			.sidebar.show {
+				margin-left: 0;
+			}
+		}
+	</style>
+</head>
+
+<body class="bg-light">
+	<div class="d-flex">
+		<!-- Sidebar -->
+		<div id="sidebar" class="sidebar sidebar-expanded">
+			<!-- Profile -->
+			<div class="text-center p-3 border-bottom">
+				<img src="/api/placeholder/100/100" alt="Profile" class="profile-img mb-2">
+				<small class="text-muted sidebar-text" th:text="${correo}"></small>
+			</div>
+
+			<!-- Navigation -->
+			<nav class="mt-3">
+				<div class="nav flex-column">
+					<a href="#" class="nav-link active">
+						<i class="fas fa-home"></i>
+						<span class="sidebar-text">Dashboard</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-cow"></i>
+						<span class="sidebar-text">Animales</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-truck"></i>
+						<span class="sidebar-text">Proveedores</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-wheat-awn"></i>
+						<span class="sidebar-text">Alimentos</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-users"></i>
+						<span class="sidebar-text">Trabajadores</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-heart"></i>
+						<span class="sidebar-text">Nacimientos</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-scale-balanced"></i>
+						<span class="sidebar-text">Unidades de Medida</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-layer-group"></i>
+						<span class="sidebar-text">Lotes</span>
+					</a>
+					<a href="/usuarios" class="nav-link">
+						<i class="fas fa-user-gear"></i>
+						<span class="sidebar-text">Usuarios</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-syringe"></i>
+						<span class="sidebar-text">Vacunaciones</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-notes-medical"></i>
+						<span class="sidebar-text">Control Sanitario</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-chart-line"></i>
+						<span class="sidebar-text">Producción</span>
+					</a>
+					<a href="#" class="nav-link">
+						<i class="fas fa-money-bill-trend-up"></i>
+						<span class="sidebar-text">Ventas</span>
+					</a>
+				</div>
+			</nav>
+		</div>
+
+		<!-- Main Content -->
+		<div class="main-content flex-grow-1">
+			<!-- Top Navigation -->
+			<nav class="navbar navbar-expand-lg navbar-light border-bottom">
+				<div class="container-fluid">
+					<button id="sidebarToggle" class="btn btn-link">
+						<i class="fas fa-bars"></i>
+					</button>
+
+					<h5 class="mb-0">Dashboard Agroganadero</h5>
+
+					<div class="d-flex align-items-center">
+						<div class="position-relative me-3">
+							<i class="fas fa-bell"></i>
+							<span
+								class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+								3
+							</span>
+						</div>
+						<div class="dropdown">
+							<button class="btn btn-link" type="button" id="dropdownMenuButton"
+								data-bs-toggle="dropdown">
+								<i class="fas fa-user-circle"></i>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Perfil</a></li>
+								<li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a>
+								</li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<form id="logoutForm" th:action="@{/logout}" method="post">
+									<li>
+										<a class="dropdown-item text-danger" href="#"
+											onclick="document.getElementById('logoutForm').submit();">
+											<i class="fas fa-sign-out-alt me-2" style="color: black;"></i>Cerrar Sesión
+										</a>
+									</li>
+								</form>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</nav>
+
+			<!-- Dashboard Content -->
+			<div class="container-fluid p-4">
+				<!-- Stats Cards -->
+				<div class="row g-4 mb-4">
+					<div class="col-12 col-md-6 col-lg-3">
+						<div class="card border-0 shadow-sm">
+							<div class="card-body">
+								<div class="d-flex align-items-center">
+									<div class="flex-shrink-0">
+										<i class="fas fa-cow fa-2x text-primary"></i>
+									</div>
+									<div class="flex-grow-1 ms-3">
+										<h6 class="mb-1">Total Animales</h6>
+										<h3 class="mb-0">1,234</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3">
+						<div class="card border-0 shadow-sm">
+							<div class="card-body">
+								<div class="d-flex align-items-center">
+									<div class="flex-shrink-0">
+										<i class="fas fa-heart fa-2x text-danger"></i>
+									</div>
+									<div class="flex-grow-1 ms-3">
+										<h6 class="mb-1">Nacimientos (Mes)</h6>
+										<h3 class="mb-0">45</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3">
+						<div class="card border-0 shadow-sm">
+							<div class="card-body">
+								<div class="d-flex align-items-center">
+									<div class="flex-shrink-0">
+										<i class="fas fa-wheat-awn fa-2x text-warning"></i>
+									</div>
+									<div class="flex-grow-1 ms-3">
+										<h6 class="mb-1">Stock Alimentos</h6>
+										<h3 class="mb-0">5,678 kg</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-3">
+						<div class="card border-0 shadow-sm">
+							<div class="card-body">
+								<div class="d-flex align-items-center">
+									<div class="flex-shrink-0">
+										<i class="fas fa-money-bill-trend-up fa-2x text-success"></i>
+									</div>
+									<div class="flex-grow-1 ms-3">
+										<h6 class="mb-1">Ventas (Mes)</h6>
+										<h3 class="mb-0">$89,234</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Recent Activity -->
+				<div class="card border-0 shadow-sm">
+					<div class="card-header bg-white">
+						<h5 class="mb-0">Actividad Reciente</h5>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Actividad</th>
+										<th>Responsable</th>
+										<th>Fecha</th>
+										<th>Estado</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>#1234</td>
+										<td>Nacimiento de ternero</td>
+										<td>Juan Pérez</td>
+										<td>2024-11-05</td>
+										<td><span class="badge bg-success">Completado</span></td>
+									</tr>
+									<tr>
+										<td>#1233</td>
+										<td>Vacunación Lote A</td>
+										<td>María García</td>
+										<td>2024-11-05</td>
+										<td><span class="badge bg-warning">En Proceso</span></td>
+									</tr>
+									<tr>
+										<td>#1232</td>
+										<td>Compra de alimentos</td>
+										<td>Carlos López</td>
+										<td>2024-11-04</td>
+										<td><span class="badge bg-success">Completado</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+	<script>
+		document.getElementById('sidebarToggle').addEventListener('click', function () {
+			const sidebar = document.getElementById('sidebar');
+			if (sidebar.classList.contains('sidebar-expanded')) {
+				sidebar.classList.remove('sidebar-expanded');
+				sidebar.classList.add('sidebar-collapsed');
+				document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
+			} else {
+				sidebar.classList.remove('sidebar-collapsed');
+				sidebar.classList.add('sidebar-expanded');
+				document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'inline');
+			}
+		});
+	</script>
+</body>
+
+</html>
