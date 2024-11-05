@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Inicio de sesión</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+		rel="stylesheet">
+	<style>
+		body {
+			background: linear-gradient(120deg, rgb(213, 245, 211) 0%, rgb(211, 207, 207) 100%);
+			min-height: 100vh;
+		}
+
+		.login-container {
+			background: rgba(255, 255, 255, 0.9);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+		}
+
+		@keyframes pulse {
+			0% {
+				transform: scale(1);
+			}
+
+			50% {
+				transform: scale(1.2);
+			}
+
+			100% {
+				transform: scale(1);
+			}
+		}
+
+		.fingerprint-container {
+			text-align: center;
+			margin: 1rem 0;
+		}
+
+		.fingerprint-icon {
+			font-size: 3rem;
+			color: #4CAF50;
+			animation: pulse 2s infinite;
+		}
+
+		.social-login {
+			position: relative;
+		}
+
+		.social-login::before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 0;
+			right: 0;
+			height: 1px;
+			background: #dee2e6;
+			z-index: 1;
+		}
+
+		.social-login .text {
+			background: white;
+			padding: 0 1rem;
+			color: #6c757d;
+			position: relative;
+			z-index: 2;
+		}
+
+		.form-floating>.form-control,
+		.form-floating>.form-control:focus {
+			background-color: transparent;
+		}
+
+		.form-floating>.form-control:focus {
+			box-shadow: none;
+			border-color: #86b7fe;
+		}
+
+		.input-group-text {
+			background-color: transparent;
+		}
+
+		.btn-login {
+			border-radius: 10px;
+			padding: 0.75rem 1rem;
+			font-weight: 500;
+		}
+
+		.google-btn {
+			background: white;
+			color: #757575;
+			border: 1px solid #ddd;
+			transition: all 0.3s ease;
+			text-transform: none;
+			font-style: normal;
+		}
+
+		.google-btn:hover {
+			background: #f8f9fa;
+			transform: translateY(-1px);
+		}
+
+		.bi-google {
+			color: #757575;
+			font-style: normal;
+		}
+
+		.accordion {
+			--bs-accordion-btn-focus-box-shadow: none;
+			--bs-accordion-active-bg: transparent;
+			--bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230d6efd'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+		}
+
+		.accordion-button:not(.collapsed) {
+			color: #0d6efd;
+			font-weight: 600;
+		}
+
+		.accordion-button:focus {
+			border-color: transparent;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row min-vh-100 align-items-center justify-content-center">
+			<div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+				<div class="login-container p-4 p-sm-5">
+					<!-- Logo y Título -->
+					<div class="text-center mb-4">
+						<div class="fingerprint-container">
+							<i class="fas fa-fingerprint fingerprint-icon"></i>
+						</div>
+						<h4 class="fw-bold">¡Bienvenido/a de nuevo!</h4>
+						<p class="text-muted">Ingresa a tu cuenta para continuar</p>
+					</div>
+
+					<form th:action="@{/process-login}" method="post">
+						<!-- Mensaje de error -->
+						<div th:if="${errorMsg}" class="alert alert-danger">
+							<span th:text="${errorMsg}">Credenciales inválidas</span>
+						</div>
+
+						<!-- Mensaje de logout -->
+						<div th:if="${logoutMsg}" class="alert alert-success">
+							<span th:text="${logoutMsg}">Sesión cerrada</span>
+						</div>
+						<div class="form-floating mb-3">
+							<div class="input-group">
+								<span class="input-group-text border-end-2">
+									<i class="fas fa-user text-muted"></i>
+								</span>
+								<div class="form-floating flex-grow-1">
+									<input type="text" class="form-control border-start-1" id="floatingName"
+										name="username" placeholder="Correo electrónico" required>
+									<label for="floatingName">Correo electrónico</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-floating mb-3">
+							<div class="input-group">
+								<span class="input-group-text border-end-2">
+									<i class="fas fa-lock text-muted"></i>
+								</span>
+								<div class="form-floating flex-grow-1">
+									<input type="password" class="form-control border-start-1" id="floatingRegPassword"
+										name="password" placeholder="Contraseña" required>
+									<label for="floatingRegPassword">Contraseña</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="d-flex justify-content-between mb-3">
+							<div class="form-check">
+								<input type="checkbox" class="form-check-input" id="remember">
+								<label class="form-check-label" for="remember">Recordarme</label>
+							</div>
+							<a th:href="@{/login/resetear-password}" class="text-decoration-none small">¿Olvidaste tu contraseña?</a>
+						</div>
+
+						<button type="submit" class="btn btn-success w-100 btn-login mb-3">
+							<i class="fa-solid fa-right-to-bracket me-2"></i>Iniciar Sesión
+						</button>
+					</form>
+					<!-- Separador -->
+					<div class="social-login text-center mb-3">
+						<span class="text">O continúa con</span>
+					</div>
+
+					<!-- Botón de Google -->
+					<a href="#" class="btn google-btn w-100 btn-login mb-3">
+						<i class="bi bi-google">oogle</i>
+					</a>
+
+					<!-- Accordion para Registro -->
+					<div class="accordion" id="registerAccordion">
+						<div class="accordion-item border-0">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed p-0 bg-transparent" type="button"
+									data-bs-toggle="collapse" data-bs-target="#registerCollapse">
+									¿No tienes una cuenta? Regístrate
+								</button>
+							</h2>
+							<div id="registerCollapse" class="accordion-collapse collapse"
+								data-bs-parent="#registerAccordion">
+								<div class="accordion-body px-0">
+									<form th:action="@{/login}" th:object="${objusu}" method="post">
+										<div class="form-floating mb-3">
+											<div class="input-group">
+												<span class="input-group-text border-end-0">
+													<i class="fas fa-envelope text-muted"></i>
+												</span>
+												<div class="form-floating flex-grow-1">
+													<input type="email" class="form-control border-start-0"
+														name="correo" id="floatingRegEmail"
+														placeholder="nombre@ejemplo.com" required>
+													<label for="floatingRegEmail">Email</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-floating mb-3">
+											<div class="input-group">
+												<span class="input-group-text border-end-0">
+													<i class="fas fa-user text-muted"></i>
+												</span>
+												<div class="form-floating flex-grow-1">
+													<input type="text" class="form-control border-start-0" name="nombre"
+														id="floatingName" placeholder="Nombre completo" required>
+													<label for="floatingName">Nombre completo</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-floating mb-3">
+											<div class="input-group">
+												<span class="input-group-text border-end-0">
+													<i class="fas fa-lock text-muted"></i>
+												</span>
+												<div class="form-floating flex-grow-1">
+													<input type="password" class="form-control border-start-0"
+														name="contrasenha" id="floatingRegPassword"
+														placeholder="Contraseña" required>
+													<label for="floatingRegPassword">Contraseña</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-floating mb-3">
+											<div class="input-group">
+												<span class="input-group-text border-end-0">
+													<i class="fas fa-lock text-muted"></i>
+												</span>
+												<div class="form-floating flex-grow-1">
+													<input type="password" class="form-control border-start-0"
+														id="floatingConfirmPassword" name="confirmarContrasenha"
+														placeholder="Confirmar contraseña" required>
+													<label for="floatingConfirmPassword">Confirmar
+														contraseña</label>
+												</div>
+											</div>
+										</div>
+
+										<button type="submit" class="btn btn-warning w-100 btn-login mb-3">
+											<i class="fa-regular fa-user me-2"></i>Crear cuenta
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
