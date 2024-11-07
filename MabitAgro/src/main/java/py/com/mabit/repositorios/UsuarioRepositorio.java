@@ -9,7 +9,5 @@ import py.com.mabit.entidades.Usuarios;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuarios, Long> {
-    Optional<Usuarios> findByCorreo(String correo);
+	Optional<Usuarios> findByCorreo(String correo);
 }
-
-// Servicio de Usuario
