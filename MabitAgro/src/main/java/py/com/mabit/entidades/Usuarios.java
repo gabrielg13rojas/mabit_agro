@@ -40,6 +40,19 @@ public class Usuarios {
 	@ManyToOne
 	@JoinColumn
 	private Privilegios privilegio;
+	
+	public Usuarios() {
+		id = 0l;
+		foto="";
+		correo ="";
+		nombre="";
+		contrasenha="";
+		codigoRecuperacion="";
+		verificado=false;
+		bloqueado=false;
+		privilegio = new Privilegios();
+		privilegio.setId(1l); 
+	}
 
 	public Long getId() {
 		return id;
