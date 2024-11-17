@@ -1,343 +1,314 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Sistema Agroganadero</title>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">	
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-	<style>
-		.dropdown-menu i {
-			color: black;
-			/* Cambia todos los íconos a negro */
-		}
-
-		.sidebar {
-			min-height: 100vh;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-			transition: all 0.3s;
-			background-color: #000000 !important;
-			color: white;
-		}
-
-		.sidebar-collapsed {
-			width: 70px;
-		}
-
-		.sidebar-expanded {
-			width: 250px;
-		}
-
-		.nav-link {
-			display: flex;
-			align-items: center;
-			padding: 10px 15px;
-			color: #ffffff !important;
-			transition: all 0.3s;
-		}
-
-		.nav-link:hover {
-			background-color: #333333;
-			color: #198754 !important;
-		}
-
-		.nav-link.active {
-			background-color: #333333;
-			color: #198754 !important;
-		}
-
-		.nav-link i {
-			width: 20px;
-			text-align: center;
-			margin-right: 10px;
-		}
-
-		.profile-img {
-			width: 50px;
-			height: 50px;
-			border-radius: 50%;
-			object-fit: cover;
-			border: 2px solid #198754;
-		}
-
-		.main-content {
-			transition: margin-left 0.3s;
-		}
-
-		.navbar {
-			background-color: #044a24 !important;
-		}
-
-		.navbar h5,
-		.navbar .btn-link,
-		.navbar i {
-			color: white !important;
-		}
-
-		#sidebar .text-muted {
-			color: #cccccc !important;
-		}
-
-		#sidebar h6 {
-			color: white;
-		}
-
-		@media (max-width: 768px) {
-			.sidebar {
-				margin-left: -250px;
-			}
-
-			.sidebar.show {
-				margin-left: 0;
-			}
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Profesional</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --dark-green: #1a472a;
+            --light-green: #2d5a40;
+            --sidebar-dark: #1e1e2d;
+            --sidebar-hover: #2b2b3c;
+        }
+        body {
+            background-color: #f5f5f9;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto;
+        }
+        .sidebar {
+            background-color: var(--sidebar-dark);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+        .sidebar .nav-link {
+            color: #a2a3b7;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+        }
+        .sidebar .nav-link:hover {
+            color: #ffffff;
+            background-color: var(--sidebar-hover);
+        }
+        .sidebar .nav-link.active {
+            color: #ffffff;
+            background-color: var(--sidebar-hover);
+        }
+        .sidebar .nav-item i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .progress {
+            height: 6px;
+        }
+        .user-profile {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .user-profile img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        .submenu {
+            padding-left: 2.5rem;
+            background-color: rgba(0,0,0,0.1);
+        }
+        .nav-group {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        .topbar {
+            background: white;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+    </style>
 </head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
+                <!-- User Profile -->
+                <div class="user-profile d-flex align-items-center">
+                    <img src="/api/placeholder/50/50" alt="Profile" class="rounded-circle me-3">
+                    <div>
+                        <h6 class="mb-1">Carlos Rodríguez</h6>
+                        <small class="text-muted">Administrador</small>
+                    </div>
+                </div>
 
-<body class="bg-light">
-	<div class="d-flex">
-		<!-- Sidebar -->
-		<div id="sidebar" class="sidebar sidebar-expanded">
-			<!-- Profile -->
-			<div class="text-center p-3 border-bottom">
-				<img src="/api/placeholder/100/100" alt="Profile" class="profile-img mb-2">
-				<small class="text-muted sidebar-text" th:text="${correo}"></small>
-			</div>
+                <!-- Navigation -->
+                <ul class="nav flex-column">
+                    <li class="nav-item nav-group">
+                        <a class="nav-link active" href="#">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
 
-			<!-- Navigation -->
-			<nav class="mt-3">
-				<div class="nav flex-column">
-					<a href="#" class="nav-link active">
-						<i class="fas fa-home"></i>
-						<span class="sidebar-text">Dashboard</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-cow"></i>
-						<span class="sidebar-text">Animales</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-truck"></i>
-						<span class="sidebar-text">Proveedores</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-wheat-awn"></i>
-						<span class="sidebar-text">Alimentos</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-users"></i>
-						<span class="sidebar-text">Trabajadores</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-heart"></i>
-						<span class="sidebar-text">Nacimientos</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-scale-balanced"></i>
-						<span class="sidebar-text">Unidades de Medida</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-layer-group"></i>
-						<span class="sidebar-text">Lotes</span>
-					</a>
-					<a href="/usuarios" class="nav-link">
-						<i class="fas fa-user-gear"></i>
-						<span class="sidebar-text">Usuarios</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-syringe"></i>
-						<span class="sidebar-text">Vacunaciones</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-notes-medical"></i>
-						<span class="sidebar-text">Control Sanitario</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-chart-line"></i>
-						<span class="sidebar-text">Producción</span>
-					</a>
-					<a href="#" class="nav-link">
-						<i class="fas fa-money-bill-trend-up"></i>
-						<span class="sidebar-text">Ventas</span>
-					</a>
-				</div>
-			</nav>
-		</div>
+                    <li class="nav-item nav-group">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#userSubmenu">
+                            <i class="bi bi-people"></i> Usuarios
+                            <i class="bi bi-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse submenu" id="userSubmenu">
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Lista de Usuarios</a>
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Roles</a>
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Permisos</a>
+                        </div>
+                    </li>
 
-		<!-- Main Content -->
-		<div class="main-content flex-grow-1">
-			<!-- Top Navigation -->
-			<nav class="navbar navbar-expand-lg navbar-light border-bottom">
-				<div class="container-fluid">
-					<button id="sidebarToggle" class="btn btn-link">
-						<i class="fas fa-bars"></i>
-					</button>
+                    <li class="nav-item nav-group">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#projectSubmenu">
+                            <i class="bi bi-kanban"></i> Proyectos
+                            <i class="bi bi-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse submenu" id="projectSubmenu">
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Ver Todos</a>
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Crear Nuevo</a>
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Categorías</a>
+                        </div>
+                    </li>
 
-					<h5 class="mb-0">Dashboard Agroganadero</h5>
+                    <li class="nav-item nav-group">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#reportSubmenu">
+                            <i class="bi bi-file-earmark-text"></i> Reportes
+                            <i class="bi bi-chevron-down float-end"></i>
+                        </a>
+                        <div class="collapse submenu" id="reportSubmenu">
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Ventas</a>
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Tráfico</a>
+                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Usuarios</a>
+                        </div>
+                    </li>
 
-					<div class="d-flex align-items-center">
-						<div class="position-relative me-3">
-							<i class="fas fa-bell"></i>
-							<span
-								class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-								3
-							</span>
-						</div>
-						<div class="dropdown">
-							<button class="btn btn-link" type="button" id="dropdownMenuButton"
-								data-bs-toggle="dropdown">
-								<i class="fas fa-user-circle"></i>
-							</button>
-							<ul class="dropdown-menu dropdown-menu-end">
-								<li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Perfil</a></li>
-								<li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a>
-								</li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<form id="logoutForm" th:action="@{/logout}" method="post">
-									<li>
-										<a class="dropdown-item text-danger" href="#"
-											onclick="document.getElementById('logoutForm').submit();">
-											<i class="fas fa-sign-out-alt me-2" style="color: black;"></i>Cerrar Sesión
-										</a>
-									</li>
-								</form>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</nav>
+                    <li class="nav-item nav-group">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-gear"></i> Configuración
+                        </a>
+                    </li>
 
-			<!-- Dashboard Content -->
-			<div class="container-fluid p-4">
-				<!-- Stats Cards -->
-				<div class="row g-4 mb-4">
-					<div class="col-12 col-md-6 col-lg-3">
-						<div class="card border-0 shadow-sm">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<i class="fas fa-cow fa-2x text-primary"></i>
-									</div>
-									<div class="flex-grow-1 ms-3">
-										<h6 class="mb-1">Total Animales</h6>
-										<h3 class="mb-0">1,234</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-md-6 col-lg-3">
-						<div class="card border-0 shadow-sm">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<i class="fas fa-heart fa-2x text-danger"></i>
-									</div>
-									<div class="flex-grow-1 ms-3">
-										<h6 class="mb-1">Nacimientos (Mes)</h6>
-										<h3 class="mb-0">45</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-md-6 col-lg-3">
-						<div class="card border-0 shadow-sm">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<i class="fas fa-wheat-awn fa-2x text-warning"></i>
-									</div>
-									<div class="flex-grow-1 ms-3">
-										<h6 class="mb-1">Stock Alimentos</h6>
-										<h3 class="mb-0">5,678 kg</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 col-md-6 col-lg-3">
-						<div class="card border-0 shadow-sm">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<div class="flex-shrink-0">
-										<i class="fas fa-money-bill-trend-up fa-2x text-success"></i>
-									</div>
-									<div class="flex-grow-1 ms-3">
-										<h6 class="mb-1">Ventas (Mes)</h6>
-										<h3 class="mb-0">$89,234</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="#">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-				<!-- Recent Activity -->
-				<div class="card border-0 shadow-sm">
-					<div class="card-header bg-white">
-						<h5 class="mb-0">Actividad Reciente</h5>
-					</div>
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>Actividad</th>
-										<th>Responsable</th>
-										<th>Fecha</th>
-										<th>Estado</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>#1234</td>
-										<td>Nacimiento de ternero</td>
-										<td>Juan Pérez</td>
-										<td>2024-11-05</td>
-										<td><span class="badge bg-success">Completado</span></td>
-									</tr>
-									<tr>
-										<td>#1233</td>
-										<td>Vacunación Lote A</td>
-										<td>María García</td>
-										<td>2024-11-05</td>
-										<td><span class="badge bg-warning">En Proceso</span></td>
-									</tr>
-									<tr>
-										<td>#1232</td>
-										<td>Compra de alimentos</td>
-										<td>Carlos López</td>
-										<td>2024-11-04</td>
-										<td><span class="badge bg-success">Completado</span></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-0">
+                <!-- Top Bar -->
+                <div class="topbar p-3 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="mb-0">Dashboard</h4>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0 small">
+                                    <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Home</a></li>
+                                    <li class="breadcrumb-item active">Dashboard</li>
+                                </ol>
+                            </nav>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="position-relative me-3">
+                                <i class="bi bi-bell fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </div>
+                            <div class="position-relative me-3">
+                                <i class="bi bi-envelope fs-5"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                    5
+                                </span>
+                            </div>
+                            <img src="/api/placeholder/32/32" alt="Profile" class="rounded-circle">
+                        </div>
+                    </div>
+                </div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-	<script>
-		document.getElementById('sidebarToggle').addEventListener('click', function () {
-			const sidebar = document.getElementById('sidebar');
-			if (sidebar.classList.contains('sidebar-expanded')) {
-				sidebar.classList.remove('sidebar-expanded');
-				sidebar.classList.add('sidebar-collapsed');
-				document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
-			} else {
-				sidebar.classList.remove('sidebar-collapsed');
-				sidebar.classList.add('sidebar-expanded');
-				document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'inline');
-			}
-		});
-	</script>
-</body>
+                <div class="px-4">
+                    <!-- Stats Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="stat-icon bg-primary bg-opacity-10 text-primary me-3">
+                                            <i class="bi bi-people fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="card-title mb-0 text-muted">Usuarios Activos</h6>
+                                            <h2 class="mb-0">1,245</h2>
+                                        </div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" style="width: 70%"></div>
+                                    </div>
+                                    <small class="text-success mt-2 d-block">
+                                        <i class="bi bi-arrow-up"></i> 12% más que el mes anterior
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="stat-icon bg-success bg-opacity-10 text-success me-3">
+                                            <i class="bi bi-currency-dollar fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="card-title mb-0 text-muted">Ingresos</h6>
+                                            <h2 class="mb-0">$8,459</h2>
+                                        </div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 85%"></div>
+                                    </div>
+                                    <small class="text-success mt-2 d-block">
+                                        <i class="bi bi-arrow-up"></i> 8% más que el mes anterior
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="stat-icon bg-warning bg-opacity-10 text-warning me-3">
+                                            <i class="bi bi-check2-square fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="card-title mb-0 text-muted">Tareas Completadas</h6>
+                                            <h2 class="mb-0">645</h2>
+                                        </div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" style="width: 60%"></div>
+                                    </div>
+                                    <small class="text-danger mt-2 d-block">
+                                        <i class="bi bi-arrow-down"></i> 5% menos que el mes anterior
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="stat-icon bg-info bg-opacity-10 text-info me-3">
+                                            <i class="bi bi-folder fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="card-title mb-0 text-muted">Proyectos Activos</h6>
+                                            <h2 class="mb-0">24</h2>
+                                        </div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" style="width: 45%"></div>
+                    </div>
+                                    <small class="text-success mt-2 d-block">
+                                        <i class="bi bi-arrow-up"></i> 3% más que el mes anterior
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-</html>
+                    <!-- Main Cards -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-12 col-lg-8">
+                            <div class="card h-100">
+                                <div class="card-header bg-transparent">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title mb-0">Actividad Reciente</h5>
+                                        <div class="dropdown">
+                                            <button class="btn btn-link text-muted p-0" type="button">
+                                                <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group list-group-flush">
+                                        <div class="list-group-item d-flex align-items-center border-0 pb-3">
+                                            <div class="stat-icon bg-primary bg-opacity-10 text-primary me-3">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex justify-content-between">
+                                                    <h6 class="mb-1">Nuevo proyecto creado</h6>
+                                                    <small class="text-muted">Hace 2h</small>
+                                                </div>
+                                                <p class="text-muted small mb-0">Carlos creó el proyecto "E-commerce Dashboard v2"</p>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item d-flex align-items-center border-0 pb-3">
+                                            <div class="stat-icon bg-success bg-opacity-10 text-success me-3">
+                                                <i class="bi bi-arrow-up-circle"></i>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex justify-content-between">
