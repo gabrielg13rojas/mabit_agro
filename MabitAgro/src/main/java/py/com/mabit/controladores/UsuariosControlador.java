@@ -49,6 +49,7 @@ public class UsuariosControlador {
 	public String eliminar(@PathVariable Long id) {
 		Usuarios us = new Usuarios();
 		us.setId(id);
+		System.out.println(id+"**********************");
 		repositorio.delete(us);
 		return "redirect:/usuarios";
 	}

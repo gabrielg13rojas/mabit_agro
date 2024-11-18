@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import py.com.mabit.enums.CargoTrabajador;
 import py.com.mabit.enums.RegimenTrabajador;
 
 @Entity
@@ -20,7 +21,7 @@ public class Trabajadores {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
+	@Column(nullable = false)
 	private String cedula;
 
 	@Column(nullable = false)
@@ -29,36 +30,24 @@ public class Trabajadores {
 	@Column(nullable = false)
 	private String apellido;
 
-	@Column
+	@Column(nullable = false)
 	private String telefono;
 
-	@Column
+	@Column(nullable = false)
 	private LocalDate fechaIngreso;
 
-	@Column
-	private String funcion;
+	@Enumerated(EnumType.STRING)
+	private CargoTrabajador funcion;
 
-	@Column
+	@Column(nullable = false)
 	private BigDecimal salario_base;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private RegimenTrabajador regimen;
 
-	@Column
+	@Column(nullable = false)
 	private BigDecimal tarifa;
-
-	@ManyToOne
-    @JoinColumn(name = "actividad_id", nullable = false)
-	private Actividades actividad;
-
-	public Actividades getActividad() {
-		return actividad;
-	}
-
-	public void setActividad(Actividades actividad) {
-		this.actividad = actividad;
-	}
 
 	public Long getId() {
 		return id;
@@ -108,11 +97,11 @@ public class Trabajadores {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public String getFuncion() {
+	public CargoTrabajador getFuncion() {
 		return funcion;
 	}
 
-	public void setFuncion(String funcion) {
+	public void setFuncion(CargoTrabajador funcion) {
 		this.funcion = funcion;
 	}
 

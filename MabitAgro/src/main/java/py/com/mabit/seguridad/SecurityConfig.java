@@ -42,7 +42,7 @@ public class SecurityConfig {
             )
             .csrf(csrf -> csrf.disable()) // Para simplicidad, en producción habilitar
         	.sessionManagement(session -> session
-                .maximumSessions(1) // Limitar a 1 sesión activa por usuario
+                .maximumSessions(2) // Limitar a 2 sesión activa por usuario
                 .sessionRegistry(sessionRegistry()) // Registro de sesiones
                 .expiredUrl("/login?sessionExpired=true") // Redirigir si la sesión expira
             );
