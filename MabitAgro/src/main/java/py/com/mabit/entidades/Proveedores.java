@@ -16,7 +16,7 @@ public class Proveedores {
 	@Column(nullable = false)
 	private String email;
 	@Column
-	private Double telefono;
+	private String telefono;
 	@Column
 	private String comentarios;
 	public Long getId() {
@@ -37,10 +37,10 @@ public class Proveedores {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Double getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(Double telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 	public String getComentarios() {
