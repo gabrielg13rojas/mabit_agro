@@ -19,6 +19,15 @@ public class UnidadesMedida {
     private Boolean estado;
     @Column(nullable = false)
     private Boolean entero;
+    
+    public UnidadesMedida() {
+    	id=0l;
+    	descripcion="";
+    	siglas="";
+    	estado=false;
+    	entero=false;
+    }
+    
 	public Long getId() {
 		return id;
 	}

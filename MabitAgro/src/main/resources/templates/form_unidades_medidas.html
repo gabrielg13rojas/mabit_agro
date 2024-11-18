@@ -31,81 +31,42 @@
 
 					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del
 							registro</span></h5>
-					<form th:action="@{/usuarios}" th:object="${usuario}" method="post">
-						<input th:value="${usuario.id}" name="id" type="hidden" class="form-control" id="correo"
-							placeholder=" ">
+					<form th:action="@{/unidades-medidas}" th:object="${unidades_medida}" method="post">
+						<input th:value="${unidades_medida.id}" name="id" type="hidden" class="form-control" id="descripcion"
+																	placeholder=" ">
 						<div class="row g-3">
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-image"></i></span>
+									<span class="input-group-text"><i class="fa-solid fa-file"></i></span>
 									<div class="form-floating">
-										<input name="imagen" type="file" accept="image/*" class="form-control"
-											id="imagen" placeholder=" " onchange="mostrarVistaPrevia(this)">
-										<label for="imagen">Seleccionar Imagen</label>
-									</div>
-								</div>
-								<!-- Contenedor para la vista previa -->
-								<div class="mt-2">
-									<img id="vistaPrevia" src="" alt="Vista previa"
-										style="max-width: 200px; max-height: 200px; display: none;"
-										class="img-thumbnail">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-envelope"></i></span>
-									<div class="form-floating">
-										<input th:value="${usuario.correo}" name="correo" type="email"
-											class="form-control" id="correo" placeholder=" ">
-										<label for="correo">Correo</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-user"></i></span>
-									<div class="form-floating">
-										<input th:value="${usuario.nombre}" name="nombre" type="text"
-											class="form-control" id="nombre" placeholder=" ">
-										<label for="nombre">Nombre</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-key"></i></span>
-									<div class="form-floating">
-										<input name="contrasenha" type="password" class="form-control" id="contrasenha"
+										<input th:value="${unidades_medida.descripcion}" name="descripcion" type="text" class="form-control" id="descripcion"
 											placeholder=" ">
-										<label for="contrasenha">Contraseña</label>
+										<label for="descripcion">Descripcion</label>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
+									<span class="input-group-text"><i class="fa-solid fa-tag"></i></span>
 									<div class="form-floating">
-										<select class="form-select" id="privilegio">
-											<option selected disabled value="">Seleccione...</option>
-											<option value="1">Administrador</option>
-											<option value="2">Usuario</option>
-										</select>
-										<label for="privilegio">Privilegio</label>
+										<input th:value="${unidades_medida.siglas}" name="siglas" type="text" class="form-control" id="siglas"
+											placeholder=" ">
+										<label for="siglas">Siglas</label>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-check form-switch">
-									<input th:field="${usuario.verificado}" class="form-check-input" type="checkbox"
-										id="verificado">
-									<label class="form-check-label" for="verificado">Verificado</label>
+									<input th:field="${unidades_medida.estado}" class="form-check-input" type="checkbox"
+										id="estado">
+									<label class="form-check-label" for="estado">Estado</label>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-check form-switch">
-									<input th:field="${usuario.bloqueado}" class="form-check-input" type="checkbox"
-										id="bloqueado">
-									<label class="form-check-label" for="bloqueado">Bloqueado</label>
+									<input th:field="${unidades_medida.entero}" class="form-check-input" type="checkbox"
+										id="entero">
+									<label class="form-check-label" for="entero">Entero</label>
 								</div>
 							</div>
 						</div>
@@ -135,10 +96,10 @@
 			</button>
 
 			<!-- Formulario con flex-grow-1 para ocupar el espacio entre los botones -->
-			<form th:action="@{/usuarios}" method="get" class="flex-grow-1">
+			<form th:action="@{/unidades-medidas}" method="get" class="flex-grow-1">
 				<div class="input-group">
 					<span class="input-group-text"><i class="fas fa-search"></i></span>
-					<input autofocus type="search" name="buscar" class="form-control" placeholder="Buscar usuario...">
+					<input type="search" name="buscar" class="form-control" placeholder="Buscar unidades de medidas...">
 				</div>
 			</form>
 
@@ -154,45 +115,41 @@
 					<thead class="table-dark">
 						<tr>
 							<th class="py-3">ID</th>
-							<th class="py-3">Foto</th>
-							<th class="py-3">Correo</th>
-							<th class="py-3">Nombre</th>
-							<th class="py-3">Privilegio</th>
-							<th class="py-3">Verificado</th>
-							<th class="py-3">Bloqueado</th>
+							<th class="py-3">Descripcion</th>
+							<th class="py-3">Siglas</th>
+							<th class="py-3">Estado</th>
+							<th class="py-3">Entero</th>
 							<th class="py-3">Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="u : ${lista}">
-							<td th:text="${u.id}"></td>
-							<td th:text="${u.foto}">usuario@ejemplo.com</td>
-							<td th:text="${u.correo}">Usuario Ejemplo</td>
-							<td th:text="${u.nombre}">Usuario Ejemplo</td>
-							<td><span class="badge bg-primary">Administrador</span></td>
+						<tr th:each="um : ${lista}">
+							<td th:text="${um.id}"></td>
+							<td th:text="${um.descripcion}">Osito</td>
+							<td th:text="${um.siglas}"><span class="badge bg-primary">Marron</span></td>
 							<td>
-								<i th:if="${u.verificado}" class="fas fa-check-circle text-success fs-5"></i>
-								<i th:if="!${u.verificado}" class="fas fa-times-circle text-danger fs-5"></i>
+								<i th:if="${um.estado}" class="fas fa-check-circle text-success fs-5"></i>
+								<i th:if="!${um.estado}" class="fas fa-times-circle text-danger fs-5"></i>
 							</td>
 							<td>
-								<i th:if="${u.bloqueado}" class="fas fa-check-circle text-success fs-5"></i>
-								<i th:if="!${u.bloqueado}" class="fas fa-times-circle text-danger fs-5"></i>
+								<i th:if="${um.entero}" class="fas fa-check-circle text-success fs-5"></i>
+								<i th:if="!${um.entero}" class="fas fa-times-circle text-danger fs-5"></i>
 							</td>
 							<td>
-								<a th:href="@{/usuarios/editar/{id}(id=${u.id})}" class="btn btn-warning btn-sm me-2">
+								<a th:href="@{/unidades-medidas/editar/{id}(id=${um.id})}"
+									class="btn btn-warning btn-sm me-2">
 									<i class="fas fa-edit"></i>
 								</a>
-								<form class="d-inline" th:action="@{/usuarios/eliminar/{id}(id=${u.id})}" method="get">
+								<form class="d-inline"
+									th:action="@{/unidades-medidas/eliminar/{id}(id=${um.id})}"
+									method="get">
 									<input type="hidden" name="userId" value="1">
-									<button type="button" 
-									        class="btn btn-danger btn-sm" 
-									        data-bs-toggle="modal" 
-									        th:data-bs-target="'#deleteModal' + ${u.id}">
-									    <i class="fas fa-trash"></i>
+									<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+										th:data-bs-target="'#deleteModal' + ${um.id}">
+										<i class="fas fa-trash"></i>
 									</button>
-
 									<!-- Modal específico para este usuario -->
-									<div class="modal fade" th:id="'deleteModal' + ${u.id}" tabindex="-1" aria-hidden="true">
+									<div class="modal fade"th:id="'deleteModal' + ${um.id}" tabindex="-1" aria-hidden="true">
 										<div class="modal-dialog modal-dialog-centered">
 											<div class="modal-content">
 												<div class="modal-header bg-danger text-white">
@@ -232,24 +189,5 @@
 	<!-- Bootstrap Bundle con Popper -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
-<script>
-	function mostrarVistaPrevia(input) {
-		const vistaPrevia = document.getElementById('vistaPrevia');
-
-		if (input.files && input.files[0]) {
-			const lector = new FileReader();
-
-			lector.onload = function (e) {
-				vistaPrevia.src = e.target.result;
-				vistaPrevia.style.display = 'block';
-			}
-
-			lector.readAsDataURL(input.files[0]);
-		} else {
-			vistaPrevia.src = '';
-			vistaPrevia.style.display = 'none';
-		}
-	}
-</script>
 
 </html>

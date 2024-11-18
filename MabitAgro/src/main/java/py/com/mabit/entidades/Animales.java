@@ -30,6 +30,9 @@ public class Animales {
 	private String identificador;
 
 	@Column(nullable = false)
+	private String alias;
+
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private SexoAnimal sexo;
 
@@ -45,80 +48,8 @@ public class Animales {
 	@ManyToOne
     @JoinColumn(name = "lote_id", nullable = false) // El nombre de la columna en la tabla de Animales
     private Lotes lote;
-	
-	public Lotes getLote() {
-		return lote;
-	}
-
-	public void setLote(Lotes lote) {
-		this.lote = lote;
-	}
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private EstadoAnimal estado;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public EspecieAnimal getEspecie() {
-		return especie;
-	}
-
-	public void setEspecie(EspecieAnimal especie) {
-		this.especie = especie;
-	}
-
-	public String getIdentificador() {
-		return identificador;
-	}
-
-	public void setIdentificador(String identificador) {
-		this.identificador = identificador;
-	}
-
-	public SexoAnimal getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(SexoAnimal sexo) {
-		this.sexo = sexo;
-	}
-
-	public LocalDate getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public LocalDate getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-	public void setFechaIngreso(LocalDate fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
-	public BigDecimal getPrecioCompra() {
-		return precioCompra;
-	}
-
-	public void setPrecioCompra(BigDecimal precioCompra) {
-		this.precioCompra = precioCompra;
-	}
-
-	public EstadoAnimal getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EstadoAnimal estado) {
-		this.estado = estado;
-	}
 }
