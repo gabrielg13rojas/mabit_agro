@@ -8,81 +8,106 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Empresas {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long id;
-	
-	@Column(nullable = false, columnDefinition = "TEXT")
-	public String logo;
-	
-	@Column(nullable = false, unique = true)
-	public String nombre;
-	
-	@Column(nullable = false)
-	public String telefono;
-	
-	@Column(nullable = false)
-	public String direccion;
-	
-	@Column(nullable = false)
-	public String email;
-	
-	@Column(nullable = false)
-	public String atrib_email;
 
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    // Este campo almacenará la ruta o nombre del archivo, no el archivo en sí
+    @Column(nullable = true, columnDefinition = "TEXT")
+    public String logo;
 
-	public String getLogo() {
-		return logo;
-	}
+    @Column(nullable = false, unique = true)
+    public String nombre;
 
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+    @Column(nullable = false)
+    public String telefono;
 
-	public String getNombre() {
-		return nombre;
-	}
+    @Column(nullable = false)
+    public String direccion;
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    @Column(nullable = false)
+    public String email;
 
-	public String getTelefono() {
-		return telefono;
-	}
+    @Column(nullable = false)
+    public String atrib_email;
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+    @Column(nullable = false)
+    private Boolean verificado;
 
-	public String getDireccion() {
-		return direccion;
-	}
+    @Column(nullable = false)
+    private Boolean bloqueado;
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getLogo() {
+        return logo;
+    }
 
-	public String getAtrib_email() {
-		return atrib_email;
-	}
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 
-	public void setAtrib_email(String atrib_email) {
-		this.atrib_email = atrib_email;
-	}
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAtrib_email() {
+        return atrib_email;
+    }
+
+    public void setAtrib_email(String atrib_email) {
+        this.atrib_email = atrib_email;
+    }
+
+    public Boolean getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(Boolean verificado) {
+        this.verificado = verificado;
+    }
+
+    public Boolean getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(Boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
 }

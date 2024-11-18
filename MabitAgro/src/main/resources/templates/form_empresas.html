@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="'Gestión de '+${entidad}"></title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+	<div class="container mt-4">
+		<!-- Título en recuadro -->
+		<div class="card mb-2 bg-success text-white border">
+			<div class="card-body py-2">
+				<h5 class="card-title text-center m-0" th:text="'Gestión de '+${entidad}"></h5>
+			</div>
+		</div>
+
+		<!-- Formulario colapsable -->
+		<div class="collapse mb-2" id="collapseForm" th:classappend="${formColapsado ? ' show' : ''}">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario de la Empresa</span></h5>
+					<form th:action="@{/empresas}" th:object="${empresa}" method="post">
+						<input th:value="${empresa.id}" name="id" type="hidden" class="form-control" id="idEmpresa">
+
+						<div class="row g-3">
+							<!-- Nombre -->
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-building"></i></span>
+									<div class="form-floating">
+										<input th:field="*{nombre}" type="text" class="form-control" id="nombre"
+											placeholder=" " required>
+										<label for="nombre">Nombre de la Empresa</label>
+									</div>
+								</div>
+							</div>
+
+							<!-- Teléfono -->
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-phone"></i></span>
+									<div class="form-floating">
+										<input th:field="*{telefono}" type="text" class="form-control" id="telefono"
+											placeholder=" ">
+										<label for="telefono">Teléfono</label>
+									</div>
+								</div>
+							</div>
+
+							<!-- Dirección -->
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+									<div class="form-floating">
+										<input th:field="*{direccion}" type="text" class="form-control" id="direccion"
+											placeholder=" ">
+										<label for="direccion">Dirección</label>
+									</div>
+								</div>
+							</div>
+
+							<!-- Correo Electrónico -->
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+									<div class="form-floating">
+										<input th:field="*{email}" type="email" class="form-control" id="email"
+											placeholder=" " required>
+										<label for="email">Correo Electrónico</label>
+									</div>
+								</div>
+							</div>
+
+							<!-- Correo de Atribución -->
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-at"></i></span>
+									<div class="form-floating">
+										<input th:field="*{atrib_email}" type="text" class="form-control"
+											id="atrib_email" placeholder=" ">
+										<label for="atrib_email">Correo de Atribución</label>
+									</div>
+								</div>
+							</div>
+
+							<!-- Logo -->
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-image"></i></span>
+									<div class="form-floating">
+										<input th:field="*{logo}" type="file" class="form-control" id="logo"
+											placeholder=" " accept="image/*">
+										<label for="logo">Logo de la Empresa</label>
+									</div>
+								</div>
+								<!-- Este es para ver el del logo -->
+								<div class="mt-2" id="logoPreviewContainer">
+									<img th:src="@{${empresa.logo}}" id="logoPreview" class="img-fluid"
+										alt="Logo de la Empresa" style="max-width: 150px; display: none;">
+								</div>
+							</div>
+						</div>
+
+						<!-- Opciones de verificado y bloqueado -->
+						<div class="d-flex justify-content-between mt-4">
+							<div class="col-md-5">
+								<div class="form-check form-switch">
+									<input th:field="*{verificado}" class="form-check-input" type="checkbox"
+										id="verificado">
+									<label class="form-check-label" for="verificado"> Verificado</label>
+								</div>
+							</div>
+
+							<div class="col-md-5">
+								<div class="form-check form-switch">
+									<input th:field="*{bloqueado}" class="form-check-input" type="checkbox"
+										id="bloqueado">
+									<label class="form-check-label" for="bloqueado">Bloqueado</label>
+								</div>
+							</div>
+						</div>
+
+						<!-- Botones del formulario -->
+						<div class="mt-4 text-end">
+							<button type="reset" class="btn btn-outline-secondary">
+								<i class="fas fa-eraser"></i> Limpiar
+							</button>
+							<button type="button" class="btn btn-outline-danger" data-bs-toggle="collapse"
+								data-bs-target="#collapseForm">
+								<i class="fas fa-times"></i> Cancelar
+							</button>
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-save"></i> Guardar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Barra de acciones -->
+		<div class="d-flex gap-3 mb-2 align-items-center w-100">
+			<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm"
+				aria-expanded="false" aria-controls="collapseForm">
+				<i class="fas fa-plus"></i> Nuevo
+			</button>
+
+			<form th:action="@{/empresas}" method="get" class="flex-grow-1">
+				<div class="input-group">
+					<span class="input-group-text"><i class="fas fa-search"></i></span>
+					<input type="search" name="buscar" class="form-control" placeholder="Buscar empresa...">
+				</div>
+			</form>
+
+			<a th:href="@{/}" class="btn btn-secondary">
+				<i class="fas fa-arrow-left"></i> Volver
+			</a>
+		</div>
+
+		<!-- Tabla de empresas -->
+		<div class="card shadow">
+			<div class="card-body">
+				<table class="table table-striped table-sm">
+					<thead class="table-dark">
+						<tr>
+							<th class="py-3">ID</th>
+							<th class="py-3">Nombre</th>
+							<th class="py-3">Teléfono</th>
+							<th class="py-3">Dirección</th>
+							<th class="py-3">Correo</th>
+							<th class="py-3">Correo de Atribución</th>
+
+							<th class="py-3">Bloqueado</th>
+							<th class="py-3">Verificado</th>
+							<th class="py-3">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="e : ${lista}">
+							<td th:text="${e.id}"></td>
+							<td th:text="${e.nombre}"></td>
+							<td th:text="${e.telefono}"></td>
+							<td th:text="${e.direccion}"></td>
+							<td th:text="${e.email}"></td>
+							<td th:text="${e.atrib_email}"></td>
+
+							<td>
+								<i th:if="${e.verificado}" class="fas fa-check-circle text-success fs-5"></i>
+								<i th:if="!${e.verificado}" class="fas fa-times-circle text-danger fs-5"></i>
+							</td>
+							<td>
+								<i th:if="${e.bloqueado}" class="fas fa-check-circle text-success fs-5"></i>
+								<i th:if="!${e.bloqueado}" class="fas fa-times-circle text-danger fs-5"></i>
+							</td>
+							<td>
+								<a th:href="@{/empresas/editar/{id}(id=${e.id})}" class="btn btn-warning btn-sm">
+									<i class="fas fa-edit"></i> Editar
+								</a>
+								<a th:href="@{/empresas/eliminar/{id}(id=${e.id})}" class="btn btn-danger btn-sm">
+									<i class="fas fa-trash-alt"></i> Eliminar
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
