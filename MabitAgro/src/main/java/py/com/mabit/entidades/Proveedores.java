@@ -52,6 +52,12 @@ public class Proveedores {
 		this.email = email;
 	}
 
+
+	public String setTelefono() {
+		return telefono;
+	}
+
+
 	public String getTelefono() {
 		return telefono;
 	}
