@@ -32,8 +32,8 @@
 					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del
 							registro</span></h5>
 					<form th:action="@{/privilegios}" th:object="${privilegios}" method="post">
-						<input th:value="${privilegios.id}" type="hidden" name="id" class="form-control"
-							id="id" placeholder=" ">
+						<input th:value="${privilegios.id}" type="hidden" name="id" class="form-control" id="id"
+							placeholder=" ">
 						<div class="row g-3">
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
@@ -51,7 +51,7 @@
 									<div class="form-floating"> <!--Si no le agregas el name="permisos", no guarda-->
 										<input th:value="${privilegios.permisos}" type="text" name="permisos"
 											class="form-control" id="permisos" placeholder=" ">
-											
+
 										<label for="permisos">Permisos</label>
 									</div>
 								</div>
@@ -61,35 +61,30 @@
 								<div class="form-check form-switch">
 									<input th:field="${privilegios.estado}" class="form-check-input" type="checkbox"
 										id="estado">
-										
+
 									<label class="form-check-label" for="estado">Activo</label>
 								</div>
 							</div>
-
-
-
 						</div>
 
 
-
+						<div class="mt-4 text-end">
+							<button type="reset" class="btn btn-outline-secondary">
+								<i class="fas fa-eraser"></i> Limpiar
+							</button>
+							<button type="button" class="btn btn-outline-danger" data-bs-toggle="collapse"
+								data-bs-target="#collapseForm">
+								<i class="fas fa-times"></i> Cancelar
+							</button>
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-save"></i> Guardar
+							</button>
+						</div>
+					</form>
 				</div>
-
-				<div class="mt-4 text-end">
-					<button type="reset" class="btn btn-outline-secondary">
-						<i class="fas fa-eraser"></i> Limpiar
-					</button>
-					<button type="button" class="btn btn-outline-danger" data-bs-toggle="collapse"
-						data-bs-target="#collapseForm">
-						<i class="fas fa-times"></i> Cancelar
-					</button>
-					<button type="submit" class="btn btn-primary">
-						<i class="fas fa-save"></i> Guardar
-					</button>
-				</div>
-				</form>
 			</div>
 		</div>
-	</div>
+	
 
 	<!-- Barra de acciones -->
 	<div class="d-flex gap-3 mb-2 align-items-center w-100">
@@ -97,12 +92,11 @@
 			aria-expanded="false" aria-controls="collapseForm">
 			<i class="fas fa-plus"></i> Nuevo
 		</button>
-
 		<!-- Formulario con flex-grow-1 para ocupar el espacio entre los botones -->
 		<form th:action="@{/privilegios}" method="get" class="flex-grow-1">
 			<div class="input-group">
 				<span class="input-group-text"><i class="fas fa-search"></i></span>
-				<input type="search" name="buscar" class="form-control" placeholder="Buscar privilegios..."  autofocus>
+				<input autofocus type="search" name="buscar" class="form-control" placeholder="Buscar privilegios...">
 			</div>
 		</form>
 
@@ -131,11 +125,9 @@
 						<td th:text="${privi.descripcion}"></td>
 						<td th:text="${privi.permisos}"></td>
 						<td>
-						    <span th:class="'badge ' + (${privi.estado} ? 'bg-success' : 'bg-warning')" 
-						          th:text="${privi.estado ? 'Activo' : 'Inactivo'}"></span>
+							<span th:class="'badge ' + (${privi.estado} ? 'bg-success' : 'bg-warning')"
+								th:text="${privi.estado ? 'Activo' : 'Inactivo'}"></span>
 						</td>
-
-
 
 						<td>
 							<a th:href="@{/privilegios/editar/{id}(id=${privi.id})}"
@@ -145,14 +137,14 @@
 							<form class="d-inline" th:action="@{/privilegios/eliminar/{id}(id=${privi.id})}"
 								method="get">
 								<input type="hidden" name="userId" value="1">
-								<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" 
-								th:data-bs-target="'#deleteModal' + ${privi.id}">
-								<i class="fas fa-trash"></i>
+								<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+									th:data-bs-target="'#deleteModal' + ${privi.id}">
+									<i class="fas fa-trash"></i>
 								</button>
 
 								<!-- Modal específico para este usuario -->
-								<div class="modal fade" th:id="'deleteModal' + ${privi.id}" tabindex="-1" aria-hidden="true">
-
+								<div class="modal fade" th:id="'deleteModal' + ${privi.id}" tabindex="-1"
+									aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered">
 										<div class="modal-content">
 											<div class="modal-header bg-danger text-white">
@@ -186,7 +178,7 @@
 		</div>
 	</div>
 	</div>
-	</div>
+
 
 	<!-- Bootstrap Bundle con Popper -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
