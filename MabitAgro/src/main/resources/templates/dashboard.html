@@ -1,314 +1,644 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en"> <!--begin::Head-->
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Profesional</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --dark-green: #1a472a;
-            --light-green: #2d5a40;
-            --sidebar-dark: #1e1e2d;
-            --sidebar-hover: #2b2b3c;
-        }
-        body {
-            background-color: #f5f5f9;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto;
-        }
-        .sidebar {
-            background-color: var(--sidebar-dark);
-            min-height: 100vh;
-            color: #ffffff;
-        }
-        .sidebar .nav-link {
-            color: #a2a3b7;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.95rem;
-        }
-        .sidebar .nav-link:hover {
-            color: #ffffff;
-            background-color: var(--sidebar-hover);
-        }
-        .sidebar .nav-link.active {
-            color: #ffffff;
-            background-color: var(--sidebar-hover);
-        }
-        .sidebar .nav-item i {
-            margin-right: 0.5rem;
-            font-size: 1.1rem;
-        }
-        .card {
-            border: none;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .progress {
-            height: 6px;
-        }
-        .user-profile {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .user-profile img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-        }
-        .submenu {
-            padding-left: 2.5rem;
-            background-color: rgba(0,0,0,0.1);
-        }
-        .nav-group {
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-        .topbar {
-            background: white;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse p-0">
-                <!-- User Profile -->
-                <div class="user-profile d-flex align-items-center">
-                    <img src="/api/placeholder/50/50" alt="Profile" class="rounded-circle me-3">
-                    <div>
-                        <h6 class="mb-1">Carlos Rodríguez</h6>
-                        <small class="text-muted">Administrador</small>
-                    </div>
-                </div>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Mabit AGRO</title><!--begin::Primary Meta Tags-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="title" content="Mabit | Dashboard">
+	<meta name="author" content="ColorlibHQ">
+	<meta name="description"
+		content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
+	<meta name="keywords"
+		content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard">
+	<!--end::Primary Meta Tags--><!--begin::Fonts-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+		integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous">
+	<!--end::Fonts--><!--begin::Third Party Plugin(OverlayScrollbars)-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css"
+		integrity="sha256-dSokZseQNT08wYEWiz5iLI8QPlKxG+TswNRD8k35cpg=" crossorigin="anonymous">
+	<!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Third Party Plugin(Bootstrap Icons)-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css"
+		integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous">
+	<!--end::Third Party Plugin(Bootstrap Icons)--><!--begin::Required Plugin(AdminLTE)-->
+	<link rel="stylesheet" href="../../dist/css/adminlte.css"><!--end::Required Plugin(AdminLTE)--><!-- apexcharts -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+		integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous"><!-- jsvectormap -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
+		integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head> <!--end::Head--> <!--begin::Body-->
 
-                <!-- Navigation -->
-                <ul class="nav flex-column">
-                    <li class="nav-item nav-group">
-                        <a class="nav-link active" href="#">
-                            <i class="bi bi-speedometer2"></i> Dashboard
-                        </a>
-                    </li>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
+	<div class="app-wrapper"> <!--begin::Header-->
+		<nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
+			<div class="container-fluid"> <!--begin::Start Navbar Links-->
+				<ul class="navbar-nav">
+					<li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i
+								class="bi bi-list"></i> </a> </li>
+					<li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
+					<li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Contact</a> </li>
+				</ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
+				<ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
+					<li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i
+								class="bi bi-search"></i> </a> </li> <!--end::Navbar Search-->
+					<!--begin::Messages Dropdown Menu-->
+					<li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i
+								class="bi bi-chat-text"></i> <span class="navbar-badge badge text-bg-danger">3</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <a href="#"
+								class="dropdown-item"> <!--begin::Message-->
+								<div class="d-flex">
+									<div class="flex-shrink-0"> <img src="../dist/assets/img/user1-128x128.jpg"
+											alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
+									<div class="flex-grow-1">
+										<h3 class="dropdown-item-title">
+											Brad Diesel
+											<span class="float-end fs-7 text-danger"><i
+													class="bi bi-star-fill"></i></span>
+										</h3>
+										<p class="fs-7">Call me whenever you can...</p>
+										<p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours
+											Ago
+										</p>
+									</div>
+								</div> <!--end::Message-->
+							</a>
+							<div class="dropdown-divider"></div> <a href="#" class="dropdown-item">
+								<!--begin::Message-->
+								<div class="d-flex">
+									<div class="flex-shrink-0"> <img src="../../dist/assets/img/user8-128x128.jpg"
+											alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
+									<div class="flex-grow-1">
+										<h3 class="dropdown-item-title">
+											John Pierce
+											<span class="float-end fs-7 text-secondary"> <i class="bi bi-star-fill"></i>
+											</span>
+										</h3>
+										<p class="fs-7">I got your message bro</p>
+										<p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours
+											Ago
+										</p>
+									</div>
+								</div> <!--end::Message-->
+							</a>
+							<div class="dropdown-divider"></div> <a href="#" class="dropdown-item">
+								<!--begin::Message-->
+								<div class="d-flex">
+									<div class="flex-shrink-0"> <img src="../../dist/assets/img/user3-128x128.jpg"
+											alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
+									<div class="flex-grow-1">
+										<h3 class="dropdown-item-title">
+											Nora Silvester
+											<span class="float-end fs-7 text-warning"> <i class="bi bi-star-fill"></i>
+											</span>
+										</h3>
+										<p class="fs-7">The subject goes here</p>
+										<p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours
+											Ago
+										</p>
+									</div>
+								</div> <!--end::Message-->
+							</a>
+							<div class="dropdown-divider"></div> <a href="#" class="dropdown-item dropdown-footer">See
+								All Messages</a>
+						</div>
+					</li> <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
+					<li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i
+								class="bi bi-bell-fill"></i> <span class="navbar-badge badge text-bg-warning">15</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <span
+								class="dropdown-item dropdown-header">15 Notifications</span>
+							<div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i
+									class="bi bi-envelope me-2"></i> 4 new messages
+								<span class="float-end text-secondary fs-7">3 mins</span> </a>
+							<div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i
+									class="bi bi-people-fill me-2"></i> 8 friend requests
+								<span class="float-end text-secondary fs-7">12 hours</span> </a>
+							<div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i
+									class="bi bi-file-earmark-fill me-2"></i> 3 new reports
+								<span class="float-end text-secondary fs-7">2 days</span> </a>
+							<div class="dropdown-divider"></div> <a href="#" class="dropdown-item dropdown-footer">
+								See All Notifications
+							</a>
+						</div>
+					</li> <!--end::Notifications Dropdown Menu--> <!--begin::Fullscreen Toggle-->
+					<li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i
+								data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i
+								data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a>
+					</li> <!--end::Fullscreen Toggle--> <!--begin::User Menu Dropdown-->
+					<li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle"
+							data-bs-toggle="dropdown"> <img th:src="${foto}" class="user-image rounded-circle shadow"
+								alt="User Image"> <span class="d-none d-md-inline" th:text="${nombre}">Usuario</span>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::User Image-->
+							<li class="user-header text-bg-success"> <img th:src="${foto}" class="rounded-circle shadow"
+									alt="User Image">
+								<p>
+									<small th:text="${correo}">email aparece aqui</small>
+								</p>
+							</li> <!--end::User Image--> <!--begin::Menu Body-->
 
-                    <li class="nav-item nav-group">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#userSubmenu">
-                            <i class="bi bi-people"></i> Usuarios
-                            <i class="bi bi-chevron-down float-end"></i>
-                        </a>
-                        <div class="collapse submenu" id="userSubmenu">
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Lista de Usuarios</a>
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Roles</a>
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Permisos</a>
-                        </div>
-                    </li>
+							<li class="user-footer"> <a th:href="@{/usuarios/perfil/{id}(id=${idus})}"
+									class="btn btn-default btn-flat">Perfil</a> <a th:href="@{/login?logout=true}"
+									class="btn btn-default btn-flat float-end">Cerrar sesión</a> </li>
+							<!--end::Menu Footer-->
+						</ul>
+					</li> <!--end::User Menu Dropdown-->
+				</ul> <!--end::End Navbar Links-->
+			</div> <!--end::Container-->
+		</nav> <!--end::Header--> <!--begin::Sidebar-->
+		<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
+			<div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link">
+					<!--begin::Brand Image--> <img src="../img/mabit-agro.png" alt="AdminLTE Logo"
+						class="brand-image opacity-75 shadow"> <!--end::Brand Image--> <!--begin::Brand Text--> <span
+						class="brand-text fw-light">Mabit AGRO v1.0</span> <!--end::Brand Text--> </a>
+				<!--end::Brand Link-->
+			</div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+			<div class="sidebar-wrapper">
+				<nav class="mt-2"> <!--begin::Sidebar Menu-->
+					<ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu"
+						data-accordion="false">
+						<li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-easel2"></i>
+								<p>
+									Dashboard
+									<i class="nav-arrow bi bi-chevron-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item"> <a href="/" class="nav-link"><i
+											class="bi bi-bar-chart-line text-success"></i>
+										<p>Resumen</p>
+									</a> </li>
+							</ul>
+						</li>
 
-                    <li class="nav-item nav-group">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#projectSubmenu">
-                            <i class="bi bi-kanban"></i> Proyectos
-                            <i class="bi bi-chevron-down float-end"></i>
-                        </a>
-                        <div class="collapse submenu" id="projectSubmenu">
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Ver Todos</a>
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Crear Nuevo</a>
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Categorías</a>
-                        </div>
-                    </li>
+						<li class="nav-item"> <a href="#" class="nav-link"> <i class="bi-folder2-open"></i>
+								<p>
+									Registros
+									<i class="nav-arrow bi bi-chevron-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item"> <a th:href="@{/animales}" class="nav-link">
+										<i class="fas fa-cow fa-1x text-primary"></i>
+										<p>Animales</p>
+									</a> </li>
+								<li class="nav-item"> <a th:href="@{/alimentos}" class="nav-link">
+										<i class="fas fa-wheat-awn fa-1x text-warning"></i>
+										<p>Alimentos</p>
+									</a> </li>
+								<li class="nav-item"> <a th:href="@{/lotes}" class="nav-link"> <i
+											class="fas fa-layer-group text-secondary"></i>
+										<p>Lotes</p>
+									</a> </li>
+								<li class="nav-item"> <a th:href="@{/proveedores}" class="nav-link"> <i
+											class="fas fa-truck text-info"></i>
+										<p>Proveedores</p>
+									</a> </li>
+								<li class="nav-item"> <a th:href="@{/trabajadores}" class="nav-link"> <i
+											class="fas fa-users"></i>
+										<p>Trabajadores</p>
+									</a> </li>
+								<li class="nav-item"> <a th:href="@{/unidades-medidas}" class="nav-link"> <i
+											class="fas fa-scale-balanced text-danger"></i>
+										<p>Unidades de medida</p>
+									</a> </li>
+							</ul>
+						</li>
+						<li class="nav-item"> <a href="#" class="nav-link"> <i class="bi-arrows-move"></i>
+								<p>
+									Movimientos
+									<i class="nav-arrow bi bi-chevron-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
+										<i class="bi bi-cash-coin text-warning"></i>
+										<p>Ventas</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
+										<i class="fas fa-syringe text-info"></i>
+										<p>Sanitización</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
+										<i class="bi bi-heart-fill text-danger"></i>
+										<p>Nacimientos</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./widgets/small-box.html" class="nav-link">
+										<i class="bi bi-box-arrow-in-down-right text-success"></i>
+										<p>Ingreso de animales</p>
+									</a> </li>
+							</ul>
+						</li>
+						<li class="nav-header">REPORTES</li>
+						<li class="nav-item"> <a href="#" class="nav-link"> <i class="bi bi-graph-up-arrow"></i>
+								<p>
+									Informes
+									<i class="nav-arrow bi bi-chevron-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
+											class="nav-icon bi bi-circle"></i>
+										<p>Alimentos</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
+											class="nav-icon bi bi-circle"></i>
+										<p>Animales</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
+											class="nav-icon bi bi-circle"></i>
+										<p>Rentabilidad</p>
+									</a> </li>
+							</ul>
+						</li>
+						<li class="nav-header">SEGURIDAD</li>
+						<li class="nav-item"> <a th:href="@{/usuarios}" class="nav-link"> <i
+									class="nav-icon bi bi-person-square"></i>
+								<p>Usuarios</p>
+							</a> </li>
+						<li class="nav-item"> <a th:href="@{/privilegios}" class="nav-link"> <i
+									class="nav-icon bi bi-shield-shaded"></i>
+								<p>Privilegios</p>
+							</a> </li>
+						<li class="nav-header">CONFIGURACIONES</li>
+						<li class="nav-item"> <a th:href="@{/empresas}" class="nav-link"> <i
+									class="nav-icon bi-building-fill-gear"></i>
+								<p>Empresa</p>
+							</a> </li>
+					</ul> <!--end::Sidebar Menu-->
+				</nav>
+			</div> <!--end::Sidebar Wrapper-->
+		</aside> <!--end::Sidebar--> <!--begin::App Main-->
+		<main class="app-main"> <!--begin::App Content Header-->
+			<div class="app-content-header"> <!--begin::Container-->
+				<div class="container-fluid"> <!--begin::Row-->
+					<div class="row">
+						<div class="col-sm-6">
+							<h3 class="mb-0">Dashboard</h3>
+						</div>
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-end">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" aria-current="page">
+									Dashboard
+								</li>
+							</ol>
+						</div>
+					</div> <!--end::Row-->
+				</div> <!--end::Container-->
+			</div> <!--end::App Content Header--> <!--begin::App Content-->
+			<div class="app-content"> <!--begin::Container-->
+				<div class="container-fluid"> <!--begin::Row-->
+					<div class="row"> <!--begin::Col-->
+						<div class="col-lg-3 col-6"> <!--begin::Small Box Widget 1-->
+							<div class="small-box text-bg-primary">
+								<div class="inner">
+									<h3 th:text="${animales}"></h3>
+									<p>Animales</p>
+								</div> <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									<path
+										d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z">
+									</path>
+								</svg> <a th:href="@{/animales}"
+									class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+									Ver más <i class="bi bi-link-45deg"></i> </a>
+							</div> <!--end::Small Box Widget 1-->
+						</div> <!--end::Col-->
+						<div class="col-lg-3 col-6"> <!--begin::Small Box Widget 2-->
+							<div class="small-box text-bg-success">
+								<div class="inner">
+									<h3 th:text="${venta}"><sup class="fs-5">%</sup></h3>
+									<p>Ventas</p>
+								</div> <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									<path
+										d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z">
+									</path>
+								</svg> <a href="#"
+									class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+									Ver más <i class="bi bi-link-45deg"></i> </a>
+							</div> <!--end::Small Box Widget 2-->
+						</div> <!--end::Col-->
+						<div class="col-lg-3 col-6"> <!--begin::Small Box Widget 3-->
+							<div class="small-box text-bg-warning">
+								<div class="inner">
+									<h3 th:text="${alimentos}"></h3>
+									<p>Alimentos</p>
+								</div> <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									<path
+										d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z">
+									</path>
+								</svg> <a th:href="@{/alimentos}"
+									class="small-box-footer link-dark link-underline-opacity-0 link-underline-opacity-50-hover">
+									Ver más <i class="bi bi-link-45deg"></i> </a>
+							</div> <!--end::Small Box Widget 3-->
+						</div> <!--end::Col-->
+						<div class="col-lg-3 col-6"> <!--begin::Small Box Widget 4-->
+							<div class="small-box text-bg-danger">
+								<div class="inner">
+									<h3 th:text="${gastos}"></h3>
+									<p>Gastos</p>
+								</div> <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24"
+									xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									<path clip-rule="evenodd" fill-rule="evenodd"
+										d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z">
+									</path>
+									<path clip-rule="evenodd" fill-rule="evenodd"
+										d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z">
+									</path>
+								</svg> <a href="#"
+									class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+									Ver más <i class="bi bi-link-45deg"></i> </a>
+							</div> <!--end::Small Box Widget 4-->
+						</div> <!--end::Col-->
+					</div> <!--end::Row--> <!--begin::Row-->
+					<div class="row"> <!-- Start col -->
+						<div class="col-lg-7 connectedSortable">
+							<div class="card mb-4">
+								<div class="card-header">
+									<h3 class="card-title">Gráfico de ventas</h3>
+								</div>
+								<div class="card-body">
+									<div id="revenue-chart"></div>
+								</div>
+							</div> <!-- /.card -->
+						</div> <!-- /.Start col --> <!-- Start col -->
+						<div class="col-lg-5 connectedSortable">
+							<div class="card text-white bg-primary bg-gradient border-primary mb-4">
+								<div class="card-header border-0">
+									<h3 class="card-title">Sales Value</h3>
+									<div class="card-tools"> <button type="button" class="btn btn-primary btn-sm"
+											data-lte-toggle="card-collapse"> <i data-lte-icon="expand"
+												class="bi bi-plus-lg"></i> <i data-lte-icon="collapse"
+												class="bi bi-dash-lg"></i> </button> </div>
+								</div>
+								<div class="card-body">
+									<div id="world-map" style="height: 220px"></div>
+								</div>
+								<div class="card-footer border-0"> <!--begin::Row-->
+									<div class="row">
+										<div class="col-4 text-center">
+											<div id="sparkline-1" class="text-dark"></div>
+											<div class="text-white">Visitors</div>
+										</div>
+										<div class="col-4 text-center">
+											<div id="sparkline-2" class="text-dark"></div>
+											<div class="text-white">Online</div>
+										</div>
+										<div class="col-4 text-center">
+											<div id="sparkline-3" class="text-dark"></div>
+											<div class="text-white">Sales</div>
+										</div>
+									</div> <!--end::Row-->
+								</div>
+							</div>
+						</div> <!-- /.Start col -->
+					</div> <!-- /.row (main row) -->
+				</div> <!--end::Container-->
+			</div> <!--end::App Content-->
+		</main> <!--end::App Main--> <!--begin::Footer-->
+		<footer class="app-footer"> <!--begin::To the end-->
+			<div class="float-end d-none d-sm-inline">v.1.0.1</div> <!--end::To the end-->
+			<!--begin::Copyright--> <strong>
+				Copyright &copy; 2025&nbsp;
+				<a href="#" class="text-decoration-none">Mabit</a>.
+			</strong>
+			Todos los derechos reservados.
+			<!--end::Copyright-->
+		</footer> <!--end::Footer-->
+	</div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
+	<script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"
+		integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script>
+	<!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script>
+	<!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+		integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script>
+	<!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+	<script src="../../dist/js/adminlte.js"></script>
+	<!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+	<script>
+		const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
+		const Default = {
+			scrollbarTheme: "os-theme-light",
+			scrollbarAutoHide: "leave",
+			scrollbarClickScroll: true,
+		};
+		document.addEventListener("DOMContentLoaded", function () {
+			const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+			if (
+				sidebarWrapper &&
+				typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== "undefined"
+			) {
+				OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+					scrollbars: {
+						theme: Default.scrollbarTheme,
+						autoHide: Default.scrollbarAutoHide,
+						clickScroll: Default.scrollbarClickScroll,
+					},
+				});
+			}
+		});
+	</script> <!--end::OverlayScrollbars Configure--> <!-- OPTIONAL SCRIPTS --> <!-- sortablejs -->
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
+		integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ=" crossorigin="anonymous"></script>
+	<!-- sortablejs -->
+	<script>
+		const connectedSortables =
+			document.querySelectorAll(".connectedSortable");
+		connectedSortables.forEach((connectedSortable) => {
+			let sortable = new Sortable(connectedSortable, {
+				group: "shared",
+				handle: ".card-header",
+			});
+		});
 
-                    <li class="nav-item nav-group">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#reportSubmenu">
-                            <i class="bi bi-file-earmark-text"></i> Reportes
-                            <i class="bi bi-chevron-down float-end"></i>
-                        </a>
-                        <div class="collapse submenu" id="reportSubmenu">
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Ventas</a>
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Tráfico</a>
-                            <a class="nav-link" href="#"><i class="bi bi-circle"></i> Usuarios</a>
-                        </div>
-                    </li>
+		const cardHeaders = document.querySelectorAll(
+			".connectedSortable .card-header",
+		);
+		cardHeaders.forEach((cardHeader) => {
+			cardHeader.style.cursor = "move";
+		});
+	</script> <!-- apexcharts -->
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+		integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
+	<!-- ChartJS -->
+	<script>
+		// NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
+		// IT'S ALL JUST JUNK FOR DEMO
+		// ++++++++++++++++++++++++++++++++++++++++++
 
-                    <li class="nav-item nav-group">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-gear"></i> Configuración
-                        </a>
-                    </li>
+		const sales_chart_options = {
+			series: [{
+				name: "Digital Goods",
+				data: [28, 48, 40, 19, 86, 27, 90],
+			},
+			{
+				name: "Electronics",
+				data: [65, 59, 80, 81, 56, 55, 40],
+			},
+			],
+			chart: {
+				height: 300,
+				type: "area",
+				toolbar: {
+					show: false,
+				},
+			},
+			legend: {
+				show: false,
+			},
+			colors: ["#0d6efd", "#20c997"],
+			dataLabels: {
+				enabled: false,
+			},
+			stroke: {
+				curve: "smooth",
+			},
+			xaxis: {
+				type: "datetime",
+				categories: [
+					"2023-01-01",
+					"2023-02-01",
+					"2023-03-01",
+					"2023-04-01",
+					"2023-05-01",
+					"2023-06-01",
+					"2023-07-01",
+				],
+			},
+			tooltip: {
+				x: {
+					format: "MMMM yyyy",
+				},
+			},
+		};
 
-                    <li class="nav-item">
-                        <a class="nav-link text-danger" href="#">
-                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-                        </a>
-                    </li>
-                </ul>
-            </div>
+		const sales_chart = new ApexCharts(
+			document.querySelector("#revenue-chart"),
+			sales_chart_options,
+		);
+		sales_chart.render();
+	</script> <!-- jsvectormap -->
+	<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
+		integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
+		integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
+	<!-- jsvectormap -->
+	<script>
+		const visitorsData = {
+			US: 398, // USA
+			SA: 400, // Saudi Arabia
+			CA: 1000, // Canada
+			DE: 500, // Germany
+			FR: 760, // France
+			CN: 300, // China
+			AU: 700, // Australia
+			BR: 600, // Brazil
+			IN: 800, // India
+			GB: 320, // Great Britain
+			RU: 3000, // Russia
+		};
 
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-0">
-                <!-- Top Bar -->
-                <div class="topbar p-3 mb-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h4 class="mb-0">Dashboard</h4>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-0 small">
-                                    <li class="breadcrumb-item"><a href="#" class="text-decoration-none">Home</a></li>
-                                    <li class="breadcrumb-item active">Dashboard</li>
-                                </ol>
-                            </nav>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="position-relative me-3">
-                                <i class="bi bi-bell fs-5"></i>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    3
-                                </span>
-                            </div>
-                            <div class="position-relative me-3">
-                                <i class="bi bi-envelope fs-5"></i>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                    5
-                                </span>
-                            </div>
-                            <img src="/api/placeholder/32/32" alt="Profile" class="rounded-circle">
-                        </div>
-                    </div>
-                </div>
+		// World map by jsVectorMap
+		const map = new jsVectorMap({
+			selector: "#world-map",
+			map: "world",
+		});
 
-                <div class="px-4">
-                    <!-- Stats Cards -->
-                    <div class="row g-3 mb-4">
-                        <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="stat-icon bg-primary bg-opacity-10 text-primary me-3">
-                                            <i class="bi bi-people fs-4"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="card-title mb-0 text-muted">Usuarios Activos</h6>
-                                            <h2 class="mb-0">1,245</h2>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-primary" style="width: 70%"></div>
-                                    </div>
-                                    <small class="text-success mt-2 d-block">
-                                        <i class="bi bi-arrow-up"></i> 12% más que el mes anterior
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="stat-icon bg-success bg-opacity-10 text-success me-3">
-                                            <i class="bi bi-currency-dollar fs-4"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="card-title mb-0 text-muted">Ingresos</h6>
-                                            <h2 class="mb-0">$8,459</h2>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" style="width: 85%"></div>
-                                    </div>
-                                    <small class="text-success mt-2 d-block">
-                                        <i class="bi bi-arrow-up"></i> 8% más que el mes anterior
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="stat-icon bg-warning bg-opacity-10 text-warning me-3">
-                                            <i class="bi bi-check2-square fs-4"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="card-title mb-0 text-muted">Tareas Completadas</h6>
-                                            <h2 class="mb-0">645</h2>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" style="width: 60%"></div>
-                                    </div>
-                                    <small class="text-danger mt-2 d-block">
-                                        <i class="bi bi-arrow-down"></i> 5% menos que el mes anterior
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-xl-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="stat-icon bg-info bg-opacity-10 text-info me-3">
-                                            <i class="bi bi-folder fs-4"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="card-title mb-0 text-muted">Proyectos Activos</h6>
-                                            <h2 class="mb-0">24</h2>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" style="width: 45%"></div>
-                    </div>
-                                    <small class="text-success mt-2 d-block">
-                                        <i class="bi bi-arrow-up"></i> 3% más que el mes anterior
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+		// Sparkline charts
+		const option_sparkline1 = {
+			series: [{
+				data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
+			},],
+			chart: {
+				type: "area",
+				height: 50,
+				sparkline: {
+					enabled: true,
+				},
+			},
+			stroke: {
+				curve: "straight",
+			},
+			fill: {
+				opacity: 0.3,
+			},
+			yaxis: {
+				min: 0,
+			},
+			colors: ["#DCE6EC"],
+		};
 
-                    <!-- Main Cards -->
-                    <div class="row g-4 mb-4">
-                        <div class="col-12 col-lg-8">
-                            <div class="card h-100">
-                                <div class="card-header bg-transparent">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title mb-0">Actividad Reciente</h5>
-                                        <div class="dropdown">
-                                            <button class="btn btn-link text-muted p-0" type="button">
-                                                <i class="bi bi-three-dots-vertical"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="list-group list-group-flush">
-                                        <div class="list-group-item d-flex align-items-center border-0 pb-3">
-                                            <div class="stat-icon bg-primary bg-opacity-10 text-primary me-3">
-                                                <i class="bi bi-plus-lg"></i>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <div class="d-flex justify-content-between">
-                                                    <h6 class="mb-1">Nuevo proyecto creado</h6>
-                                                    <small class="text-muted">Hace 2h</small>
-                                                </div>
-                                                <p class="text-muted small mb-0">Carlos creó el proyecto "E-commerce Dashboard v2"</p>
-                                            </div>
-                                        </div>
-                                        <div class="list-group-item d-flex align-items-center border-0 pb-3">
-                                            <div class="stat-icon bg-success bg-opacity-10 text-success me-3">
-                                                <i class="bi bi-arrow-up-circle"></i>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <div class="d-flex justify-content-between">
+		const sparkline1 = new ApexCharts(
+			document.querySelector("#sparkline-1"),
+			option_sparkline1,
+		);
+		sparkline1.render();
+
+		const option_sparkline2 = {
+			series: [{
+				data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
+			},],
+			chart: {
+				type: "area",
+				height: 50,
+				sparkline: {
+					enabled: true,
+				},
+			},
+			stroke: {
+				curve: "straight",
+			},
+			fill: {
+				opacity: 0.3,
+			},
+			yaxis: {
+				min: 0,
+			},
+			colors: ["#DCE6EC"],
+		};
+
+		const sparkline2 = new ApexCharts(
+			document.querySelector("#sparkline-2"),
+			option_sparkline2,
+		);
+		sparkline2.render();
+
+		const option_sparkline3 = {
+			series: [{
+				data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
+			},],
+			chart: {
+				type: "area",
+				height: 50,
+				sparkline: {
+					enabled: true,
+				},
+			},
+			stroke: {
+				curve: "straight",
+			},
+			fill: {
+				opacity: 0.3,
+			},
+			yaxis: {
+				min: 0,
+			},
+			colors: ["#DCE6EC"],
+		};
+
+		const sparkline3 = new ApexCharts(
+			document.querySelector("#sparkline-3"),
+			option_sparkline3,
+		);
+		sparkline3.render();
+	</script> <!--end::Script-->
+</body><!--end::Body-->
+
+</html>

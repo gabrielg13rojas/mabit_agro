@@ -110,7 +110,7 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></i></span>
 									<div class="form-floating">
-										<input th:value="${alimento.precioUnitario}" name="precioUnitario" type="number"
+										<input th:value="${alimento.precioUnitario}" name="precioUnitario" type="number" step="0.01"
 											class="form-control" id="precioUnitario" placeholder=" ">
 										<label for="precioUnitario">Precio Unitario</label>
 									</div>
@@ -183,7 +183,8 @@
 							<td th:text="${ali.stock}"></td>
 							<td th:text="${ali.unidad_medida.descripcion}"></td>
 							<td th:text="${ali.stockMinimo}"></td>
-							<td th:text="${ali.precioUnitario}"></td>
+							<td th:text="${ali.precioUnitario % 1 == 0 ? #numbers.formatDecimal(ali.precioUnitario, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(ali.precioUnitario, 1, 'POINT', 2, 'COMMA')}"></td>
+
 							<td>
 								<a th:href="@{/alimentos/editar/{id}(id=${ali.id})}"
 									class="btn btn-warning btn-sm me-2">

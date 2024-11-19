@@ -23,8 +23,6 @@ public class Sanitizacion {
 	@Column(nullable = false)
 	private TipoSanitizacion tipo;
 	
-
-	
 	public Sanitizacion() {
 		
 	}

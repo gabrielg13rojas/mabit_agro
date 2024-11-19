@@ -34,24 +34,20 @@ public class Usuarios {
 	@Column(nullable = false)
 	private Boolean bloqueado;
 
-	@Column(nullable = false)
-	private String codigoRecuperacion;
-
 	@ManyToOne
 	@JoinColumn
 	private Privilegios privilegio;
-	
+
 	public Usuarios() {
 		id = 0l;
-		foto="";
-		correo ="";
-		nombre="";
-		contrasenha="";
-		codigoRecuperacion="";
-		verificado=false;
-		bloqueado=false;
+		foto = "";
+		correo = "";
+		nombre = "";
+		contrasenha = "";
+		verificado = false;
+		bloqueado = false;
 		privilegio = new Privilegios();
-		privilegio.setId(1l); 
+		privilegio.setId(1l);
 	}
 
 	public Long getId() {
@@ -117,13 +113,4 @@ public class Usuarios {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-
-	public String getCodigoRecuperacion() {
-		return codigoRecuperacion;
-	}
-
-	public void setCodigoRecuperacion(String codigoRecuperacion) {
-		this.codigoRecuperacion = codigoRecuperacion;
-	}
-
 }

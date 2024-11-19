@@ -35,22 +35,7 @@
 						<input th:value="${usuario.id}" name="id" type="hidden" class="form-control" id="correo"
 							placeholder=" ">
 						<div class="row g-3">
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-image"></i></span>
-									<div class="form-floating">
-										<input name="imagen" type="file" accept="image/*" class="form-control"
-											id="imagen" placeholder=" " onchange="mostrarVistaPrevia(this)">
-										<label for="imagen">Seleccionar Imagen</label>
-									</div>
-								</div>
-								<!-- Contenedor para la vista previa -->
-								<div class="mt-2">
-									<img id="vistaPrevia" src="" alt="Vista previa"
-										style="max-width: 200px; max-height: 200px; display: none;"
-										class="img-thumbnail">
-								</div>
-							</div>
+
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -142,7 +127,7 @@
 				</div>
 			</form>
 
-			<a th:href="@{/}" class="btn btn-secondary">
+			<a href="javascript:history.back()" class="btn btn-secondary">
 				<i class="fas fa-arrow-left"></i> Volver
 			</a>
 		</div>
@@ -154,7 +139,6 @@
 					<thead class="table-dark">
 						<tr>
 							<th class="py-3">ID</th>
-							<th class="py-3">Foto</th>
 							<th class="py-3">Correo</th>
 							<th class="py-3">Nombre</th>
 							<th class="py-3">Privilegio</th>
@@ -166,7 +150,6 @@
 					<tbody>
 						<tr th:each="u : ${lista}">
 							<td th:text="${u.id}"></td>
-							<td th:text="${u.foto}">usuario@ejemplo.com</td>
 							<td th:text="${u.correo}">Usuario Ejemplo</td>
 							<td th:text="${u.nombre}">Usuario Ejemplo</td>
 							<td><span class="badge bg-primary">Administrador</span></td>
@@ -184,15 +167,14 @@
 								</a>
 								<form class="d-inline" th:action="@{/usuarios/eliminar/{id}(id=${u.id})}" method="get">
 									<input type="hidden" name="userId" value="1">
-									<button type="button" 
-									        class="btn btn-danger btn-sm" 
-									        data-bs-toggle="modal" 
-									        th:data-bs-target="'#deleteModal' + ${u.id}">
-									    <i class="fas fa-trash"></i>
+									<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+										th:data-bs-target="'#deleteModal' + ${u.id}">
+										<i class="fas fa-trash"></i>
 									</button>
 
 									<!-- Modal específico para este usuario -->
-									<div class="modal fade" th:id="'deleteModal' + ${u.id}" tabindex="-1" aria-hidden="true">
+									<div class="modal fade" th:id="'deleteModal' + ${u.id}" tabindex="-1"
+										aria-hidden="true">
 										<div class="modal-dialog modal-dialog-centered">
 											<div class="modal-content">
 												<div class="modal-header bg-danger text-white">
@@ -220,8 +202,7 @@
 										</div>
 									</div>
 								</form>
-							</t
-							d>
+							</td>
 						</tr>
 					</tbody>
 				</table>
