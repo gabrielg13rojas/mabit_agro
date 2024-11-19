@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gestión de Perfil</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+</head>
+<style>
+	.imagen-circular {
+		width: 300px;
+		/* Ancho de la imagen */
+		height: 300px;
+		/* Altura de la imagen */
+		border-radius: 50%;
+		/* Hace que la imagen sea circular */
+		object-fit: cover;
+		/* Asegura que la imagen se ajuste correctamente */
+	}
+
+	/* Contenedor para centrar la imagen */
+	.imagen-container {
+		display: flex;
+		justify-content: center;
+		/* Centra horizontalmente */
+		align-items: center;
+		/* Centra verticalmente */
+
+		/* Asegura que el contenedor tenga el 100% del alto de la pantalla */
+	}
+</style>
+
+<body class="bg-light">
+	<div class="container mt-4">
+		<!-- Título en recuadro -->
+		<div class="card mb-2 bg-success text-white border">
+			<div class="card-body py-2">
+				<h5 class="card-title text-center m-0" th:text="${usu.correo}">Gestión de Perfil</h5>
+			</div>
+		</div>
+
+		<div class="card shadow">
+			<div class="card-body">
+				<h5 class="card-title mb-2"><span class="badge bg-secondary">Actualizar Perfil</span></h5>
+				<div class="imagen-container">
+					<div>
+						<img th:src="${usu.foto}" alt="Imagen Circular" class="imagen-circular">
+					</div>
+				</div>
+				<form th:action="@{/usuarios/perfil/actualizar}" th:object="${usu}" method="post" id="profileForm">
+					<div class="row g-3">
+						<!-- Imagen de Perfil -->
+						<div class="col-md-12">
+							<div class="input-group input-group-sm mb-3">
+								<span class="input-group-text"><i class="fas fa-image"></i></span>
+								<div class="form-floating flex-grow-1">
+									<input type="file" class="form-control" id="imageInput" accept="image/*"
+										placeholder=" ">
+									<label for="imageInput">Foto de Perfil</label>
+								</div>
+							</div>
+							<div class="img-container mb-3" style="max-height: 300px; overflow: hidden;">
+								<img id="imageToCrop" style="display:none; max-width: 100%;">
+							</div>
+							<input type="hidden" th:value="${usu.foto}" name="foto" id="foto">
+						</div>
+
+						<!-- Correo -->
+						<div class="col-md-6">
+							<div class="input-group input-group-sm">
+								<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+								<div class="form-floating">
+									<input type="email" class="form-control" id="correo" th:value="${usu.correo}"
+										name="correo" placeholder=" ">
+									<label for="correo">Correo</label>
+								</div>
+							</div>
+						</div>
+						<input type="hidden" th:value="${usu.id}" class="form-control" name="id">
+						<!-- Nombre -->
+						<div class="col-md-6">
+							<div class="input-group input-group-sm">
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
+								<div class="form-floating">
+									<input type="text" th:value="${usu.nombre}" class="form-control" id="nombre"
+										name="nombre" placeholder=" ">
+									<label for="nombre">Nombre</label>
+								</div>
+							</div>
+						</div>
+
+						<!-- Nueva Contraseña -->
+						<div class="col-md-6">
+							<div class="input-group input-group-sm">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+								<div class="form-floating">
+									<input type="password" class="form-control" id="nuevaContrasena" name="contrasenha"
+										placeholder=" ">
+									<label for="contrasenha">Nueva Contraseña</label>
+								</div>
+							</div>
+						</div>
+
+						<!-- Confirmar Contraseña -->
+						<div class="col-md-6">
+							<div class="input-group input-group-sm">
+								<span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
+								<div class="form-floating">
+									<input type="password" class="form-control" id="confirmarContrasena"
+										placeholder=" ">
+									<label for="confirmarContrasena">Confirmar Contraseña</label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="passwordAlert" class="alert alert-danger mt-3" style="display:none;">
+						Las contraseñas no coinciden
+					</div>
+
+					<div class="mt-4 text-end">
+						<a th:href="@{/}" class="btn btn-warning">
+							<i class="fas fa-arrow-left"></i> Volver
+						</a>
+						<button type="reset" class="btn btn-outline-secondary">
+							<i class="fas fa-eraser"></i> Limpiar
+						</button>
+						<button type="submit" class="btn btn-primary">
+							<i class="fas fa-save"></i> Guardar
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const imageInput = document.getElementById('imageInput');
+			const imageToCrop = document.getElementById('imageToCrop');
+			const imagenBase64Input = document.getElementById('foto');
+			const nuevaContrasena = document.getElementById('nuevaContrasena');
+			const confirmarContrasena = document.getElementById('confirmarContrasena');
+			const passwordAlert = document.getElementById('passwordAlert');
+			const profileForm = document.getElementById('profileForm');
+			const imgContainer = document.querySelector('.img-container');
+
+			// Create loading spinner element
+			const loadingSpinner = document.createElement('div');
+			loadingSpinner.innerHTML = `
+	        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+	            <div class="spinner-border text-primary" role="status">
+	                <span class="visually-hidden">Cargando...</span>
+	            </div>
+	        </div>`;
+			loadingSpinner.style.display = 'none';
+			imgContainer.appendChild(loadingSpinner);
+
+			let cropper;
+
+			// Imagen
+			imageInput.addEventListener('change', function (e) {
+				const file = e.target.files[0];
+
+				// Show loading spinner
+				imageToCrop.style.display = 'none';
+				loadingSpinner.style.display = 'flex';
+
+				const reader = new FileReader();
+
+				reader.onload = function (event) {
+					// Hide loading spinner
+					loadingSpinner.style.display = 'none';
+
+					imageToCrop.src = event.target.result;
+					imageToCrop.style.display = 'block';
+
+					if (cropper) {
+						cropper.destroy();
+					}
+
+					cropper = new Cropper(imageToCrop, {
+						aspectRatio: 1,
+						viewMode: 1,
+						minCropBoxWidth: 100,
+						minCropBoxHeight: 100
+					});
+				};
+
+				reader.onerror = function () {
+					// Hide loading spinner and show error
+					loadingSpinner.style.display = 'none';
+					alert('Error al cargar la imagen');
+				};
+
+				reader.readAsDataURL(file);
+			});
+
+			// Rest of the previous script remains the same...
+			profileForm.addEventListener('submit', function (e) {
+				if (nuevaContrasena.value !== confirmarContrasena.value) {
+					e.preventDefault();
+					passwordAlert.style.display = 'block';
+					return;
+				}
+
+				// Convertir imagen recortada a Base64
+				if (cropper) {
+					const canvas = cropper.getCroppedCanvas();
+					const base64Image = canvas.toDataURL('image/jpeg');
+					imagenBase64Input.value = base64Image;
+				}
+			});
+
+			[nuevaContrasena, confirmarContrasena].forEach(input => {
+				input.addEventListener('input', function () {
+					passwordAlert.style.display = 'none';
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

@@ -1,19 +1,33 @@
 package py.com.mabit.controladores;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import py.com.mabit.entidades.Animales;
+import py.com.mabit.entidades.Usuarios;
+import py.com.mabit.repositorios.AlimentosRepositorio;
+import py.com.mabit.repositorios.UsuarioRepositorio;
+
 @Controller
-@RequestMapping({"/dashboard","/"})
+@RequestMapping({ "/dashboard", "/" })
 public class DashboardControlador {
+	@Autowired
+	UsuarioRepositorio rep;
+	@Autowired
+	AlimentosRepositorio alimentosRep;
+
 	@GetMapping
 	public String dashboard(Authentication authentication, Model model) {
-		// Obtener usuario actual
-		String correo = authentication.getName();
-		model.addAttribute("correo", correo);
+		Usuarios us = rep.findByCorreo(authentication.getName()).get();
+		model.addAttribute("correo", us.getCorreo());
+		model.addAttribute("idus", us.getId());
+		model.addAttribute("foto", us.getFoto());
+		model.addAttribute("nombre", us.getNombre());
+		model.addAttribute("alimentos", alimentosRep.findAll().size());
 		return "dashboard";
 	}
 }

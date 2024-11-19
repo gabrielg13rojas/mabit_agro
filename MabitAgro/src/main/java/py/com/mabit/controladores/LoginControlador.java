@@ -28,7 +28,11 @@ public class LoginControlador {
 		if (logout != null)
 			model.addAttribute("logoutMsg", "Ha cerrado sesión exitosamente");
 		if (existe != null)
-			model.addAttribute("errorMsg", "Ya existe un usuario registrado con este correo electrónico");
+			if (existe.equals("true")) {
+				model.addAttribute("errorMsg", "Ya existe un usuario registrado con este correo electrónico");
+			} else {
+				model.addAttribute("errorMsg", "No existe un usuario registrado con este correo electrónico");
+			}
 		if (passnocoinc != null)
 			model.addAttribute("errorMsg", "Las contraseñas ingresadas no coinciden");
 		if (sessionExpired != null)
@@ -41,15 +45,15 @@ public class LoginControlador {
 	@GetMapping("/resetear-password")
 	public String resetearContrasenha(Model modelo, String existe, String noexist) {
 		if (existe != null)
-			modelo.addAttribute("exitoMsg", "Se ha enviado un código de recuperación a su correo. "
-					+ "Verifíquelo y siga las instrucciones.");
+			modelo.addAttribute("exitoMsg",
+					"Se ha enviado un código de recuperación a su correo. " + "Verifíquelo y siga las instrucciones.");
 		if (noexist != null)
 			modelo.addAttribute("errorMsg", "No se ha encontrado un usuario registrado con este correo electrónico");
 		return "resetear_password";
 	}
 
 	@PostMapping("/resetear-password")
-	public String postMethodName(String email) {
+	public String resetearpass(String email) {
 		if (usuRepos.findByCorreo(email).isPresent()) {
 			return "redirect:/login/resetear-password?existe=true";
 		} else {
@@ -70,7 +74,6 @@ public class LoginControlador {
 			usu.setVerificado(true);
 			usu.setBloqueado(false);
 			usu.setFoto("");
-			usu.setCodigoRecuperacion("");
 			Privilegios p = new Privilegios();
 			p.setId(1l);
 			usu.setPrivilegio(p);
