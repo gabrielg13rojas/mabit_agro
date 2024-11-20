@@ -24,7 +24,7 @@ public class Lotes {
 	private String codigo;
 
 	@Column(nullable = false)
-	private String ubicación;
+	private String ubicacion;
 
 	@Column(nullable = false)
 	private int capacidad;
@@ -52,6 +52,101 @@ public class Lotes {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private EstadoLote estado;
-	
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+
+	public int getCapacidad() {
+		return capacidad;
+	}
+
+	public void setCapacidad(int capacidad) {
+		this.capacidad = capacidad;
+	}
+
+	public String getTamanho() {
+		return tamanho;
+	}
+
+	public void setTamanho(String tamanho) {
+		this.tamanho = tamanho;
+	}
+
+	public TipoLote getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoLote tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getCondicion_alimentacion() {
+		return condicion_alimentacion;
+	}
+
+	public void setCondicion_alimentacion(String condicion_alimentacion) {
+		this.condicion_alimentacion = condicion_alimentacion;
+	}
+
+	public String getCondicion_resguardo() {
+		return condicion_resguardo;
+	}
+
+	public void setCondicion_resguardo(String condicion_resguardo) {
+		this.condicion_resguardo = condicion_resguardo;
+	}
+
+	public TipoSueloLote getTipo_suelo() {
+		return tipo_suelo;
+	}
+
+	public void setTipo_suelo(TipoSueloLote tipo_suelo) {
+		this.tipo_suelo = tipo_suelo;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	public EstadoLote getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoLote estado) {
+		this.estado = estado;
+	}
+
 }
