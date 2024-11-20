@@ -1,17 +1,12 @@
 package py.com.mabit.entidades;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import py.com.mabit.enums.EstadoLote;
 import py.com.mabit.enums.TipoLote;
 import py.com.mabit.enums.TipoSueloLote;
@@ -29,7 +24,7 @@ public class Lotes {
 	private String codigo;
 
 	@Column(nullable = false)
-	private String ubicación;
+	private String ubicacion;
 
 	@Column(nullable = false)
 	private int capacidad;
@@ -52,18 +47,11 @@ public class Lotes {
 	private TipoSueloLote tipo_suelo;
 
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private EstadoLote estado;
-
-	@Column(nullable = false)
 	private String observaciones;
 
-	@OneToMany(mappedBy = "lote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Animales> animales;
-	
-	public Lotes() {
-		
-	}
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private EstadoLote estado;
 
 	public Long getId() {
 		return id;
@@ -89,12 +77,12 @@ public class Lotes {
 		this.codigo = codigo;
 	}
 
-	public String getUbicación() {
-		return ubicación;
+	public String getUbicacion() {
+		return ubicacion;
 	}
 
-	public void setUbicación(String ubicación) {
-		this.ubicación = ubicación;
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
 	}
 
 	public int getCapacidad() {
@@ -145,14 +133,6 @@ public class Lotes {
 		this.tipo_suelo = tipo_suelo;
 	}
 
-	public EstadoLote getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EstadoLote estado) {
-		this.estado = estado;
-	}
-
 	public String getObservaciones() {
 		return observaciones;
 	}
@@ -161,12 +141,12 @@ public class Lotes {
 		this.observaciones = observaciones;
 	}
 
-	public List<Animales> getAnimales() {
-		return animales;
+	public EstadoLote getEstado() {
+		return estado;
 	}
 
-	public void setAnimales(List<Animales> animales) {
-		this.animales = animales;
+	public void setEstado(EstadoLote estado) {
+		this.estado = estado;
 	}
-	
+
 }

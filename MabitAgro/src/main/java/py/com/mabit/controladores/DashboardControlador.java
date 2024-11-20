@@ -7,27 +7,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import py.com.mabit.entidades.Animales;
 import py.com.mabit.entidades.Usuarios;
 import py.com.mabit.repositorios.AlimentosRepositorio;
+import py.com.mabit.repositorios.AnimalesRepositorio;
 import py.com.mabit.repositorios.UsuarioRepositorio;
 
 @Controller
 @RequestMapping({ "/dashboard", "/" })
 public class DashboardControlador {
 	@Autowired
-	UsuarioRepositorio rep;
+	UsuarioRepositorio usuariosRep;
 	@Autowired
 	AlimentosRepositorio alimentosRep;
-
+	@Autowired
+	AnimalesRepositorio animalesRep;
+	
 	@GetMapping
 	public String dashboard(Authentication authentication, Model model) {
-		Usuarios us = rep.findByCorreo(authentication.getName()).get();
+		Usuarios us = usuariosRep.findByCorreo(authentication.getName()).get();
 		model.addAttribute("correo", us.getCorreo());
 		model.addAttribute("idus", us.getId());
 		model.addAttribute("foto", us.getFoto());
 		model.addAttribute("nombre", us.getNombre());
 		model.addAttribute("alimentos", alimentosRep.findAll().size());
+		model.addAttribute("animales", animalesRep.findAll().size());
 		return "dashboard";
 	}
 }

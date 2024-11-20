@@ -3,13 +3,15 @@ package py.com.mabit.entidades;
 import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-public class Productos {
+@Entity
+public class Insumos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -24,10 +26,7 @@ public class Productos {
 	private String descripcion;
 	
 	@Column(nullable = false)
-	private BigDecimal costo;
-	
-	@Column(nullable = false)
-	private Double stock;
+	private String detalles;
 	
 	@Column(nullable = false)
 	private Double stockMinimo;
@@ -36,11 +35,8 @@ public class Productos {
 	@JoinColumn
 	private UnidadesMedida unidad;
 	
-	@ManyToOne
-	@JoinColumn
-	private Proveedores proveedor_habitual;
 	
-	public Productos() {
+	public Insumos() {
 		
 	}
 
