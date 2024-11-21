@@ -46,8 +46,6 @@ public class Usuarios {
 		contrasenha = "";
 		verificado = false;
 		bloqueado = false;
-		privilegio = new Privilegios();
-		privilegio.setId(1l);
 	}
 
 	public Long getId() {

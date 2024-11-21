@@ -10,8 +10,8 @@
 </head>
 <style>
 	.estado-badge {
-		padding: 5px 10px;
-		border-radius: 4px;
+		padding: 1px 3px;
+		border-radius: 2px;
 		font-weight: bold;
 	}
 
@@ -124,7 +124,8 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fa-regular fa-file-lines"></i></span>
 									<div class="form-floating">
-										<input type="text" class="form-control" th:value="${animal.alias}==null? '': ${animal.alias}" id="alias"
+										<input type="text" class="form-control"
+											th:value="${animal.alias}==null? '': ${animal.alias}" id="alias"
 											name="alias" placeholder=" ">
 										<label for="alias">Alias</label>
 									</div>
@@ -227,7 +228,7 @@
 							<th class="py-3">ALIAS</th>
 							<th class="py-3">F. NACIMIENTO</th>
 							<th class="py-3">F. INGRESO</th>
-							<th class="py-3">PRECIO DE COMPRA</th>
+							<th class="py-3">PRECIO</th>
 							<th class="py-3">ESTADO</th>
 							<th class="py-3">ACCIONES</th>
 						</tr>
@@ -245,25 +246,27 @@
 							<td class="py-3" th:text="${animal.alias}">ALIAS</td>
 							<td class="py-3" th:text="${animal.fechaNacimiento}">F. NACIMIENTO</td>
 							<td class="py-3" th:text="${animal.fechaIngreso}">F. INGRESO</td>
-							<td
+							<td class="text-end"
 								th:text="${animal.precioCompra % 1 == 0 ? #numbers.formatDecimal(animal.precioCompra, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(animal.precioCompra, 1, 'POINT', 2, 'COMMA')}">
 							</td>
 							<td>
-								<span class="estado-badge estado-vivo" th:if="${animal.estado.name() == 'VIVO'}"
-									th:text="${animal.estado}">
-								</span>
-								<span class="estado-badge estado-enfermo" th:if="${animal.estado.name() == 'ENFERMO'}"
-									th:text="${animal.estado}">
-								</span>
-								<span class="estado-badge estado-faenado" th:if="${animal.estado.name() == 'FAENADO'}"
-									th:text="${animal.estado}">
-								</span>
-								<span class="estado-badge estado-vendido" th:if="${animal.estado.name() == 'VENDIDO'}"
-									th:text="${animal.estado}">
-								</span>
-								<span class="estado-badge estado-muerto" th:if="${animal.estado.name() == 'MUERTO'}"
-									th:text="${animal.estado}">
-								</span>
+								<div class="d-flex justify-content-center">
+									<span class="badge bg-success" th:if="${animal.estado.name() == 'VIVO'}"
+										th:text="Vivo">
+									</span>
+									<span class="badge bg-warning" th:if="${animal.estado.name() == 'ENFERMO'}"
+										th:text="Enfermo">
+									</span>
+									<span class="badge bg-secondary" th:if="${animal.estado.name() == 'FAENADO'}"
+										th:text="Faenado">
+									</span>
+									<span class="badge bg-info" th:if="${animal.estado.name() == 'VENDIDO'}"
+										th:text="Vendido">
+									</span>
+									<span class="badge bg-danger" th:if="${animal.estado.name() == 'MUERTO'}"
+										th:text="Muerto">
+									</span>
+								</div>
 							</td>
 							<td>
 								<a th:href="@{/animales/editar/{id}(id=${animal.id})}"

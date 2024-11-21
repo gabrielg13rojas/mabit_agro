@@ -70,12 +70,13 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
 									<div class="form-floating">
-										<select class="form-select" id="privilegio">
-											<option selected disabled value="">Seleccione...</option>
-											<option value="1">Administrador</option>
-											<option value="2">Usuario</option>
+										<select class="form-select" id="floatingSelect" name="privilegio"
+											aria-label="Floating label select example">
+											<option th:each="p : ${privilegios}" th:value="${p.id}"
+												th:field="*{privilegio}" th:text="${p.descripcion}">
+											</option>
 										</select>
-										<label for="privilegio">Privilegio</label>
+										<label for="floatingSelect">Privilegio</label>
 									</div>
 								</div>
 							</div>
@@ -127,7 +128,7 @@
 				</div>
 			</form>
 
-			<a href="javascript:history.back()" class="btn btn-secondary">
+			<a th:href="@{/}" class="btn btn-secondary">
 				<i class="fas fa-arrow-left"></i> Volver
 			</a>
 		</div>
@@ -152,7 +153,7 @@
 							<td th:text="${u.id}"></td>
 							<td th:text="${u.correo}">Usuario Ejemplo</td>
 							<td th:text="${u.nombre}">Usuario Ejemplo</td>
-							<td><span class="badge bg-primary">Administrador</span></td>
+							<td><span class="badge bg-primary" th:text="${u.privilegio.descripcion}"></span></td>
 							<td>
 								<i th:if="${u.verificado}" class="fas fa-check-circle text-success fs-5"></i>
 								<i th:if="!${u.verificado}" class="fas fa-times-circle text-danger fs-5"></i>
