@@ -47,9 +47,8 @@ public class UsuariosControlador {
 
 	@PostMapping
 	public String guardar(@ModelAttribute("usuario") Usuarios u) {
-		Optional<Usuarios> opt = repositorio.findByCorreo(u.getCorreo());
-		if (opt.isPresent()) {
-			u.setFoto(opt.get().getFoto());
+		if (u.getId()>0&&u.getContrasenha().isEmpty()) {
+			u.setContrasenha(repositorio.findById(u.getId()).get().getContrasenha());
 		}
 		repositorio.save(u);
 		return "redirect:/usuarios";

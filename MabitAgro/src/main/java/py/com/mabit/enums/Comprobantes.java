@@ -1,0 +1,5 @@
+package py.com.mabit.enums;
+
+public enum Comprobantes {
+	COMPROBANTE_INTERNO, FACTURA, PRESUPUESTO, NOTA_DE_CREDITO, NOTA_DE_REMISION, NOTA_DE_RETENCION;
+}

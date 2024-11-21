@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import py.com.mabit.entidades.Alimentos;
 import py.com.mabit.entidades.Lotes;
 import py.com.mabit.repositorios.LotesRepositorio;
 

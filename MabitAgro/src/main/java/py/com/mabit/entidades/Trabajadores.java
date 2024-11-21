@@ -10,8 +10,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import py.com.mabit.enums.CargoTrabajador;
 import py.com.mabit.enums.RegimenTrabajador;
 
@@ -25,10 +23,7 @@ public class Trabajadores {
 	private String cedula;
 
 	@Column(nullable = false)
-	private String nombre;
-
-	@Column(nullable = false)
-	private String apellido;
+	private String nombreApellido;
 
 	@Column(nullable = false)
 	private String telefono;
@@ -40,14 +35,14 @@ public class Trabajadores {
 	private CargoTrabajador funcion;
 
 	@Column(nullable = false)
-	private BigDecimal salario_base;
+	private BigDecimal salario_base = new BigDecimal(0);
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private RegimenTrabajador regimen;
 
 	@Column(nullable = false)
-	private BigDecimal tarifa;
+	private BigDecimal tarifa = new BigDecimal(0);;
 
 	public Long getId() {
 		return id;
@@ -65,20 +60,11 @@ public class Trabajadores {
 		this.cedula = cedula;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getNombreApellido() {
+		return nombreApellido;
 	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setNombreApellido(String nombreApellido) {
+		this.nombreApellido = nombreApellido;
 	}
 
 	public String getTelefono() {

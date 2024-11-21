@@ -36,7 +36,7 @@ public class TrabajadoresControlador {
 			html.addAttribute("lista", repositorio.findAll());
 		} else {
 			html.addAttribute("lista", repositorio
-					.findByNombreIgnoreCaseContainingOrApellidoIgnoreCaseContainingOrCedula(buscar, buscar, buscar));
+					.findByNombreApellidoIgnoreCaseContainingOrCedula(buscar, buscar));
 		}
 
 		return ("form_trabajadores");

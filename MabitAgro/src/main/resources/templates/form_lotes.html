@@ -37,6 +37,36 @@
 						<div class="row g-3">
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
+									<span class="input-group-text"> <i class="fas fa-seedling"></i>
+										</i></span>
+									<div class="form-floating">
+										<select class="form-select" name="tipo" th:field="*{tipo}">
+											<option th:each="tip : ${T(py.com.mabit.enums.TipoLote).values()}"
+												th:value="${tip}" th:text="${tip}" th:selected="${tip.name() == tipo}">
+											</option>
+										</select>
+										<label for="tipo">Tipo de Lote</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"> <i class="fas fa-tractor"></i>
+										</i></span>
+									<div class="form-floating">
+										<select class="form-select" name="tipo_suelo" th:field="*{tipo_suelo}">
+											<option
+												th:each="tipoSuelo : ${T(py.com.mabit.enums.TipoSueloLote).values()}"
+												th:value="${tipoSuelo}" th:text="${tipoSuelo}"
+												th:selected="${tipoSuelo.name() == tipo_suelo}">
+											</option>
+										</select>
+										<label for="tipo_suelo">Tipo de suelo</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
 									<span class="input-group-text"> <i class="fas fa-user"></i>
 									</span>
 									<div class="form-floating">
@@ -52,9 +82,9 @@
 
 									</span>
 									<div class="form-floating">
-										<input th:value="${lote.codigo}" type="text" class="form-control" id="codigo"
+										<input required th:value="${lote.codigo}" type="text" class="form-control" id="codigo"
 											name="codigo" placeholder=" ">
-										<label for="codigo">Codigo</label>
+										<label for="codigo">Código</label>
 									</div>
 								</div>
 							</div>
@@ -65,7 +95,7 @@
 									<div class="form-floating">
 										<input th:value="${lote.ubicacion}" type="text" class="form-control"
 											id="ubicacion" name="ubicacion" placeholder=" ">
-										<label for="ubicacion">Ubicacion</label>
+										<label for="ubicacion">Ubicación</label>
 									</div>
 								</div>
 							</div>
@@ -74,7 +104,7 @@
 									<span class="input-group-text"> <i class="fas fa-tachometer-alt"></i>
 									</span>
 									<div class="form-floating">
-										<input th:field="${lote.capacidad}" type="number" class="form-control"
+										<input th:field="${lote.capacidad}" type="number" min="1" class="form-control"
 											id="capacidad" placeholder=" ">
 										<label for="capacidad">Capacidad</label>
 									</div>
@@ -91,66 +121,36 @@
 									</div>
 								</div>
 							</div>
+
+
+
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"> <i class="fas fa-seedling"></i>
+									<span class="input-group-text"> <i class="fas fa-bowl-food"></i>
 										</i></span>
-									<div class="form-floating">
-										<select class="form-select" name="tipo" th:field="*{tipo}">
-											<option th:each="tip : ${T(py.com.mabit.enums.TipoLote).values()}"
-												th:value="${tip}" th:text="${tip}" th:selected="${tip.name() == tipo}">
-											</option>
-										</select>
-										<label for="tipo">Tipo de Lote</label>
-									</div>
-								</div>
-							</div>
-
-
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text">									<i class="fas fa-bowl-food"></i>
-</i></span>
 									<div class="form-floating">
 										<input th:value="${lote.condicion_alimentacion}" type="text"
 											class="form-control" name="condicion_alimentacion"
 											id="condicion_alimentacion" placeholder=" ">
-										<label for="condicion_alimentacion">Condicion de alimentacion</label>
+										<label for="condicion_alimentacion">Condición de alimentación</label>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text">									<i class="fas fa-shield-alt"></i>
-</span>
+									<span class="input-group-text"> <i class="fas fa-shield-alt"></i>
+									</span>
 									<div class="form-floating">
 										<input th:value="${lote.condicion_resguardo}" type="text" class="form-control"
 											name="condicion_resguardo" id="condicion_resguardo" placeholder=" ">
-										<label for="condicion_resguardo">Condicion de resguardo</label>
+										<label for="condicion_resguardo">Condición de resguardo</label>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text">									<i class="fas fa-tractor"></i>
-</i></span>
-									<div class="form-floating">
-										<select class="form-select" name="tipo_suelo" th:field="*{tipo_suelo}">
-											<option
-												th:each="tipoSuelo : ${T(py.com.mabit.enums.TipoSueloLote).values()}"
-												th:value="${tipoSuelo}" th:text="${tipoSuelo}"
-												th:selected="${tipoSuelo.name() == tipo_suelo}">
-											</option>
-										</select>
-										<label for="tipo_suelo">Tipo de suelo</label>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text">									<i class="fas fa-crop"></i>
-</span>
+									<span class="input-group-text"> <i class="fas fa-crop"></i>
+									</span>
 									<div class="form-floating">
 										<select class="form-select" name="estado" th:field="*{estado}">
 											<option th:each="est : ${T(py.com.mabit.enums.EstadoLote).values()}"
@@ -158,7 +158,7 @@
 												th:selected="${est.name() == estado}">
 											</option>
 										</select>
-										<label for="estado">Estado de Lote</label>
+										<label for="estado">Estado del Lote</label>
 									</div>
 								</div>
 							</div>
@@ -225,16 +225,16 @@
 					<thead class="table-dark">
 						<tr>
 							<th class="py-3">ID</th>
+							<th class="py-3">Tipo</th>
+							<th class="py-3">Tipo de Suelo</th>
 							<th class="py-3">Nombre</th>
 							<th class="py-3">Codigo</th>
 							<th class="py-3">Ubicacion</th>
 							<th class="py-3">Capacidad</th>
 							<th class="py-3">Tamaño</th>
-							<th class="py-3">Tipo de Lote</th>
-							<th class="py-3">Codicion de Alimentacion</th>
-							<th class="py-3">Condicion de Resguardo</th>
-							<th class="py-3">Tipo de Suelo</th>
-							<th class="py-3">Estado de Lote</th>
+							<th class="py-3">Codición de Alimentacion</th>
+							<th class="py-3">Condición de Resguardo</th>
+							<th class="py-3">Estado</th>
 							<th class="py-3">Acciones</th>
 
 
@@ -243,21 +243,36 @@
 					<tbody>
 						<tr th:each="lote : ${lista}">
 							<td th:text="${lote.id}"></td>
+							<td th:text="${lote.tipo}"></td>
+							<td th:text="${lote.tipo_suelo}"></td>
 							<td th:text="${lote.nombre}"></td>
 							<td th:text="${lote.codigo}"></td>
 							<td th:text="${lote.ubicacion}"></td>
 							<td th:text="${lote.capacidad}"></td>
 							<td th:text="${lote.tamanho}"></td>
-							<td th:text="${lote.tipo}"></td>
 							<td th:text="${lote.condicion_alimentacion}"></td>
 							<td th:text="${lote.condicion_resguardo}"></td>
-							<td th:text="${lote.tipo_suelo}"></td>
-							<td th:text="${lote.estado}"></td>
+							<td>
+								<div class="d-flex justify-content-center">
+									<span class="badge bg-success" th:if="${lote.estado.name() == 'DISPONIBLE'}"
+										th:text="Disponible">
+									</span>
+									<span class="badge bg-danger" th:if="${lote.estado.name() == 'OCUPADO'}"
+										th:text="Ocupado">
+									</span>
+									<span class="badge bg-secondary" th:if="${lote.estado.name() == 'OCIOSO'}"
+										th:text="Ocioso">
+									</span>
+									<span class="badge bg-warning" th:if="${lote.estado.name() == 'EN_MANTENIMIENTO'}"
+										th:text="'En mantenimiento'">
+									</span>
+								</div>
+							</td>
 							<td>
 								<a th:href="@{/lotes/editar/{id}(id=${lote.id})}" class="btn btn-warning btn-sm me-2">
 									<i class="fas fa-edit"></i>
 								</a>
-								
+
 
 								<form class="d-inline" th:action="@{/lotes/eliminar/{id}(id=${lote.id})}" method="get">
 									<input type="hidden" name="userId" value="1">
