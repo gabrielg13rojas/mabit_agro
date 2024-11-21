@@ -68,7 +68,7 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
 									<div class="form-floating">
-										<input th:value="${trabajadores.cedula}" name="cedula" type="text"
+										<input required th:value="${trabajadores.cedula}" name="cedula" type="text"
 											class="form-control" id="correo" placeholder=" ">
 										<label for="correo">Cedula</label>
 									</div>
@@ -78,19 +78,9 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fa-regular fa-id-badge"></i></span>
 									<div class="form-floating">
-										<input th:value="${trabajadores.nombre}" name="nombre" type="text"
-											class="form-control" id="nombre" placeholder=" ">
-										<label for="nombre">Nombre</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fa-solid fa-address-card"></i></span>
-									<div class="form-floating">
-										<input th:value="${trabajadores.apellido}" name="apellido" type="text"
-											class="form-control" id="apellido" placeholder=" ">
-										<label for="apellido">Apellido</label>
+										<input required th:value="${trabajadores.nombreApellido}" name="nombreApellido" type="text"
+											class="form-control" id="nombreApellido" placeholder=" ">
+										<label for="nombreApellido">Nombre y apellido</label>
 									</div>
 								</div>
 							</div>
@@ -119,7 +109,7 @@
 									<span class="input-group-text"><i
 											class="fa-solid fa-hand-holding-dollar"></i></span>
 									<div class="form-floating">
-										<input th:value="${trabajadores.salario_base}" name="salario_base" type="number"
+										<input th:value="${trabajadores.salario_base}" min="0" name="salario_base" type="number"
 											class="form-control" id="salario_base" placeholder=" ">
 										<label for="salario_base">Salario Base</label>
 									</div>
@@ -128,9 +118,9 @@
 
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-key"></i></span>
+									<span class="input-group-text"><i class="fa-solid fa-money-check-dollar"></i></i></span>
 									<div class="form-floating">
-										<input th:value="${trabajadores.tarifa}" name="tarifa" type="number"
+										<input th:value="${trabajadores.tarifa}" name="tarifa" type="number" min="0"
 											class="form-control" id="tarifa" placeholder=" ">
 										<label for="tarifa">Tarifa</label>
 									</div>
@@ -186,12 +176,12 @@
 					<thead class="table-dark">
 						<tr>
 							<th class="py-3">ID</th>
+							<th class="py-3">Función</th>
 							<th class="py-3">Cédula</th>
-							<th class="py-3">Nombre</th>
+							<th class="py-3">Nombre y apellido</th>
 							<th class="py-3">Apellido</th>
 							<th class="py-3">Teléfono</th>
 							<th class="py-3">Fecha de Ingreso</th>
-							<th class="py-3">Funcion</th>
 							<th class="py-3">Salario Base</th>
 							<th class="py-3">Régimen de cobro</th>
 							<th class="py-3">Tarifa</th>
@@ -201,15 +191,14 @@
 					<tbody>
 						<tr th:each="trab : ${lista}">
 							<td th:text="${trab.id}"></td>
+							<td th:text="${trab.funcion}"></td>
 							<td th:text="${trab.cedula}"></td>
-							<td th:text="${trab.nombre}"></td>
-							<td th:text="${trab.apellido}"></td>
+							<td th:text="${trab.nombreApellido}"></td>
 							<td th:text="${trab.telefono}"></td>
 							<td th:text="${trab.fechaIngreso}"></td>
-							<td th:text="${trab.funcion}"></td>
-							<td th:text="${trab.salario_base}"></td>
+							<td th:text="${trab.salario_base % 1 == 0 ? #numbers.formatDecimal(trab.salario_base, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(trab.salario_base, 1, 'POINT', 2, 'COMMA')}"></td>
 							<td th:text="${trab.regimen}"></td>
-							<td th:text="${trab.tarifa}"></td>
+							<td th:text="${trab.tarifa % 1 == 0 ? #numbers.formatDecimal(trab.tarifa, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(trab.tarifa, 1, 'POINT', 2, 'COMMA')}"></td>
 							<td>
 							<a th:href="@{/trabajadores/editar/{id}(id=${trab.id})}"
 								class="btn btn-warning btn-sm me-2">

@@ -1,5 +1,7 @@
 package py.com.mabit.controladores;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,14 +23,18 @@ public class DashboardControlador {
 	AlimentosRepositorio alimentosRep;
 	@Autowired
 	AnimalesRepositorio animalesRep;
-	
+
 	@GetMapping
 	public String dashboard(Authentication authentication, Model model) {
-		Usuarios us = usuariosRep.findByCorreo(authentication.getName()).get();
-		model.addAttribute("correo", us.getCorreo());
-		model.addAttribute("idus", us.getId());
-		model.addAttribute("foto", us.getFoto());
-		model.addAttribute("nombre", us.getNombre());
+		Optional<Usuarios> usu = usuariosRep.findByCorreo(authentication.getName());
+		if (usu.isPresent()) {
+			Usuarios us = usu.get();
+			model.addAttribute("correo", us.getCorreo());
+			model.addAttribute("idus", us.getId());
+			model.addAttribute("foto", us.getFoto());
+			model.addAttribute("nombre", us.getNombre());
+			model.addAttribute("privilegio", us.getPrivilegio().getDescripcion());
+		}
 		model.addAttribute("alimentos", alimentosRep.findAll().size());
 		model.addAttribute("animales", animalesRep.findAll().size());
 		return "dashboard";

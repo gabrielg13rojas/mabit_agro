@@ -125,7 +125,7 @@
 						<td th:text="${privi.descripcion}"></td>
 						<td th:text="${privi.permisos}"></td>
 						<td>
-							<span th:class="'badge ' + (${privi.estado} ? 'bg-success' : 'bg-warning')"
+							<span th:class="'badge ' + (${privi.estado} ? 'bg-success' : 'bg-danger')"
 								th:text="${privi.estado ? 'Activo' : 'Inactivo'}"></span>
 						</td>
 
