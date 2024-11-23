@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import py.com.mabit.enums.ColorAnimal;
 import py.com.mabit.enums.EspecieAnimal;
 import py.com.mabit.enums.EstadoAnimal;
 import py.com.mabit.enums.SexoAnimal;
@@ -22,10 +23,17 @@ public class Animales {
 
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String foto;
-	
+
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private EspecieAnimal especie;
+
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private ColorAnimal color;
+
+	@Column(nullable = false)
+	private Double peso;
 
 	@Column(nullable = false)
 	private String identificador;
@@ -37,11 +45,11 @@ public class Animales {
 	@Enumerated(EnumType.STRING)
 	private SexoAnimal sexo;
 
-	@Column
-	private LocalDate fechaNacimiento = LocalDate.of(2000, 1, 1);
-
 	@Column(nullable = false)
 	private LocalDate fechaIngreso = LocalDate.now();
+
+	@Column(nullable = false)
+	private LocalDate nacimiento = LocalDate.of(2000, 1, 1);
 
 	@Column(nullable = false)
 	private BigDecimal precioCompra;
@@ -60,6 +68,14 @@ public class Animales {
 
 	public EspecieAnimal getEspecie() {
 		return especie;
+	}
+
+	public LocalDate getNacimiento() {
+		return nacimiento;
+	}
+
+	public void setNacimiento(LocalDate nacimiento) {
+		this.nacimiento = nacimiento;
 	}
 
 	public void setEspecie(EspecieAnimal especie) {
@@ -90,14 +106,6 @@ public class Animales {
 		this.sexo = sexo;
 	}
 
-	public LocalDate getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
-
 	public LocalDate getFechaIngreso() {
 		return fechaIngreso;
 	}
@@ -121,10 +129,28 @@ public class Animales {
 	public void setEstado(EstadoAnimal estado) {
 		this.estado = estado;
 	}
+
 	public String getFoto() {
 		return foto;
 	}
+
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+
+	public ColorAnimal getColor() {
+		return color;
+	}
+
+	public void setColor(ColorAnimal color) {
+		this.color = color;
+	}
+
+	public Double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(Double peso) {
+		this.peso = peso;
 	}
 }

@@ -194,7 +194,7 @@
 										<p>Insumos</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/stock-insumos}" class="nav-link"> <i
-											class="fa-solid fa-boxes-packing text-danger"></i>
+											class="fa-solid fa-boxes-packing text-info"></i>
 										<p>Stock de insumos</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/lotes}" class="nav-link"> <i
@@ -206,7 +206,7 @@
 										<p>Compradores</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/servicios}" class="nav-link"> <i
-											class="fa-regular fa-handshake"></i>
+											class="fa-regular fa-handshake text-primary"></i>
 										<p>Servicios</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/proveedores}" class="nav-link"> <i
@@ -246,6 +246,10 @@
 										<i class="bi bi-heart-fill text-danger"></i>
 										<p>Nacimientos</p>
 									</a> </li>
+								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
+										<i class="bi bi-heart-fill text-danger"></i>
+										<p>Mortandad</p>
+									</a> </li>
 								<li class="nav-item"> <a href="./widgets/small-box.html" class="nav-link">
 										<i class="bi bi-box-arrow-in-down-right text-success"></i>
 										<p>Ingreso de animales</p>
@@ -272,6 +276,14 @@
 											class="nav-icon bi bi-circle"></i>
 										<p>Rentabilidad</p>
 									</a> </li>
+								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
+										<i class="bi bi-heart-fill text-danger"></i>
+										<p>Gastos</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
+										<i class="bi bi-heart-fill text-danger"></i>
+										<p>Movimientos</p>
+									</a> </li>
 							</ul>
 						</li>
 						<li class="nav-header">SEGURIDAD</li>
@@ -284,14 +296,16 @@
 								<p>Privilegios</p>
 							</a> </li>
 						<li class="nav-header">CONFIGURACIONES</li>
-						<li class="nav-item"> <a th:href="@{/monedas}" class="nav-link"> <i class="fa-solid fa-money-bill"></i>
+						<li class="nav-item"> <a th:href="@{/monedas}" class="nav-link"> <i
+									class="fa-solid fa-money-bill"></i>
 								<p>Monedas</p>
 							</a> </li>
 						<li class="nav-item"> <a th:href="@{/empresas}" class="nav-link"> <i
 									class="nav-icon bi-building-fill-gear"></i>
 								<p>Empresa</p>
 							</a> </li>
-						<li class="nav-item"> <a th:href="@{/lote-facturas}" class="nav-link"> <i class="fa-solid fa-file-invoice"></i>
+						<li class="nav-item"> <a th:href="@{/lote-facturas}" class="nav-link"> <i
+									class="fa-solid fa-file-invoice"></i>
 								<p>Lote de facturas</p>
 							</a> </li>
 					</ul> <!--end::Sidebar Menu-->
