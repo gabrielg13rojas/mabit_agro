@@ -86,13 +86,14 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fa-solid fa-hippo"></i></i></span>
 									<div class="form-floating">
-										<select class="form-select" name="especie" th:field="*{especie}">
-											<option th:each="esp : ${T(py.com.mabit.enums.EspecieAnimal).values()}"
-												th:value="${esp}" th:text="${esp}"
-												th:selected="${esp.name() == especie}">
-											</option>
+										<select class="form-select" name="raza" th:field="*{raza}">
+											<th:block th:each="raz : ${razas}">
+												<option th:value="${raz.id}" th:text="'('+${raz.especie+') '+raz.descripcion}"
+													  th:selected="${raz.id} == animal.raza.id">
+												</option>
+											</th:block>
 										</select>
-										<label for="especie">Especie</label>
+										<label for="raza">Especie/Raza</label>
 									</div>
 								</div>
 							</div>
@@ -322,8 +323,8 @@
 							<th class="py-3">ID</th>
 							<th class="py-3">FOTO</th>
 							<th class="py-3">ESPECIE</th>
-							<th class="py-3">SEXO</th>
 							<th class="py-3">IDENTIFICADOR</th>
+							<th class="py-3">SEXO</th>
 							<th class="py-3">COLOR</th>
 							<th class="py-3">ALIAS</th>
 							<th class="py-3">F. INGRESO</th>
@@ -339,9 +340,9 @@
 								<img th:src="${animal.foto}" alt="Imagen"
 									style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
 							</td>
-							<td class="py-3" th:text="${animal.especie}">ESPECIE</td>
-							<td class="py-3" th:text="${animal.sexo}">SEXO</td>
+							<td class="py-3" th:text="${'('+animal.raza.especie+') '+animal.raza.descripcion}">ESPECIE</td>
 							<td class="py-3" th:text="${animal.identificador}">IDENTIFICADOR</td>
+							<td class="py-3" th:text="${animal.sexo}">SEXO</td>
 							<td class="py-3" th:text="${animal.color}">COLOR</td>
 							<td class="py-3" th:text="${animal.alias}">ALIAS</td>
 							<td class="py-3" th:text="${animal.fechaIngreso}">F. INGRESO</td>

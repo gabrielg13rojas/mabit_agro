@@ -14,7 +14,7 @@ public class TiposDocumentoComprador {
 	@Column(nullable = false)
 	public String descripcion;
 	@Column(nullable = false)
-	public Boolean estado;
+	public Boolean estado = true;
 
 	public Long getId() {
 		return id;

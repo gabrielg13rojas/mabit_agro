@@ -2,19 +2,23 @@ package py.com.mabit.entidades;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import py.com.mabit.enums.EspecieAnimal;
 
 @Entity
-public class Monedas {
+public class Razas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
-	private String descripcion;
+	@Enumerated(EnumType.STRING)
+	private EspecieAnimal especie;
 	@Column(nullable = false)
-	private String codigoIso;
+	private String descripcion;
 	@Column(nullable = false)
 	private Boolean estado = true;
 
@@ -26,20 +30,20 @@ public class Monedas {
 		this.id = id;
 	}
 
+	public EspecieAnimal getEspecie() {
+		return especie;
+	}
+
+	public void setEspecie(EspecieAnimal especie) {
+		this.especie = especie;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-
-	public String getCodigoIso() {
-		return codigoIso;
-	}
-
-	public void setCodigoIso(String codigoIso) {
-		this.codigoIso = codigoIso;
 	}
 
 	public Boolean getEstado() {
