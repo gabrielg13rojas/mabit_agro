@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gestión de Insumos</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+	<div class="container mt-4">
+		<!-- Título en recuadro -->
+		<div class="card mb-2 bg-success text-white border">
+			<div class="card-body py-2">
+				<h5 class="card-title text-center m-0" th:text="'Gestión de '+${entidad}"></h5>
+			</div>
+		</div>
+
+		<!-- Mensajes de alerta -->
+		<div th:if="${mensaje}" class="container py-4">
+			<div th:utext="${mensaje}" class="alert alert-dismissible fade show"
+				th:classappend="'alert-' + ${tipoMensaje}" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+
+		<!-- Formulario colapsable -->
+		<div class="collapse mb-2" id="collapseForm" th:classappend="${formColapsado ? 'show' : ''}">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del Insumo</span></h5>
+					<form th:action="@{/insumos}" th:object="${insumo}" method="post">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<br>
+										<label for="imageUpload" class="form-label">Seleccionar Imagen</label>
+										<input type="file" class="form-control" id="imageUpload" accept="image/*"
+											onchange="previewImage(event)">
+									</div>
+									<div class="mt-2">
+										<img id="imagePreview" th:src="${insumo.imagen}" alt="Vista previa"
+											style="max-width: 200px;">
+										<input type="hidden" id="imagen" name="imagen" th:field="*{imagen}">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row g-3">
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-barcode"></i></span>
+									<div class="form-floating">
+										<input th:field="*{codigo}" type="text" class="form-control" id="codigo"
+											name="codigo" placeholder=" ">
+										<label for="codigo">Código</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+									<div class="form-floating">
+										<input th:field="${insumo.descripcion}" type="text" class="form-control"
+											id="descripcion" name="descripcion" placeholder=" ">
+										<label for="descripcion">Descripción</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+									<div class="form-floating">
+										<input th:field="${insumo.detalles}" type="text" class="form-control"
+											id="detalles" name="detalles" placeholder=" ">
+										<label for="detalles">Detalles</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-box"></i></span>
+									<div class="form-floating">
+										<input th:field="${insumo.stockMinimo}" type="number" class="form-control"
+											id="stockMinimo" name="stockMinimo" placeholder=" ">
+										<label for="stockMinimo">Stock Mínimo</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-balance-scale"></i></span>
+									<div class="form-floating">
+										<select class="form-select" id="unidad_medida" name="unidad_medida">
+											<option selected disabled value="">Seleccione...</option>
+											<th:block th:each="unidadMedida : ${unidadesMedida}">
+												<option th:value="${unidadMedida.id}"
+													th:text="${unidadMedida.descripcion}"
+													th:selected="${insumo.unidad_medida != null && unidadMedida.id == insumo.unidad_medida.id}">
+											</th:block>
+										</select>
+										<label for="unidad_medida">Unidad de Medida</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="mt-4 text-end">
+							<button type="reset" class="btn btn-outline-secondary">
+								<i class="fas fa-eraser"></i> Limpiar
+							</button>
+							<button type="button" class="btn btn-outline-danger" data-bs-toggle="collapse"
+								data-bs-target="#collapseForm">
+								<i class="fas fa-times"></i> Cancelar
+							</button>
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-save"></i> Guardar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Barra de acciones -->
+		<div class="d-flex gap-3 mb-2 align-items-center w-100">
+			<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm"
+				aria-expanded="false" aria-controls="collapseForm">
+				<i class="fas fa-plus"></i> Nuevo
+			</button>
+			<!-- Formulario con flex-grow-1 para ocupar el espacio entre los botones -->
+			<form th:action="@{/insumos}" method="get" class="flex-grow-1">
+				<div class="input-group">
+					<span class="input-group-text"><i class="fas fa-search"></i></span>
+					<input type="search" name="buscar" class="form-control" placeholder="Buscar insumo...">
+				</div>
+			</form>
+
+			<a th:href="@{/}" class="btn btn-secondary">
+						<i class="fas fa-arrow-left"></i> Volver
+					</a>
+		</div>
+
+		<!-- Tabla de insumos -->
+		<div class="card shadow">
+			<div class="card-body">
+				<table class="table table-striped table-sm">
+					<thead class="table-dark">
+						<tr>
+							<th class="py-3">ID</th>
+							<th class="py-3">IMAGEN</th>
+							<th class="py-3">DESCRIPCION</th>
+							<th class="py-3">DETALLES</th>
+							<th class="py-3">STOCK MINIMO</th>
+							<th class="py-3">UNIDAD DE MEDIDA</th>
+							<th class="py-3">ACCIONES</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="i : ${lista}">
+							<td th:text="${i.id}"></td>
+							<td th:text="${i.imagen}"></td>
+							<td th:text="${i.descripcion}"></td>
+							<td th:text="${i.detalles}"></td>
+							<td th:text="${i.stockMinimo % 1 == 0 ? 
+							              #numbers.formatDecimal(i.stockMinimo, 1, 'POINT', 0, 'COMMA') : 
+							              #numbers.formatDecimal(i.stockMinimo, 1, 'POINT', 2, 'COMMA')}">
+							</td>
+
+							<td>
+							            <span th:text="${i.unidad_medida != null ? i.unidad_medida.descripcion : 'No asignada'}"></span>
+							        </td>
+							<td>
+								<a th:href="@{/insumos/editar/{id}(id=${i.id})}" class="btn btn-warning btn-sm me-2">
+									<i class="fas fa-edit"></i>
+								</a>
+								<form class="d-inline" th:action="@{/insumos/eliminar/{id}(id=${i.id})}" method="get">
+									<input type="hidden" name="userId" value="1">
+									<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+										th:data-bs-target="'#deleteModal' + ${i.id}">
+										<i class="fas fa-trash"></i>
+									</button>
+									<!-- Modal de confirmación de eliminación -->
+									<div class="modal fade" th:id="'deleteModal' + ${i.id}" tabindex="-1"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header bg-danger text-white">
+													<h5 class="modal-title">
+														<i class="fas fa-exclamation-triangle me-2"></i>
+														Confirmar Eliminación
+													</h5>
+													<button type="button" class="btn-close btn-close-white"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>¿Está seguro que desea eliminar este registro?</p>
+													<p class="text-danger mb-0">Esta acción no se puede deshacer.</p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">
+														<i class="fas fa-times"></i> Cancelar
+													</button>
+													<form th:action="@{/insumos/eliminar/{id}(id=${i.id})}"
+														method="post">
+														<button type="submit" class="btn btn-danger">
+															<i class="fas fa-trash"></i> Eliminar
+														</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- Bootstrap Bundle con Popper -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
