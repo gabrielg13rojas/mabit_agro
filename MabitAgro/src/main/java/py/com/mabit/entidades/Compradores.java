@@ -40,86 +40,99 @@ public class Compradores {
 	private String email;
 	@Column(nullable = false)
 	private String direccion;
-	@Column(nullable = false)
-	private String nacionalidad;//debe ser un combobox, preguntar cómo cargar la lista de paises
+	
 
-	public Long getId() {
-		return id;
-	}
+public Compradores() {
+}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
 
-	public TipoPersona getTipo() {
-		return tipo;
-	}
+public Long getId() {
+	return id;
+}
 
-	public void setTipo(TipoPersona tipo) {
-		this.tipo = tipo;
-	}
 
-	public SexoPersona getSexo() {
-		return sexo;
-	}
+public void setId(Long id) {
+	this.id = id;
+}
 
-	public void setSexo(SexoPersona sexo) {
-		this.sexo = sexo;
-	}
 
-	public TiposDocumentoComprador getTipo_documento() {
-		return tipo_documento;
-	}
+public TipoPersona getTipo() {
+	return tipo;
+}
 
-	public void setTipo_documento(TiposDocumentoComprador tipo_documento) {
-		this.tipo_documento = tipo_documento;
-	}
 
-	public String getDocumento() {
-		return documento;
-	}
+public void setTipo(TipoPersona tipo) {
+	this.tipo = tipo;
+}
 
-	public void setDocumento(String documento) {
-		this.documento = documento;
-	}
 
-	public String getNombre_razon_social() {
-		return nombre_razon_social;
-	}
+public SexoPersona getSexo() {
+	return sexo;
+}
 
-	public void setNombre_razon_social(String nombre_razon_social) {
-		this.nombre_razon_social = nombre_razon_social;
-	}
 
-	public String getTelefono() {
-		return telefono;
-	}
+public void setSexo(SexoPersona sexo) {
+	this.sexo = sexo;
+}
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
 
-	public String getEmail() {
-		return email;
-	}
+public TiposDocumentoComprador getTipo_documento() {
+	return tipo_documento;
+}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
-	public String getDireccion() {
-		return direccion;
-	}
+public void setTipo_documento(TiposDocumentoComprador tipo_documento) {
+	this.tipo_documento = tipo_documento;
+}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
 
-	public String getNacionalidad() {
-		return nacionalidad;
-	}
+public String getDocumento() {
+	return documento;
+}
 
-	public void setNacionalidad(String nacionalidad) {
-		this.nacionalidad = nacionalidad;
-	}
+
+public void setDocumento(String documento) {
+	this.documento = documento;
+}
+
+
+public String getNombre_razon_social() {
+	return nombre_razon_social;
+}
+
+
+public void setNombre_razon_social(String nombre_razon_social) {
+	this.nombre_razon_social = nombre_razon_social;
+}
+
+
+public String getTelefono() {
+	return telefono;
+}
+
+
+public void setTelefono(String telefono) {
+	this.telefono = telefono;
+}
+
+
+public String getEmail() {
+	return email;
+}
+
+
+public void setEmail(String email) {
+	this.email = email;
+}
+
+
+public String getDireccion() {
+	return direccion;
+}
+
+
+public void setDireccion(String direccion) {
+	this.direccion = direccion;
+}
+
 }
