@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -13,23 +14,20 @@ public class Nacimientos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@OneToOne
 	@JoinColumn
 	private Animales cria;
-	
-	@Column
-	private Double peso;
-	
-	@OneToOne
+
+	@ManyToOne
 	@JoinColumn
 	private Animales madre;
-	
-	@OneToOne
+
+	@ManyToOne
 	@JoinColumn
 	private Animales padre;
-	
-	@Column
+
+	@Column(nullable = false)
 	private String observaciones;
 
 	public Long getId() {
@@ -48,24 +46,22 @@ public class Nacimientos {
 		this.cria = cria;
 	}
 
-	public Double getPeso() {
-		return peso;
-	}
-
-	public void setPeso(Double peso) {
-		this.peso = peso;
-	}
-
 	public Animales getMadre() {
+		if (madre == null) {
+			madre = new Animales();
+		}
 		return madre;
+	}
+
+	public Animales getPadre() {
+		if (padre == null) {
+			padre = new Animales();
+		}
+		return padre;
 	}
 
 	public void setMadre(Animales madre) {
 		this.madre = madre;
-	}
-
-	public Animales getPadre() {
-		return padre;
 	}
 
 	public void setPadre(Animales padre) {

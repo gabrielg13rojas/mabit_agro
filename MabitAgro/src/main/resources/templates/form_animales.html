@@ -60,7 +60,6 @@
 		<div class="collapse mb-2" id="collapseForm" th:classappend="${formColapsado ? ' show' : ''}">
 			<div class="card">
 				<div class="card-body">
-
 					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del
 							registro</span></h5>
 					<form th:action="@{/animales}" th:object="${animal}" method="post">
@@ -99,14 +98,14 @@
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fa-solid fa-venus-mars"></i></span>
+									<span class="input-group-text"><i class="fa-solid fa-fill-drip"></i></span>
 									<div class="form-floating">
-										<select class="form-select" name="sexo" th:field="*{sexo}">
-											<option th:each="sex : ${T(py.com.mabit.enums.SexoAnimal).values()}"
-												th:value="${sex}" th:text="${sex}" th:selected="${sex.name() == sexo}">
+										<select class="form-select" name="color" th:field="*{color}">
+											<option th:each="col : ${T(py.com.mabit.enums.ColorAnimal).values()}"
+												th:value="${col}" th:text="${col}" th:selected="${col.name() == color}">
 											</option>
 										</select>
-										<label for="sexo">Sexo</label>
+										<label for="color">Color</label>
 									</div>
 								</div>
 							</div>
@@ -120,6 +119,7 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fa-regular fa-file-lines"></i></span>
@@ -133,11 +133,32 @@
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+									<span class="input-group-text"><i class="fa-regular fa-money-bill-1"></i></i></span>
 									<div class="form-floating">
-										<input type="date" class="form-control" th:value="${animal.fechaNacimiento}"
-											id="fechaNacimiento" name="fechaNacimiento" placeholder=" ">
-										<label for="fechaNacimiento">Fecha de nacimiento</label>
+										<input required type="number" step="0.01" class="form-control"
+											name="precioCompra" id="precioCompra" th:value="${animal.precioCompra}"
+											placeholder=" ">
+										<label for="precioCompra">Precio de compra</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-weight-scale"></i></span>
+									<div class="form-floating">
+										<input required type="number" step="0.01" class="form-control" name="peso"
+											th:value="${animal.peso}" id="peso" placeholder=" ">
+										<label for="peso">Peso (kg)</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-heart"></i></span>
+									<div class="form-floating">
+										<input type="date" class="form-control" th:value="${animal.nacimiento}"
+											id="nacimiento" name="nacimiento" placeholder=" " required>
+										<label for="nacimiento">Fecha de nacimiento</label>
 									</div>
 								</div>
 							</div>
@@ -153,12 +174,14 @@
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fa-regular fa-money-bill-1"></i></i></span>
+									<span class="input-group-text"><i class="fa-solid fa-venus-mars"></i></span>
 									<div class="form-floating">
-										<input required type="number" step="0.01" class="form-control"
-											name="precioCompra" id="precioCompra" th:value="${animal.precioCompra}"
-											placeholder=" ">
-										<label for="precioCompra">Precio de compra</label>
+										<select class="form-select" name="sexo" th:field="*{sexo}">
+											<option th:each="sex : ${T(py.com.mabit.enums.SexoAnimal).values()}"
+												th:value="${sex}" th:text="${sex}" th:selected="${sex.name() == sexo}">
+											</option>
+										</select>
+										<label for="sexo">Sexo</label>
 									</div>
 								</div>
 							</div>
@@ -176,7 +199,83 @@
 								</div>
 							</div>
 						</div>
-
+						<div class="mt-4">
+							<div class="accordion accordion-flush border rounded bg-light" id="accordionDetalles">
+								<!-- Primer Accordion - Información Genealógica -->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button collapsed bg-secondary bg-opacity-10"
+											type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+											aria-expanded="false" aria-controls="flush-collapseOne">
+											<i class="fa-solid fa-dna text-primary" style="margin-right: 8px;"></i>
+											<span>Información
+												Genealógica (Padre y Madre del ternero)</span>
+										</button>
+									</h2>
+									<div id="flush-collapseOne" class="accordion-collapse collapse"
+										th:classappend="${madre}!=null ? 'show' : ''"
+										data-bs-parent="#accordionDetalles">
+										<div class="accordion-body bg-secondary bg-opacity-10">
+											<div class="row g-3">
+												<div class="col-md-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-text"><i
+																class="fa-solid fa-venus"></i></span>
+														<div class="form-floating">
+															<select class="form-select" name="madre">
+																<option th:value="0">Seleccione la madre</option>
+																<th:block th:each="mad : ${madres}"
+																	th:if="${mad.id != animal.id}">
+																	<option th:value="${mad.id}"
+																		th:text="${mad.identificador}+'-'+${mad.color}+' '+${mad.alias}"
+																		th:selected="${mad.id} == ${madre}">
+																	</option>
+																</th:block>
+															</select>
+															<label for="madre">Madre</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-text"><i
+																class="fa-solid fa-mars"></i></span>
+														<input type="hidden" name="idNacimiento"
+															th:value="${idNacimiento}">
+														<div class="form-floating">
+															<select class="form-select" name="padre">
+																<option th:value="0">Seleccione el padre</option>
+																<th:block th:each="pad : ${padres}"
+																	th:if="${pad.id != animal.id}">
+																	<option th:value="${pad.id}"
+																		th:text="${pad.identificador}+'-'+${pad.color}+' '+${pad.alias}"
+																		th:selected="${pad.id} == ${padre}">
+																	</option>
+																</th:block>
+															</select>
+															<label for="padre">Padre</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-12">
+													<div class="input-group">
+														<span class="input-group-text align-items-start pt-2"><i
+																class="fa-solid fa-comment-medical"></i></span>
+														<div class="form-floating flex-grow-1">
+															<textarea class="form-control" name="observaciones"
+																th:text="${observaciones}" id="observaciones"
+																style="height: 100px; min-height: 100px;"
+																placeholder="Ingrese sus observaciones"></textarea>
+															<label for="observaciones">Observaciones</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="mt-4 text-end">
 							<button type="reset" class="btn btn-outline-secondary">
 								<i class="fas fa-eraser"></i> Limpiar
@@ -225,8 +324,8 @@
 							<th class="py-3">ESPECIE</th>
 							<th class="py-3">SEXO</th>
 							<th class="py-3">IDENTIFICADOR</th>
+							<th class="py-3">COLOR</th>
 							<th class="py-3">ALIAS</th>
-							<th class="py-3">F. NACIMIENTO</th>
 							<th class="py-3">F. INGRESO</th>
 							<th class="py-3">PRECIO</th>
 							<th class="py-3">ESTADO</th>
@@ -243,8 +342,8 @@
 							<td class="py-3" th:text="${animal.especie}">ESPECIE</td>
 							<td class="py-3" th:text="${animal.sexo}">SEXO</td>
 							<td class="py-3" th:text="${animal.identificador}">IDENTIFICADOR</td>
+							<td class="py-3" th:text="${animal.color}">COLOR</td>
 							<td class="py-3" th:text="${animal.alias}">ALIAS</td>
-							<td class="py-3" th:text="${animal.fechaNacimiento}">F. NACIMIENTO</td>
 							<td class="py-3" th:text="${animal.fechaIngreso}">F. INGRESO</td>
 							<td class="text-end"
 								th:text="${animal.precioCompra % 1 == 0 ? #numbers.formatDecimal(animal.precioCompra, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(animal.precioCompra, 1, 'POINT', 2, 'COMMA')}">
