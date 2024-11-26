@@ -20,6 +20,65 @@ public class Insumos {
 	@Column(nullable = false)
 	private String imagen;
 	
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+
+	public String getDetalles() {
+		return detalles;
+	}
+
+
+	public void setDetalles(String detalles) {
+		this.detalles = detalles;
+	}
+
+
+	public Double getStockMinimo() {
+		return stockMinimo;
+	}
+
+
+	public void setStockMinimo(Double stockMinimo) {
+		this.stockMinimo = stockMinimo;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+
 	@Column(nullable = false)
 	private String descripcion;
 	
@@ -31,9 +90,19 @@ public class Insumos {
 	
 	@ManyToOne
 	@JoinColumn
-	private UnidadesMedida unidad;
+	private UnidadesMedida unidad_medida;
 	
 	
+	public UnidadesMedida getUnidad_medida() {
+		return unidad_medida;
+	}
+
+
+	public void setUnidad_medida(UnidadesMedida unidad_medida) {
+		this.unidad_medida = unidad_medida;
+	}
+
+
 	public Insumos() {
 		
 	}

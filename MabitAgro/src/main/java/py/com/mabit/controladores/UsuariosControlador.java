@@ -79,20 +79,20 @@ public class UsuariosControlador {
 	}
 
 	@PostMapping("/perfil/actualizar")
-	public String actualizarPerfil(@ModelAttribute("usu") Usuarios usua) {
+	public String actualizarPerfil(@ModelAttribute("usu") Usuarios usua, String contrasenhaplano) {
 		Optional<Usuarios> u = repositorio.findById(usua.getId());
 		if (u.isPresent()) {
 			Usuarios objaisl = u.get();
 			objaisl.setCorreo(usua.getCorreo());
 			objaisl.setFoto(usua.getFoto());
-			if (!usua.getContrasenha().isEmpty()) {
-				objaisl.setContrasenha(usua.getContrasenha());
+			if (contrasenhaplano!=null) {
+				objaisl.setContrasenhaPlano(contrasenhaplano);				
+			}else {
+				objaisl.setContrasenha(objaisl.getContrasenha());				
 			}
 			objaisl.setNombre(usua.getNombre());
 			repositorio.save(objaisl);
 		}
-
 		return "redirect:/";
 	}
-
 }

@@ -79,6 +79,9 @@ public class Usuarios {
 	public void setContrasenha(String contrasenha) {
 		this.contrasenha = new BCryptPasswordEncoder(12).encode(contrasenha);
 	}
+	public void setContrasenhaPlano(String contrasenha) {
+		this.contrasenha = contrasenha;
+	}
 
 	public Boolean getVerificado() {
 		return verificado;

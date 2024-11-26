@@ -10,8 +10,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import py.com.mabit.enums.ColorAnimal;
-import py.com.mabit.enums.EspecieAnimal;
 import py.com.mabit.enums.EstadoAnimal;
 import py.com.mabit.enums.SexoAnimal;
 
@@ -24,9 +25,9 @@ public class Animales {
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String foto;
 
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private EspecieAnimal especie;
+	@ManyToOne
+	@JoinColumn
+	private Razas raza;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -62,12 +63,16 @@ public class Animales {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Razas getRaza() {
+		return raza;
 	}
 
-	public EspecieAnimal getEspecie() {
-		return especie;
+	public void setRaza(Razas raza) {
+		this.raza = raza;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public LocalDate getNacimiento() {
@@ -76,10 +81,6 @@ public class Animales {
 
 	public void setNacimiento(LocalDate nacimiento) {
 		this.nacimiento = nacimiento;
-	}
-
-	public void setEspecie(EspecieAnimal especie) {
-		this.especie = especie;
 	}
 
 	public String getIdentificador() {

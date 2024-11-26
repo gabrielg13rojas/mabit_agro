@@ -185,6 +185,10 @@
 										<i class="fas fa-cow fa-1x text-primary"></i>
 										<p>Animales</p>
 									</a> </li>
+								<li class="nav-item"> <a th:href="@{/razas}" class="nav-link">
+										<i class="fa-solid fa-dna"></i>
+										<p>Razas</p>
+									</a> </li>
 								<li class="nav-item"> <a th:href="@{/alimentos}" class="nav-link">
 										<i class="fas fa-wheat-awn fa-1x text-warning"></i>
 										<p>Alimentos</p>
@@ -202,15 +206,15 @@
 										<p>Lotes</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/compradores}" class="nav-link"> <i
-											class="fa-solid fa-users"></i>
+											class="fa-solid fa-users text-success"></i>
 										<p>Compradores</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/servicios}" class="nav-link"> <i
-											class="fa-regular fa-handshake text-primary"></i>
+											class="fa-regular fa-handshake"></i>
 										<p>Servicios</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/proveedores}" class="nav-link"> <i
-											class="fas fa-truck text-info"></i>
+											class="fas fa-truck"></i>
 										<p>Proveedores</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/trabajadores}" class="nav-link"> <i
@@ -218,7 +222,7 @@
 										<p>Trabajadores</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/unidades-medidas}" class="nav-link"> <i
-											class="fas fa-scale-balanced text-danger"></i>
+											class="fas fa-scale-balanced"></i>
 										<p>Unidades de medida</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/tipo-doc-comprador}" class="nav-link"> <i
@@ -242,17 +246,13 @@
 										<i class="fas fa-syringe text-info"></i>
 										<p>Sanitización</p>
 									</a> </li>
-								<li class="nav-item"> <a th:href="@{/nacimientos}" class="nav-link">
-										<i class="bi bi-heart-fill text-danger"></i>
-										<p>Nacimientos</p>
-									</a> </li>
 								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
-										<i class="bi bi-heart-fill text-danger"></i>
+										<i class="fa-solid fa-ban text-danger"></i></i>
 										<p>Mortandad</p>
 									</a> </li>
-								<li class="nav-item"> <a href="./widgets/small-box.html" class="nav-link">
+								<li class="nav-item"> <a th:href="@{/traslados}" class="nav-link">
 										<i class="bi bi-box-arrow-in-down-right text-success"></i>
-										<p>Ingreso de animales</p>
+										<p>Traslados</p>
 									</a> </li>
 							</ul>
 						</li>

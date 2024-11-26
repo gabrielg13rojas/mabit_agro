@@ -28,111 +28,98 @@ public class Compradores {
 
 	@ManyToOne
 	@JoinColumn
-	private TiposDocumentoComprador tipo_documento;
+	private TiposDocumentoComprador tipoDocumento;
 
 	@Column(nullable = false)
 	private String documento;
 	@Column(nullable = false)
-	private String nombre_razon_social;
+	private String nombreRazonSocial;
 	@Column(nullable = false)
 	private String telefono;
 	@Column(nullable = false)
 	private String email;
 	@Column(nullable = false)
 	private String direccion;
-	
+	@Column(nullable = false)
+	private String nacionalidad = "Paraguaya";
 
-public Compradores() {
-}
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-public Long getId() {
-	return id;
-}
+	public TipoPersona getTipo() {
+		return tipo;
+	}
 
+	public void setTipo(TipoPersona tipo) {
+		this.tipo = tipo;
+	}
 
-public void setId(Long id) {
-	this.id = id;
-}
+	public SexoPersona getSexo() {
+		return sexo;
+	}
 
+	public void setSexo(SexoPersona sexo) {
+		this.sexo = sexo;
+	}
 
-public TipoPersona getTipo() {
-	return tipo;
-}
+	public TiposDocumentoComprador getTipoDocumento() {
+		return tipoDocumento;
+	}
 
+	public void setTipoDocumento(TiposDocumentoComprador tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
 
-public void setTipo(TipoPersona tipo) {
-	this.tipo = tipo;
-}
+	public String getDocumento() {
+		return documento;
+	}
 
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
 
-public SexoPersona getSexo() {
-	return sexo;
-}
+	public String getNombreRazonSocial() {
+		return nombreRazonSocial;
+	}
 
+	public void setNombreRazonSocial(String nombreRazonSocial) {
+		this.nombreRazonSocial = nombreRazonSocial;
+	}
 
-public void setSexo(SexoPersona sexo) {
-	this.sexo = sexo;
-}
+	public String getTelefono() {
+		return telefono;
+	}
 
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
 
-public TiposDocumentoComprador getTipo_documento() {
-	return tipo_documento;
-}
+	public String getEmail() {
+		return email;
+	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-public void setTipo_documento(TiposDocumentoComprador tipo_documento) {
-	this.tipo_documento = tipo_documento;
-}
+	public String getDireccion() {
+		return direccion;
+	}
 
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
 
-public String getDocumento() {
-	return documento;
-}
+	public String getNacionalidad() {
+		return nacionalidad;
+	}
 
-
-public void setDocumento(String documento) {
-	this.documento = documento;
-}
-
-
-public String getNombre_razon_social() {
-	return nombre_razon_social;
-}
-
-
-public void setNombre_razon_social(String nombre_razon_social) {
-	this.nombre_razon_social = nombre_razon_social;
-}
-
-
-public String getTelefono() {
-	return telefono;
-}
-
-
-public void setTelefono(String telefono) {
-	this.telefono = telefono;
-}
-
-
-public String getEmail() {
-	return email;
-}
-
-
-public void setEmail(String email) {
-	this.email = email;
-}
-
-
-public String getDireccion() {
-	return direccion;
-}
-
-
-public void setDireccion(String direccion) {
-	this.direccion = direccion;
-}
-
+	public void setNacionalidad(String nacionalidad) {
+		this.nacionalidad = nacionalidad;
+	}
 }

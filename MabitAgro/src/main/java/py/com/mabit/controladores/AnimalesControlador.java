@@ -21,6 +21,7 @@ import py.com.mabit.enums.EstadoAnimal;
 import py.com.mabit.enums.SexoAnimal;
 import py.com.mabit.repositorios.AnimalesRepositorio;
 import py.com.mabit.repositorios.NacimientosRepositorio;
+import py.com.mabit.repositorios.RazasRepositorio;
 
 @Controller
 @RequestMapping("/animales")
@@ -29,13 +30,15 @@ public class AnimalesControlador {
 	AnimalesRepositorio repositorio;
 	@Autowired
 	NacimientosRepositorio repositorioNacimiento;
+	@Autowired
+	RazasRepositorio repositorioRaza;
 
 	@GetMapping({ "", "/editar/{id}" })
 	public String formulario(Model html, @PathVariable(required = false) Long id,
 			@RequestParam(defaultValue = "") String buscar, @ModelAttribute("animal") Animales animal) {
 		html.addAttribute("entidad", "animales");
 		html.addAttribute("estados", EstadoAnimal.values());
-		html.addAttribute("especies", EspecieAnimal.values());
+		html.addAttribute("razas", repositorioRaza.findAll());
 		html.addAttribute("sexos", SexoAnimal.values());
 		List<EstadoAnimal> estadosFiltro = new ArrayList<>();
 		estadosFiltro.add(EstadoAnimal.VIVO);
