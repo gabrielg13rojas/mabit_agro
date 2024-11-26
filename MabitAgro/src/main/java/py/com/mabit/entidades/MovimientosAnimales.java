@@ -57,6 +57,9 @@ public class MovimientosAnimales {
 	}
 
 	public Lotes getLote() {
+		if (lote==null) {
+			lote = new Lotes();
+		}
 		return lote;
 	}
 

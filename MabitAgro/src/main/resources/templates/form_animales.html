@@ -65,31 +65,26 @@
 					<form th:action="@{/animales}" th:object="${animal}" method="post">
 						<input type="hidden" name="id" th:value="${animal.id}">
 						<div class="row g-3">
-							<div class="container">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<br>
-											<label for="imageUpload" class="form-label">Seleccionar Imagen</label>
-											<input type="file" class="form-control" id="imageUpload" accept="image/*"
-												onchange="previewImage(event)">
-										</div>
-										<div class="mt-2">
-											<img id="imagePreview" th:src="${animal.foto}" alt="Vista previa"
-												style="max-width: 200px;">
-											<input type="hidden" id="foto" name="foto" th:field="*{foto}">
-										</div>
-									</div>
+							<div class="col-md-6">
+								<div class="form-floating">
+									<input type="file" class="form-control" id="imageUpload" accept="image/*"
+										onchange="previewImage(event)">
+								</div>
+								<div class="mt-2">
+									<img id="imagePreview" th:src="${animal.foto}" alt="Vista previa"
+										style="max-width: 200px;">
+									<input type="hidden" id="foto" name="foto" th:field="*{foto}">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fa-solid fa-hippo"></i></i></span>
+									<span class="input-group-text"><i class="fa-solid fa-dna"></i></span>
 									<div class="form-floating">
 										<select class="form-select" name="raza" th:field="*{raza}">
 											<th:block th:each="raz : ${razas}">
-												<option th:value="${raz.id}" th:text="'('+${raz.especie+') '+raz.descripcion}"
-													  th:selected="${raz.id} == animal.raza.id">
+												<option th:value="${raz.id}"
+													th:text="'('+${raz.especie+') '+raz.descripcion}"
+													th:selected="${raz.id} == animal.raza.id">
 												</option>
 											</th:block>
 										</select>
@@ -136,9 +131,9 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fa-regular fa-money-bill-1"></i></i></span>
 									<div class="form-floating">
-										<input required type="number" step="0.01" class="form-control"
-											name="precioCompra" id="precioCompra" th:value="${animal.precioCompra}"
-											placeholder=" ">
+										<input type="number" step="0.01" class="form-control" name="precioCompra"
+											id="precioCompra" th:value="${animal.precioCompra}" placeholder=" "
+											required>
 										<label for="precioCompra">Precio de compra</label>
 									</div>
 								</div>
@@ -196,6 +191,35 @@
 											</option>
 										</select>
 										<label for="estado">Estado del animal</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6" th:classappend="${animal.id == null ? 'show' : 'd-none'}">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i
+											class="fa-solid fa-location-dot text-danger"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="lote">
+											<option th:value="0">Seleccione la ubicación</option>
+											<th:block th:each="lot : ${lotes}">
+												<option th:value="${lot.id}"
+													th:text="${lot.nombre+' '+lot.codigo+' ['+lot.nombre+']'}">
+												</option>
+											</th:block>
+										</select>
+										<label for="lote">Ubicación del animal (lote)</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="input-group">
+									<span class="input-group-text align-items-start pt-2"><i
+											class="fa-solid fa-comment-medical"></i></span>
+									<div class="form-floating flex-grow-1">
+										<textarea class="form-control" name="observacionesLote"
+											id="observacionesLote" style="height: 100px; min-height: 100px;"
+											placeholder="Ingrese sus observaciones"></textarea>
+										<label for="observacionesLote">Observaciones (sobre la entrada del animal)</label>
 									</div>
 								</div>
 							</div>
@@ -267,7 +291,8 @@
 																th:text="${observaciones}" id="observaciones"
 																style="height: 100px; min-height: 100px;"
 																placeholder="Ingrese sus observaciones"></textarea>
-															<label for="observaciones">Observaciones</label>
+															<label for="observaciones">Observaciones (sobre el
+																nacimiento)</label>
 														</div>
 													</div>
 												</div>
@@ -340,7 +365,8 @@
 								<img th:src="${animal.foto}" alt="Imagen"
 									style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
 							</td>
-							<td class="py-3" th:text="${'('+animal.raza.especie+') '+animal.raza.descripcion}">ESPECIE</td>
+							<td class="py-3" th:text="${'('+animal.raza.especie+') '+animal.raza.descripcion}">ESPECIE
+							</td>
 							<td class="py-3" th:text="${animal.identificador}">IDENTIFICADOR</td>
 							<td class="py-3" th:text="${animal.sexo}">SEXO</td>
 							<td class="py-3" th:text="${animal.color}">COLOR</td>
