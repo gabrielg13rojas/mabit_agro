@@ -3,7 +3,9 @@ package py.com.mabit.entidades;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import py.com.mabit.enums.EstadoGasto;
 import py.com.mabit.enums.FormaPago;
 
+@Entity
 public class Gastos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +35,20 @@ public class Gastos {
 	private EstadoGasto estado;
 	@Column(nullable = false)
 	private String observaciones;
+	
+	public Gastos() {
+		id=0l;
+		vencimiento=LocalDate.now();
+		tipoGasto="";
+		monto=BigDecimal.ZERO;
+		beneficiario="";
+		formaPago=FormaPago.EFECTIVO ;
+		estado=EstadoGasto.PAGADO;
+		observaciones="";
+		
+		
+			
+	}
 
 	public Long getId() {
 		return id;
