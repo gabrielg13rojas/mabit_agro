@@ -28,12 +28,12 @@ public class Compradores {
 
 	@ManyToOne
 	@JoinColumn
-	private TiposDocumentoComprador tipo_documento;
+	private TiposDocumentoComprador tipoDocumento;
 
 	@Column(nullable = false)
 	private String documento;
 	@Column(nullable = false)
-	private String nombre_razon_social;
+	private String nombreRazonSocial;
 	@Column(nullable = false)
 	private String telefono;
 	@Column(nullable = false)
@@ -41,7 +41,7 @@ public class Compradores {
 	@Column(nullable = false)
 	private String direccion;
 	@Column(nullable = false)
-	private String nacionalidad;//debe ser un combobox, preguntar cómo cargar la lista de paises
+	private String nacionalidad = "Paraguaya";
 
 	public Long getId() {
 		return id;
@@ -67,12 +67,12 @@ public class Compradores {
 		this.sexo = sexo;
 	}
 
-	public TiposDocumentoComprador getTipo_documento() {
-		return tipo_documento;
+	public TiposDocumentoComprador getTipoDocumento() {
+		return tipoDocumento;
 	}
 
-	public void setTipo_documento(TiposDocumentoComprador tipo_documento) {
-		this.tipo_documento = tipo_documento;
+	public void setTipoDocumento(TiposDocumentoComprador tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 	public String getDocumento() {
@@ -83,12 +83,12 @@ public class Compradores {
 		this.documento = documento;
 	}
 
-	public String getNombre_razon_social() {
-		return nombre_razon_social;
+	public String getNombreRazonSocial() {
+		return nombreRazonSocial;
 	}
 
-	public void setNombre_razon_social(String nombre_razon_social) {
-		this.nombre_razon_social = nombre_razon_social;
+	public void setNombreRazonSocial(String nombreRazonSocial) {
+		this.nombreRazonSocial = nombreRazonSocial;
 	}
 
 	public String getTelefono() {

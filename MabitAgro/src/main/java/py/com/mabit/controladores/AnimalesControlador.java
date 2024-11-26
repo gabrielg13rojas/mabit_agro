@@ -1,5 +1,6 @@
 package py.com.mabit.controladores;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import py.com.mabit.entidades.Animales;
+import py.com.mabit.entidades.Lotes;
+import py.com.mabit.entidades.MovimientosAnimales;
 import py.com.mabit.entidades.Nacimientos;
-import py.com.mabit.enums.EspecieAnimal;
 import py.com.mabit.enums.EstadoAnimal;
+import py.com.mabit.enums.EstadoLote;
 import py.com.mabit.enums.SexoAnimal;
+import py.com.mabit.enums.TipoMovimientoAnimal;
 import py.com.mabit.repositorios.AnimalesRepositorio;
+import py.com.mabit.repositorios.LotesRepositorio;
+import py.com.mabit.repositorios.MovimientoAnimalesRepositorio;
 import py.com.mabit.repositorios.NacimientosRepositorio;
+import py.com.mabit.repositorios.RazasRepositorio;
 
 @Controller
 @RequestMapping("/animales")
@@ -29,19 +36,26 @@ public class AnimalesControlador {
 	AnimalesRepositorio repositorio;
 	@Autowired
 	NacimientosRepositorio repositorioNacimiento;
+	@Autowired
+	RazasRepositorio repositorioRaza;
+	@Autowired
+	LotesRepositorio repositorioLote;
+	@Autowired
+	MovimientoAnimalesRepositorio repositorioMovimientos;
 
 	@GetMapping({ "", "/editar/{id}" })
 	public String formulario(Model html, @PathVariable(required = false) Long id,
 			@RequestParam(defaultValue = "") String buscar, @ModelAttribute("animal") Animales animal) {
 		html.addAttribute("entidad", "animales");
 		html.addAttribute("estados", EstadoAnimal.values());
-		html.addAttribute("especies", EspecieAnimal.values());
+		html.addAttribute("razas", repositorioRaza.findAll());
 		html.addAttribute("sexos", SexoAnimal.values());
 		List<EstadoAnimal> estadosFiltro = new ArrayList<>();
 		estadosFiltro.add(EstadoAnimal.VIVO);
 		estadosFiltro.add(EstadoAnimal.ENFERMO);
 		html.addAttribute("padres", repositorio.findBySexoYEstado(SexoAnimal.MACHO, estadosFiltro));
 		html.addAttribute("madres", repositorio.findBySexoYEstado(SexoAnimal.HEMBRA, estadosFiltro));
+		html.addAttribute("lotes", repositorioLote.findByEstado(EstadoLote.DISPONIBLE));
 		if (id != null) {
 			html.addAttribute("animal", repositorio.findById(id).get());
 			html.addAttribute("formColapsado", true);
@@ -67,8 +81,20 @@ public class AnimalesControlador {
 
 	@PostMapping
 	public String guardar(@ModelAttribute("animal") Animales ani, @RequestParam(defaultValue = "0") Long padre,
-			@RequestParam(defaultValue = "0") Long madre, @RequestParam(defaultValue = "") String observaciones) {
+			@RequestParam(defaultValue = "0") Long madre, @RequestParam(defaultValue = "") String observaciones,
+			@RequestParam(defaultValue = "") String observacionesLote, @RequestParam(defaultValue = "0") Long lote) {
 		Animales animalGuardado = repositorio.save(ani);
+		if (lote > 0) {
+			System.out.println("lote: " + lote);
+			MovimientosAnimales mov = new MovimientosAnimales();
+			mov.setAnimal(animalGuardado);
+			mov.setFecha(LocalDate.now());
+			mov.getLote().setId(lote);
+			mov.setObservaciones(observacionesLote);
+			mov.setPeso(animalGuardado.getPeso());
+			mov.setTipo(TipoMovimientoAnimal.ENTRADA);
+			repositorioMovimientos.save(mov);
+		}
 		if (madre > 0 && padre > 0) {
 			Optional<Nacimientos> nacimiento = repositorioNacimiento.findByCriaId(animalGuardado.getId());
 			Nacimientos nac = nacimiento.isPresent() ? nacimiento.get() : new Nacimientos();

@@ -42,8 +42,9 @@ public class Ventas {
 	@ManyToOne
 	@JoinColumn
 	private Trabajadores trabajador;
-	@Column(nullable = false)
-	private String timbrado;
+	@ManyToOne
+	@JoinColumn
+	private LotesFacturas lote;
 	@Column(nullable = false)
 	private Boolean enviado;
 	@Column(nullable = false)
@@ -57,9 +58,6 @@ public class Ventas {
 	@ManyToOne
 	@JoinColumn
 	private Empresas empresa;
-	@ManyToOne
-	@JoinColumn
-	private LotesFacturas lotefactura;
 
 	public Long getId() {
 		return id;
@@ -149,14 +147,6 @@ public class Ventas {
 		this.trabajador = trabajador;
 	}
 
-	public String getTimbrado() {
-		return timbrado;
-	}
-
-	public void setTimbrado(String timbrado) {
-		this.timbrado = timbrado;
-	}
-
 	public Boolean getEnviado() {
 		return enviado;
 	}
@@ -205,11 +195,4 @@ public class Ventas {
 		this.empresa = empresa;
 	}
 
-	public LotesFacturas getLotefactura() {
-		return lotefactura;
-	}
-
-	public void setLotefactura(LotesFacturas lotefactura) {
-		this.lotefactura = lotefactura;
-	}
 }

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="'Gestión de '+${entidad}"></title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+	<div class="container mt-4">
+		<!-- Título en recuadro -->
+		<div class="card mb-2 bg-success text-white border">
+			<div class="card-body py-2">
+				<h5 class="card-title text-center m-0" th:text="'Gestión de '+${entidad}"></h5>
+			</div>
+		</div>
+		<!-- Mensajes de alerta -->
+		<div th:if="${mensaje}" class="container py-4">
+			<div th:utext="${mensaje}" class="alert alert-dismissible fade show"
+				th:classappend="'alert-' + ${tipoMensaje}" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+		<!-- Formulario colapsable -->
+		<div class="collapse mb-2" id="collapseForm" th:classappend="${formColapsado ? ' show' : ''}">
+			<div class="card">
+				<div class="card-body">
+
+					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del
+							registro</span></h5>
+					<form th:action="@{/compradores}" th:object="${comprador}" method="post">
+						<input th:value="${comprador.id}" name="id" type="hidden" class="form-control" id="descripcion"
+							placeholder=" ">
+						<div class="row g-3">
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"> <i class="fas fa-users"></i>
+										</i></span>
+									<div class="form-floating">
+										<select class="form-select" name="tipopersona" th:field="*{tipo}">
+											<option
+												th:each="tipopersona : ${T(py.com.mabit.enums.TipoPersona).values()}"
+												th:value="${tipopersona}" th:text="${tipopersona}"
+												th:selected="${tipopersona.name() == tipo}">
+											</option>
+										</select>
+										<label for="tipo">Tipo de Persona</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="sexopersona" th:field="*{sexo}">
+											<option
+												th:each="sexopersona : ${T(py.com.mabit.enums.SexoPersona).values()}"
+												th:value="${sexopersona}" th:text="${sexopersona}"
+												th:selected="${sexopersona.name() == sexo}">
+											</option>
+										</select>
+										<label for="sexo">Sexo de Persona</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-id-card"></i></span>
+									<div class="form-floating">
+										<select class="form-select" id="tipoDocumento" name="tipoDocumento" required>
+											<!-- Asegúrate de que esta opción exista -->
+											<th:block th:each="tipoDocumento : ${tiposDocumentoComprador}">
+												<option th:value="${tipoDocumento.id}"
+													th:text="${tipoDocumento.descripcion}"
+													th:selected="${tipoDocumento.id} == ${comprador.tipoDocumento?.id}">
+												</option>
+											</th:block>
+										</select>
+										<label for="tipoDocumento">Tipo de documento con el que se registra</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-id-card"></i></span>
+									<div class="form-floating">
+										<input required id="documento" name="documento" type="text"
+											th:value="${comprador.documento}" class="form-control" placeholder=" ">
+										<label for="documento">Documento</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-building"></i></span>
+									<div class="form-floating">
+										<input required th:value="${comprador.nombreRazonSocial}" name="nombreRazonSocial"
+											type="text" class="form-control" id="nombreRazonSocial" placeholder=" ">
+										<label for="nombreRazonSocial">Nombre o razón social</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-id-card"></i></span>
+									<div class="form-floating">
+										<select class="form-select" id="nacionalidad" name="nacionalidad" required>
+											<!-- Asegúrate de que esta opción exista -->
+											<th:block th:each="pais : ${nacionalidades}">
+												<option th:value="${pais}" th:text="${pais}"
+													th:selected="${pais} == ${comprador.nacionalidad}">
+												</option>
+											</th:block>
+										</select>
+										<label for="nacionalidad">Nacionalidad</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+									<div class="form-floating">
+										<input th:value="${comprador.telefono}" name="telefono" type="text"
+											class="form-control" id="telefono" placeholder=" ">
+										<label for="telefono">Teléfono</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+									<div class="form-floating">
+										<input th:value="${comprador.email}" name="email" type="email"
+											class="form-control" id="telefono" placeholder=" ">
+										<label for="email">Email</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="input-group">
+									<span class="input-group-text align-items-start pt-2"><i
+											class="fas fa-map-marker-alt"></i></span>
+									<div class="form-floating flex-grow-1">
+										<textarea class="form-control" name="direccion" th:text="${direccion}"
+											id="direccion" style="height: 100px; min-height: 100px;"
+											placeholder="Dirección"></textarea>
+										<label for="direccion">Dirección</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4 text-end">
+							<button type="reset" class="btn btn-outline-secondary">
+								<i class="fas fa-eraser"></i> Limpiar
+							</button>
+							<button type="button" class="btn btn-outline-danger" data-bs-toggle="collapse"
+								data-bs-target="#collapseForm">
+								<i class="fas fa-times"></i> Cancelar
+							</button>
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-save"></i> Guardar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- Barra de acciones -->
+		<div class="d-flex gap-3 mb-2 align-items-center w-100">
+			<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm"
+				aria-expanded="false" aria-controls="collapseForm">
+				<i class="fas fa-plus"></i> Nuevo
+			</button>
+
+			<!-- Formulario con flex-grow-1 para ocupar el espacio entre los botones -->
+			<form th:action="@{/compradores}" method="get" class="flex-grow-1">
+				<div class="input-group">
+					<span class="input-group-text"><i class="fas fa-search"></i></span>
+					<input autofocus type="search" name="buscar" class="form-control" placeholder="Buscar compradores...">
+				</div>
+			</form>
+			<a th:href="@{/}" class="btn btn-secondary">
+				<i class="fas fa-arrow-left"></i> Volver
+			</a>
+		</div>
+		<!-- Tabla de usuarios -->
+		<div class="card shadow">
+			<div class="card-body">
+				<table class="table table-striped table-sm">
+					<thead class="table-dark">
+						<tr>
+							<th class="py-3">ID</th>
+							<th class="py-3">Documento</th>
+							<th class="py-3">Nombre razón social</th>
+							<th class="py-3">Teléfono</th>
+							<th class="py-3">Email</th>
+							<th class="py-3">Dirección</th>
+							<th class="py-3">Tipo de persona</th>
+							<th class="py-3">Sexo</th>
+							<th class="py-3">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="com : ${lista}">
+							<td th:text="${com.id}"></td>
+							<td th:text="${com.documento+ ' ('+com.tipoDocumento.descripcion+')'}"></td>
+							<td th:text="${com.nombreRazonSocial}"></td>
+							<td th:text="${com.telefono}"></td>
+							<td th:text="${com.email}"></td>
+							<td th:text="${com.direccion}"></td>
+							<td th:text="${com.tipo}"></td>
+							<td th:text="${com.sexo}"></td>
+							<td>
+								<a th:href="@{/compradores/editar/{id}(id=${com.id})}"
+									class="btn btn-warning btn-sm me-2">
+									<i class="fas fa-edit"></i>
+								</a>
+								<form class="d-inline" th:action="@{/compradores/eliminar/{id}(id=${com.id})}"
+									method="get">
+									<input type="hidden" name="userId" value="1">
+									<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+										th:data-bs-target="'#deleteModal' + ${com.id}">
+										<i class="fas fa-trash"></i>
+									</button>
+
+
+									<!-- Modal específico para este usuario -->
+									<div class="modal fade" th:id="'deleteModal' + ${com.id}" tabindex="-1"
+										aria-hidden="true">
+
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header bg-danger text-white">
+													<h5 class="modal-title">
+														<i class="fas fa-exclamation-triangle me-2"></i>
+														Confirmar Eliminación
+													</h5>
+													<button type="button" class="btn-close btn-close-white"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>¿Está seguro que desea eliminar este registro?</p>
+													<p class="text-danger mb-0">Esta acción no se puede deshacer.</p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">
+														<i class="fas fa-times"></i> Cancelar
+													</button>
+													<button type="submit" class="btn btn-danger">
+														<i class="fas fa-trash"></i> Eliminar
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Bootstrap Bundle con Popper -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
