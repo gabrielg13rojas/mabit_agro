@@ -17,8 +17,10 @@ InsumosRepositorio repositorio;
 	UnidadMedidaRepositorio unidadMedidaRepositorio;
 
     @GetMapping({ "", "/editar/{id}" })
-    public String formulario(Model html, @PathVariable(required = false) Long id,
-            @RequestParam(defaultValue = "") String buscar, @ModelAttribute("insumo") Insumos insu) {
+    public String formulario(Model html,
+    		@PathVariable(required = false) Long id,
+            @RequestParam(defaultValue = "") String buscar, 
+            @ModelAttribute("insumo") Insumos insu) {
         html.addAttribute("entidad", "Insumos");
         if (id != null) {
         	html.addAttribute("insumo", repositorio.findById(id).get());
