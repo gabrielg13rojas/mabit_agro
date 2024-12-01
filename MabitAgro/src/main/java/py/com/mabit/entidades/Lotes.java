@@ -1,5 +1,9 @@
 package py.com.mabit.entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import py.com.mabit.enums.EstadoLote;
 import py.com.mabit.enums.TipoLote;
 import py.com.mabit.enums.TipoSueloLote;
@@ -52,6 +57,17 @@ public class Lotes {
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private EstadoLote estado;
+
+	@OneToMany(mappedBy = "lote", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<LotesOcupacion> listAnimales = new ArrayList<>();
+
+	public List<LotesOcupacion> getListAnimales() {
+		return listAnimales;
+	}
+
+	public void setListAnimales(List<LotesOcupacion> listAnimales) {
+		this.listAnimales = listAnimales;
+	}
 
 	public Long getId() {
 		return id;

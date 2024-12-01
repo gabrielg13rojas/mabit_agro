@@ -193,21 +193,21 @@
 										<i class="fas fa-wheat-awn fa-1x text-warning"></i>
 										<p>Alimentos</p>
 									</a> </li>
-								<li class="nav-item"> <a th:href="@{/insumos}" class="nav-link"> <i
-											class="fa-solid fa-suitcase-medical text-danger"></i>
-										<p>Insumos</p>
-									</a> </li>
 								<li class="nav-item"> <a th:href="@{/stock-insumos}" class="nav-link"> <i
 											class="fa-solid fa-boxes-packing text-info"></i>
 										<p>Stock de insumos</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/lotes}" class="nav-link"> <i
-											class="fas fa-layer-group text-secondary"></i>
+											class="fas fa-layer-group text-primary"></i>
 										<p>Lotes</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/compradores}" class="nav-link"> <i
-											class="fa-solid fa-users text-success"></i>
+											class="fa-solid fa-users"></i>
 										<p>Compradores</p>
+									</a> </li>
+								<li class="nav-item"> <a th:href="@{/insumos}" class="nav-link"> <i
+											class="fa-solid fa-suitcase-medical text-danger"></i>
+										<p>Insumos</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/servicios}" class="nav-link"> <i
 											class="fa-regular fa-handshake"></i>
@@ -233,13 +233,17 @@
 						</li>
 						<li class="nav-item"> <a href="#" class="nav-link"> <i class="bi-arrows-move"></i>
 								<p>
-									Movimientos
+									Eventos
 									<i class="nav-arrow bi bi-chevron-right"></i>
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
+								<li class="nav-item"> <a th:href="@{/lote-actividades/alimentacion}" class="nav-link">
+										<i class="fa-solid fa-plate-wheat text-warning"></i>
+										<p>Alimentación</p>
+									</a> </li>
 								<li class="nav-item"> <a th:href="@{/ventas}" class="nav-link">
-										<i class="bi bi-cash-coin text-warning"></i>
+										<i class="fa-solid fa-money-bill-trend-up text-success"></i>
 										<p>Ventas</p>
 									</a> </li>
 								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
@@ -251,8 +255,25 @@
 										<p>Mortandad</p>
 									</a> </li>
 								<li class="nav-item"> <a th:href="@{/traslados}" class="nav-link">
-										<i class="bi bi-box-arrow-in-down-right text-success"></i>
+										<i class="fa-solid fa-right-left text-primary"></i>
 										<p>Traslados</p>
+									</a> </li>
+							</ul>
+						</li>
+						<li class="nav-item"> <a href="#" class="nav-link"> <i class="fa-solid fa-coins"></i>
+								<p>
+									Transacciones
+									<i class="nav-arrow bi bi-chevron-right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item"> <a th:href="@{/facturacion}" class="nav-link">
+										<i class="fa-solid fa-file-invoice text-info"></i>
+										<p>Facturación</p>
+									</a> </li>
+								<li class="nav-item"> <a th:href="@{/cobranzas}" class="nav-link">
+										<i class="fa-solid fa-hand-holding-dollar text-success"></i>
+										<p>Cobranzas</p>
 									</a> </li>
 							</ul>
 						</li>
@@ -264,25 +285,29 @@
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
-											class="nav-icon bi bi-circle"></i>
-										<p>Alimentos</p>
-									</a> </li>
-								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
-											class="nav-icon bi bi-circle"></i>
-										<p>Animales</p>
-									</a> </li>
-								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
-											class="nav-icon bi bi-circle"></i>
-										<p>Rentabilidad</p>
-									</a> </li>
 								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
-										<i class="bi bi-heart-fill text-danger"></i>
+										<i class="fa-solid fa-arrow-trend-down text-danger"></i>
 										<p>Gastos</p>
 									</a> </li>
+								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
+											class="fa-solid fa-circle-dollar-to-slot text-success"></i>
+										<p>Rentabilidad</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
+											class="fa-solid fa-cow text-primary"></i>
+										<p>Animales</p>
+									</a> </li>
 								<li class="nav-item"> <a href="./widgets/info-box.html" class="nav-link">
-										<i class="bi bi-heart-fill text-danger"></i>
+										<i class="fa-solid fa-shuffle"></i>
 										<p>Movimientos</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
+											class="fa-solid fa-wheat-awn-circle-exclamation text-warning"></i>
+										<p>Stock de alimentos</p>
+									</a> </li>
+								<li class="nav-item"> <a href="./examples/lockscreen.html" class="nav-link"> <i
+											class="fa-solid fa-boxes-stacked text-info"></i>
+										<p>Stock de insumos</p>
 									</a> </li>
 							</ul>
 						</li>

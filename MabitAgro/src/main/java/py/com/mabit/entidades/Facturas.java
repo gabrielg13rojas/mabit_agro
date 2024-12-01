@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 import py.com.mabit.enums.CondicionVenta;
 
 @Entity
-public class Ventas {
+public class Facturas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

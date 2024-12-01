@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class VentasDetalle {
+public class FacturaDetalle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,7 +36,7 @@ public class VentasDetalle {
 
 	@ManyToOne
 	@JoinColumn
-	private Ventas cabecera;
+	private Facturas cabecera;
 
 	public Long getId() {
 		return id;
@@ -118,11 +118,11 @@ public class VentasDetalle {
 		this.impuestoMonto = impuestoMonto;
 	}
 
-	public Ventas getCabecera() {
+	public Facturas getCabecera() {
 		return cabecera;
 	}
 
-	public void setCabecera(Ventas cabecera) {
+	public void setCabecera(Facturas cabecera) {
 		this.cabecera = cabecera;
 	}
 }

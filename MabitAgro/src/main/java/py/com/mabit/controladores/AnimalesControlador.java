@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import py.com.mabit.entidades.Animales;
-import py.com.mabit.entidades.Lotes;
+import py.com.mabit.entidades.LotesOcupacion;
 import py.com.mabit.entidades.MovimientosAnimales;
 import py.com.mabit.entidades.Nacimientos;
 import py.com.mabit.enums.EstadoAnimal;
@@ -24,6 +24,7 @@ import py.com.mabit.enums.EstadoLote;
 import py.com.mabit.enums.SexoAnimal;
 import py.com.mabit.enums.TipoMovimientoAnimal;
 import py.com.mabit.repositorios.AnimalesRepositorio;
+import py.com.mabit.repositorios.LoteOcupacionRepositorio;
 import py.com.mabit.repositorios.LotesRepositorio;
 import py.com.mabit.repositorios.MovimientoAnimalesRepositorio;
 import py.com.mabit.repositorios.NacimientosRepositorio;
@@ -41,6 +42,8 @@ public class AnimalesControlador {
 	@Autowired
 	LotesRepositorio repositorioLote;
 	@Autowired
+	LoteOcupacionRepositorio repositorioOcupacionLote;
+	@Autowired 
 	MovimientoAnimalesRepositorio repositorioMovimientos;
 
 	@GetMapping({ "", "/editar/{id}" })
@@ -85,7 +88,10 @@ public class AnimalesControlador {
 			@RequestParam(defaultValue = "") String observacionesLote, @RequestParam(defaultValue = "0") Long lote) {
 		Animales animalGuardado = repositorio.save(ani);
 		if (lote > 0) {
-			System.out.println("lote: " + lote);
+			LotesOcupacion ocupacion = new LotesOcupacion();
+			ocupacion.setAnimal(animalGuardado);
+			ocupacion.getLote().setId(lote);
+			repositorioOcupacionLote.save(ocupacion);
 			MovimientosAnimales mov = new MovimientosAnimales();
 			mov.setAnimal(animalGuardado);
 			mov.setFecha(LocalDate.now());

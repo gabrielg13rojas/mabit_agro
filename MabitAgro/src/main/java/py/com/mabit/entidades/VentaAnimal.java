@@ -2,7 +2,6 @@ package py.com.mabit.entidades;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,24 +11,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Alimentacion {
+public class VentaAnimal {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
 	private LocalDate fecha;
-	@Column(nullable = false)
-	private String observaciones;
 	@ManyToOne
 	@JoinColumn
 	private Animales animal;
 	@ManyToOne
 	@JoinColumn
-	private Alimentos alimento;
+	private Compradores comprador;
 	@Column(nullable = false)
-	private Double cantidad;
+	private BigDecimal precioVenta;
 	@Column(nullable = false)
-	private BigDecimal costo;
+	private BigDecimal ganancia;
 
 	public Long getId() {
 		return id;
@@ -47,14 +44,6 @@ public class Alimentacion {
 		this.fecha = fecha;
 	}
 
-	public String getObservaciones() {
-		return observaciones;
-	}
-
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
-	}
-
 	public Animales getAnimal() {
 		return animal;
 	}
@@ -63,30 +52,27 @@ public class Alimentacion {
 		this.animal = animal;
 	}
 
-	public Alimentos getAlimento() {
-		if (alimento == null) {
-			alimento = new Alimentos();
-		}
-		return alimento;
+	public Compradores getComprador() {
+		return comprador;
 	}
 
-	public void setAlimento(Alimentos alimento) {
-		this.alimento = alimento;
+	public void setComprador(Compradores comprador) {
+		this.comprador = comprador;
 	}
 
-	public Double getCantidad() {
-		return cantidad;
+	public BigDecimal getPrecioVenta() {
+		return precioVenta;
 	}
 
-	public void setCantidad(Double cantidad) {
-		this.cantidad = cantidad;
+	public void setPrecioVenta(BigDecimal precioVenta) {
+		this.precioVenta = precioVenta;
 	}
 
-	public BigDecimal getCosto() {
-		return costo;
+	public BigDecimal getGanancia() {
+		return ganancia;
 	}
 
-	public void setCosto(BigDecimal costo) {
-		this.costo = costo;
+	public void setGanancia(BigDecimal ganancia) {
+		this.ganancia = ganancia;
 	}
 }

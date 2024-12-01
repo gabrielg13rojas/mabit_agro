@@ -30,8 +30,6 @@ public class Sanitizacion {
 	private Double cantidad;
 	@Column(nullable = false)
 	private BigDecimal costo;
-	@Column(nullable = false)
-	private BigDecimal subtotal;
 
 	public Long getId() {
 		return id;
@@ -88,13 +86,4 @@ public class Sanitizacion {
 	public void setCosto(BigDecimal costo) {
 		this.costo = costo;
 	}
-
-	public BigDecimal getSubtotal() {
-		return subtotal;
-	}
-
-	public void setSubtotal(BigDecimal subtotal) {
-		this.subtotal = subtotal;
-	}
-
 }
