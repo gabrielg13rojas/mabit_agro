@@ -36,6 +36,14 @@ public class StockInsumos {
 	@JoinColumn
 	private Insumos insumo;
 
+	public LocalDate getVencimiento() {
+		return vencimiento;
+	}
+
+	public void setVencimiento(LocalDate vencimiento) {
+		this.vencimiento = vencimiento;
+	}
+
 	@ManyToOne
 	@JoinColumn
 	private Proveedores proveedor;
