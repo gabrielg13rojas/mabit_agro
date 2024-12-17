@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import py.com.mabit.entidades.Usuarios;
+import py.com.mabit.enums.EstadoAnimal;
 import py.com.mabit.repositorios.AlimentosRepositorio;
 import py.com.mabit.repositorios.AnimalesRepositorio;
 import py.com.mabit.repositorios.UsuarioRepositorio;
@@ -36,7 +37,7 @@ public class DashboardControlador {
 			model.addAttribute("privilegio", us.getPrivilegio().getDescripcion());
 		}
 		model.addAttribute("alimentos", alimentosRep.findAll().size());
-		model.addAttribute("animales", animalesRep.findAll().size());
+		model.addAttribute("animales", animalesRep.findByEstadoOrEstado(EstadoAnimal.VIVO, EstadoAnimal.ENFERMO).size());
 		return "dashboard";
 	}
 }

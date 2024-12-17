@@ -1,5 +1,6 @@
 package py.com.mabit.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,14 +13,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Alimentacion {
+public class Alimentacion implements Serializable {
+	private static final long serialVersionUID = 123456759L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
 	private LocalDate fecha;
-	@Column(nullable = false)
-	private String observaciones;
 	@ManyToOne
 	@JoinColumn
 	private Animales animal;
@@ -45,14 +45,6 @@ public class Alimentacion {
 
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
-	}
-
-	public String getObservaciones() {
-		return observaciones;
-	}
-
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
 	}
 
 	public Animales getAnimal() {

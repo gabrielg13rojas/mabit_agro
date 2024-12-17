@@ -1,5 +1,6 @@
 package py.com.mabit.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
@@ -11,7 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Alimentos {
+public class Alimentos implements Serializable {
+	private static final long serialVersionUID = 123456789L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

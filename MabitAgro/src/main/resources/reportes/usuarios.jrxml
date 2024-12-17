@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="usuarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="85b9acd5-dca2-45a4-be31-9a035c54f0ae">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT * FROM usuarios]]>
+	</queryString>
+	<field name="bloqueado" class="java.lang.Boolean"/>
+	<field name="verificado" class="java.lang.Boolean"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="privilegio_id" class="java.lang.Long"/>
+	<field name="contrasenha" class="java.lang.String"/>
+	<field name="correo" class="java.lang.String"/>
+	<field name="foto" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="111" height="20" uuid="09507b72-7ccc-479e-82a9-e873e697074d"/>
+				<text><![CDATA[correo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="111" y="0" width="111" height="20" uuid="7769c8a0-dbb0-42d7-bdd0-390485ceb080"/>
+				<text><![CDATA[nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="0" width="111" height="20" uuid="da350c10-49a2-4678-a1b3-af0225a7f43f"/>
+				<text><![CDATA[privilegio_id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="0" width="111" height="20" uuid="7a315465-9668-44c9-aab4-838d7a014cef"/>
+				<text><![CDATA[verificado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="0" width="111" height="20" uuid="0f2fe2be-aa39-4617-9d16-8c787a158729"/>
+				<text><![CDATA[bloqueado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="111" height="20" uuid="61091736-f548-4a49-8cfc-8a8d275293c3"/>
+				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="111" y="0" width="111" height="20" uuid="78c6692e-1495-4667-9ad1-18a8a6e27ed9"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="222" y="0" width="111" height="20" uuid="cfbeef17-89a1-4630-a99b-b03826f560bc"/>
+				<textFieldExpression><![CDATA[$F{privilegio_id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="333" y="0" width="111" height="20" uuid="ed9ffb64-555b-414c-bc29-65fa0576cd2e"/>
+				<textFieldExpression><![CDATA[$F{verificado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="444" y="0" width="111" height="20" uuid="ad721ef3-2860-4f50-9358-798a69bb7e66"/>
+				<textFieldExpression><![CDATA[$F{bloqueado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

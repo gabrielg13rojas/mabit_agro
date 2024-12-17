@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Registro de Mortalidad Animal</title>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Font Awesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+	<style>
+		body {
+			background-color: #f4f6f9;
+		}
+
+		.form-floating>.form-control:focus {
+			border-color: #dc3545;
+			box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+		}
+
+		.input-group-text {
+			background-color: transparent;
+			border-right: none;
+		}
+
+		.form-control:focus {
+			border-left: none;
+		}
+
+		#photoPreview {
+			max-height: 300px;
+			object-fit: cover;
+			display: none;
+		}
+
+		.table-hover tbody tr:hover {
+			background-color: rgba(220, 53, 69, 0.1);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container py-5">
+		<div class="row justify-content-center">
+			<div class="col-12">
+				<div class="card shadow-lg">
+					<div class="card-header bg-danger text-white text-center">
+						<h3 class="my-2">
+							<i class="fas fa-skull me-2"></i>Registro de Mortalidad Animal
+						</h3>
+					</div>
+					<div class="card-body p-4">
+						<form id="mortalityForm">
+							<div class="row g-3">
+								<!-- Lot Selection Section -->
+								<div class="col-12">
+									<div class="input-group mb-3">
+										<select class="form-select" id="lotSelect">
+											<option value="">Seleccionar Lote</option>
+											<option value="lote1">Lote 1 - Establos Norte</option>
+											<option value="lote2">Lote 2 - Praderas Centrales</option>
+											<option value="lote3">Lote 3 - Zona de Cría</option>
+										</select>
+										<button class="btn btn-danger" type="button" id="selectLotBtn">
+											<i class="fas fa-search me-2"></i>Seleccionar
+										</button>
+									</div>
+
+									<!-- Accordion for Animal Selection -->
+									<div class="accordion" id="lotAccordion">
+										<div class="accordion-item">
+											<h2 class="accordion-header" id="animalsAccordionHeader">
+												<button class="accordion-button collapsed" type="button"
+													data-bs-toggle="collapse" data-bs-target="#animalsAccordionBody"
+													aria-expanded="false" aria-controls="animalsAccordionBody">
+													<i class="fas fa-paw me-2"></i>Animales del Lote
+												</button>
+											</h2>
+											<div id="animalsAccordionBody" class="accordion-collapse collapse"
+												aria-labelledby="animalsAccordionHeader">
+												<div class="accordion-body">
+													<div class="table-responsive">
+														<div class="col-12">
+															<div class="form-floating mb-3">
+																<div class="input-group">
+																	<span class="input-group-text">
+																		<i class="fa-solid fa-magnifying-glass"></i>
+																	</span>
+																	<div class="form-floating flex-grow-1">
+																		<input type="search" class="form-control"
+																			id="estadoSalud"
+																			placeholder="Estado de Salud" required>
+																		<label for="estadoSalud">Buscar animal</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<table class="table table-hover" id="animalsTable">
+															<thead class="table table-dark">
+																<tr>
+																	<th>
+																		<input type="checkbox" class="form-check-input"
+																			id="selectAllAnimals">
+																	</th>
+																	<th>ID</th>
+																	<th>Tipo</th>
+																	<th>Edad</th>
+																	<th>Peso</th>
+																</tr>
+															</thead>
+															<tbody id="animalsTableBody">
+																<!-- Dynamically populated animals will go here -->
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Selected Animals Dropdown -->
+
+
+								<!-- Photo Upload and Preview -->
+								<div class="col-12">
+									<div class="form-floating mb-3">
+										<input type="file" class="form-control" id="fotoAnimal" accept="image/*"
+											required>
+										<label for="fotoAnimal">
+											<i class="fas fa-camera me-2"></i>Foto del Animal
+										</label>
+									</div>
+									<div class="text-center mt-3">
+										<img id="photoPreview" class="img-fluid rounded shadow"
+											alt="Vista previa de la foto">
+									</div>
+								</div>
+
+								<!-- Mortality Details -->
+								<div class="col-md-6">
+									<div class="form-floating mb-3">
+										<div class="input-group">
+											<span class="input-group-text">
+												<i class="fas fa-birthday-cake"></i>
+											</span>
+											<div class="form-floating flex-grow-1">
+												<input type="number" step="0.1" class="form-control" id="edad"
+													placeholder="Edad" required>
+												<label for="edad">Edad (años)</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-floating mb-3">
+										<div class="input-group">
+											<span class="input-group-text">
+												<i class="fas fa-weight"></i>
+											</span>
+											<div class="form-floating flex-grow-1">
+												<input type="number" step="0.1" class="form-control" id="peso"
+													placeholder="Peso" required>
+												<label for="peso">Peso (kg)</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12">
+									<div class="form-floating mb-3">
+										<div class="input-group">
+											<span class="input-group-text">
+												<i class="fas fa-heartbeat"></i>
+											</span>
+											<div class="form-floating flex-grow-1">
+												<input type="text" class="form-control" id="estadoSalud"
+													placeholder="Estado de Salud" required>
+												<label for="estadoSalud">Estado de Salud Previo</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12">
+									<div class="form-floating mb-3">
+										<div class="input-group">
+											<span class="input-group-text">
+												<i class="fas fa-skull-crossbones"></i>
+											</span>
+											<div class="form-floating flex-grow-1">
+												<textarea class="form-control" id="causaMuerte"
+													placeholder="Causa de Muerte" style="height: 100px"
+													required></textarea>
+												<label for="causaMuerte">Descripción Detallada de la Causa de
+													Muerte</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12">
+									<div class="form-floating mb-3">
+										<div class="input-group">
+											<span class="input-group-text">
+												<i class="fas fa-dollar-sign"></i>
+											</span>
+											<div class="form-floating flex-grow-1">
+												<input type="number" step="0.01" class="form-control"
+													id="perdidaEconomica" placeholder="Pérdida Económica" required>
+												<label for="perdidaEconomica">Pérdida Económica ($)</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12">
+									<div class="form-floating mb-3">
+										<input type="date" class="form-control" id="fechaRegistro" required>
+										<label for="fechaRegistro">
+											<i class="fas fa-calendar-alt me-2"></i>Fecha de Registro
+										</label>
+									</div>
+								</div>
+
+								<div class="col-12">
+									<button type="submit" class="btn btn-danger w-100">
+										<i class="fas fa-save me-2"></i>Registrar Muerte Animal
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

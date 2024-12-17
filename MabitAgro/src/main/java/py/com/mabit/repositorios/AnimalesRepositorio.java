@@ -18,5 +18,6 @@ public interface AnimalesRepositorio extends JpaRepository<Animales, Long> {
 
 	@Query("SELECT a FROM Animales a WHERE a.sexo = :sexo AND a.estado IN (:estados)")
 	List<Animales> findBySexoYEstado(@Param("sexo") SexoAnimal sexo, @Param("estados") List<EstadoAnimal> estados);
+	List<Animales> findByEstadoOrEstado(EstadoAnimal vivo, EstadoAnimal muerto);
 
 }
