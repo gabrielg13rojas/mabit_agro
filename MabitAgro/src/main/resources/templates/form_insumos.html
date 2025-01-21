@@ -32,6 +32,8 @@
 				<div class="card-body">
 					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del Insumo</span></h5>
 					<form th:action="@{/insumos}" th:object="${insumo}" method="post">
+						<input th:value="${insumo.id}" type="hidden" name="id" class="form-control" id="id"
+							placeholder=" ">
 						<div class="container">
 							<div class="row">
 								<div class="col-md-6">
@@ -64,29 +66,19 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-text"><i class="fas fa-file-alt"></i></span>
 									<div class="form-floating">
-										<input required th:field="${insumo.descripcion}" type="text" class="form-control"
-											id="descripcion" name="descripcion" placeholder=" ">
+										<input required th:field="${insumo.descripcion}" type="text"
+											class="form-control" id="descripcion" name="descripcion" placeholder=" ">
 										<label for="descripcion">Descripción</label>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+									<span class="input-group-text"><i class="fa-solid fa-money-bill"></i></span>
 									<div class="form-floating">
-										<input th:field="${insumo.detalles}" type="text" class="form-control"
-											id="detalles" name="detalles" placeholder=" ">
-										<label for="detalles">Detalles</label>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="input-group input-group-sm">
-									<span class="input-group-text"><i class="fas fa-box"></i></span>
-									<div class="form-floating">
-										<input th:field="${insumo.stockMinimo}" type="number" class="form-control"
-											id="stockMinimo" name="stockMinimo" placeholder=" ">
-										<label for="stockMinimo">Stock Mínimo</label>
+										<input th:field="${insumo.precioUnitario}" type="number" class="form-control"
+											id="precioUnitario" name="precioUnitario" placeholder=" ">
+										<label for="stockMinimo">Precio Unitario</label>
 									</div>
 								</div>
 							</div>
@@ -106,8 +98,112 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-box"></i></span>
+									<div class="form-floating">
+										<input th:field="${insumo.stockMinimo}" type="number" class="form-control"
+											id="stockMinimo" name="stockMinimo" placeholder=" ">
+										<label for="stockMinimo">Stock Mínimo</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+									<div class="form-floating">
+										<input th:field="${insumo.detalles}" type="text" class="form-control"
+											id="detalles" name="detalles" placeholder=" ">
+										<label for="detalles">Detalles</label>
+									</div>
+								</div>
+							</div>
 						</div>
+						<!-- Always expanded accordion -->
+						<div class="accordion mt-3" id="stockAccordion" th:if="${formColapsado}">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#stockCollapse" aria-expanded="true">
+										Información de Stock
+									</button>
+								</h2>
+								<div id="stockCollapse" class="accordion-collapse show"
+									data-bs-parent="#stockAccordion">
+									<div class="accordion-body">
+										<div class="row g-3">
+											<div class="col-md-6">
+												<div class="input-group input-group-sm">
+													<span class="input-group-text"><i class="fas fa-box"></i></span>
+													<div class="form-floating">
+														<input type="number" class="form-control" id="stock"
+															name="stock" placeholder=" ">
+														<label for="stock">Stock</label>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="input-group input-group-sm">
+													<span class="input-group-text"><i
+															class="fas fa-balance-scale"></i></span>
+													<div class="form-floating">
+														<select class="form-select" id="proveedor" name="proveedor">
+															<option selected disabled value="">Seleccione
+																proveedor...
+															</option>
+															<th:block th:each="prov : ${proveedores}">
+																<option th:value="${prov.id}" th:text="${prov.nombre}">
+															</th:block>
+														</select>
+														<label for="proveedor">Proveedor</label>
+													</div>
+												</div>
+											</div>
 
+											<div class="col-md-6">
+												<div class="input-group input-group-sm">
+													<span class="input-group-text"><i class="fas fa-box"></i></span>
+													<div class="form-floating">
+														<input class="form-control" id="lote" name="lote"
+															placeholder=" ">
+														<label for="lote">Lote</label>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="input-group input-group-sm">
+													<span class="input-group-text"><i
+															class="fa-solid fa-calendar-day"></i></span>
+													<div class="form-floating">
+														<input type="date" class="form-control" id="vencimiento"
+															name="vencimiento">
+														<label for="vencimiento">Fecha de vencimiento</label>
+													</div>
+												</div>
+											</div>
+											<table class="table table-sm">
+												<thead class="table table-dark">
+													<td>ID</td>
+													<td>PROVEEDOR</td>
+													<td>LOTE</td>
+													<td>VENCIMIENTO</td>
+													<td>STOCK</td>
+												</thead>
+												<tbody>
+													<tr th:each="hs : ${historialStock}">
+														<td th:text="${hs.id}"></td>
+														<td th:text="${hs.proveedor.nombre}"></td>
+														<td th:text="${hs.lote}"></td>
+														<td th:text="${hs.vencimiento}"></td>
+														<td th:text="${hs.stock}"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="mt-4 text-end">
 							<button type="reset" class="btn btn-outline-secondary">
 								<i class="fas fa-eraser"></i> Limpiar

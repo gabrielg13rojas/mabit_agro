@@ -1,5 +1,7 @@
 package py.com.mabit.entidades;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,57 +15,64 @@ public class Insumos {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String codigo;
-	
+
 	@Column(nullable = false)
 	private String imagen;
-	
+
+	@Column(nullable = false)
+	private String descripcion;
+
+	@Column(nullable = false)
+	private String detalles;
+
+	@Column(nullable = false)
+	private Double stockMinimo;
+
+	@Column(nullable = false)
+	private BigDecimal precioUnitario;
+
+	@ManyToOne
+	@JoinColumn
+	private UnidadesMedida unidad_medida;
+
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
 	public String getCodigo() {
 		return codigo;
 	}
-
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
 
-
 	public String getDescripcion() {
 		return descripcion;
 	}
-
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-
 	public String getDetalles() {
 		return detalles;
 	}
-
 
 	public void setDetalles(String detalles) {
 		this.detalles = detalles;
 	}
 
-
 	public Double getStockMinimo() {
 		return stockMinimo;
 	}
-
 
 	public void setStockMinimo(Double stockMinimo) {
 		this.stockMinimo = stockMinimo;
@@ -73,38 +82,23 @@ public class Insumos {
 		return imagen;
 	}
 
-
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 
-
-	@Column(nullable = false)
-	private String descripcion;
-	
-	@Column(nullable = false)
-	private String detalles;
-	
-	@Column(nullable = false)
-	private Double stockMinimo;
-	
-	@ManyToOne
-	@JoinColumn
-	private UnidadesMedida unidad_medida;
-	
-	
 	public UnidadesMedida getUnidad_medida() {
 		return unidad_medida;
 	}
-
 
 	public void setUnidad_medida(UnidadesMedida unidad_medida) {
 		this.unidad_medida = unidad_medida;
 	}
 
-
-	public Insumos() {
-		
+	public BigDecimal getPrecioUnitario() {
+		return precioUnitario;
 	}
 
+	public void setPrecioUnitario(BigDecimal precioUnitario) {
+		this.precioUnitario = precioUnitario;
+	}
 }

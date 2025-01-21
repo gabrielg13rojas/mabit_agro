@@ -36,7 +36,7 @@ public class AlimentacionControlador {
 
 	@ModelAttribute("listAlimentaciones")
 	public ArrayList<Alimentacion> inicializarLista() {
-		return new ArrayList<>();
+		return new ArrayList<Alimentacion>();
 	}
 
 	@GetMapping
