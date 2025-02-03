@@ -1,5 +1,7 @@
 package py.com.mabit.controladores;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import py.com.mabit.entidades.Insumos;
 import py.com.mabit.entidades.Lotes;
 import py.com.mabit.entidades.LotesOcupacion;
 import py.com.mabit.entidades.Sanitizacion;
@@ -41,8 +42,7 @@ public class SanitizacionControlador {
 	}
 
 	@GetMapping
-	public String alimentacion(Model html,
-			@ModelAttribute("listSanitizacion") ArrayList<Sanitizacion> listSanitizacion,
+	public String sanitizacion(Model html, @ModelAttribute("listSanitizacion") ArrayList<Sanitizacion> listSanitizacion,
 			@RequestParam(defaultValue = "0") Long idLote, String insuExist, String stockInsuf, String guardar,
 			String limpiar) {
 		if (limpiar != null) {
@@ -55,66 +55,79 @@ public class SanitizacionControlador {
 				for (Sanitizacion sanit : listSanitizacion) {
 					Sanitizacion sa = new Sanitizacion();
 					sa.setInsumo(sanit.getInsumo());
+					sa.setLoteInsumo(sanit.getLoteInsumo());
 					sa.setAnimal(animales.getAnimal());
-					sa.setCantidad(sanit.getCantidad() / lot.getListAnimales().size());
-					sa.setCosto(sanit.getCosto());
+					sa.setCantidad(sanit.getCantidad().divide(new BigDecimal(lot.getListAnimales().size()), 2,
+							RoundingMode.HALF_UP));
+					sa.setCosto(sanit.getCosto().multiply(sa.getCantidad()));
 					sa.setFecha(LocalDate.now());
 					listDefSanit.add(sa);
 				}
 			}
 			repositorio.saveAll(listDefSanit);
-			List<Insumos> listdescontarStockInsu = new ArrayList<>();
+			List<StockInsumos> listdescontarStockInsu = new ArrayList<>();
+			List<StockInsumos> listaInsumos = repositorioInsumos.findAll();
 			for (Sanitizacion sanitizacion : listSanitizacion) {
-				Insumos insu = sanitizacion.getInsumo();
-//				insu.setStock(insu.getStock() - sanitizacion.getCantidad());
-//				listdescontarStockInsu.add(ali);
+				for (StockInsumos stockInsumos : listaInsumos) {
+					if (stockInsumos.getInsumo().getId() == sanitizacion.getInsumo().getId()
+							&& stockInsumos.getLote().equals(sanitizacion.getLoteInsumo())) {
+						StockInsumos insu = stockInsumos;
+						insu.setStock(insu.getStock().subtract(sanitizacion.getCantidad()));
+						listdescontarStockInsu.add(insu);
+					}
+				}
 			}
-//			repositorioInsumos.saveAll(listdescontarStockInsu);
-			html.addAttribute("msg", "Se ha registrado la alimentación de los animales");
+			repositorioInsumos.saveAll(listdescontarStockInsu);
+			html.addAttribute("msg", "Se ha registrado la sanitización de los animales");
 			listSanitizacion.clear();
 			idLote = 0l;
 		}
 		if (idLote > 0) {
 			Lotes lote = repositorioLotes.findById(idLote).get();
 			html.addAttribute("loteObj", lote);
-			double gasTotal = 0d;
+			BigDecimal gasTotal = new BigDecimal(0d);
 			for (Sanitizacion sanitizacion : listSanitizacion) {
-				//gasTotal += sanitizacion.getCantidad() * sanitizacion.getInsumo().getPrecioUnitario().doubleValue();
+				gasTotal.add(sanitizacion.getCantidad().multiply(sanitizacion.getInsumo().getPrecioUnitario()));
 			}
-			html.addAttribute("gastoxanimal", gasTotal / lote.getListAnimales().size());
+			html.addAttribute("gastoxanimal",
+					gasTotal.divide(new BigDecimal(lote.getListAnimales().size()), 2, RoundingMode.HALF_UP));
 			html.addAttribute("gastoTotal", gasTotal);
 		} else {
 			html.addAttribute("loteObj", new Lotes());
 		}
-	//	html.addAttribute("totalPesoAlim", listSanitizacion.stream().mapToDouble(Insumos::get).sum());
+		html.addAttribute("totalPesoAlim",
+				listSanitizacion.stream().map(Sanitizacion::getCantidad).reduce(BigDecimal.ZERO, BigDecimal::add));
 		html.addAttribute("listInsumos", repositorioInsumos.findAll());
 		html.addAttribute("listaLotes", repositorioLotes.findAll());
 		if (stockInsuf != null) {
-			html.addAttribute("error", "No existe el stock suficiente para asignar este alimento");
+			html.addAttribute("error", "No existe el stock suficiente para asignar este insumo");
 		}
 		if (insuExist != null) {
 			html.addAttribute("error",
-					"Ya existe este alimento en la lista. Si desea modificar la cantidad, quite de la lista de abajo y vuelve a agregar.");
+					"Ya existe este insumo en la lista. Si desea modificar la cantidad, quite de la lista de abajo y vuelve a agregar.");
 		}
 		return "form_sanitizacion";
 	}
 
 	@PostMapping("/addInsu")
-	public String agregarAlimento(@RequestParam("insumo") Long idInsumo, @RequestParam("cantidad") Double cantidad,
+	public String agregarInsumo(@RequestParam("insumo") Long idInsumo, @RequestParam("cantidad") BigDecimal cantidad,
 			@ModelAttribute("listSanitizacion") ArrayList<Sanitizacion> listSanitizacion) {
-		if (listSanitizacion.stream().noneMatch(in -> in.getInsumo().getId() == idInsumo)) {
-			Sanitizacion ali = new Sanitizacion();
-			List<StockInsumos> stin = repositorioInsumos.findByInsumoId(idInsumo);
-			if (stin.size()>0) {
-				ali.setInsumo(stin.get(0).getInsumo());				
-			}
-			ali.setCantidad(cantidad);
-		//	ali.setCosto(ali.getInsumo().getPrecioUnitario());
-			ali.setFecha(LocalDate.now());
-			if (1000 < ali.getCantidad()) {
+		if (listSanitizacion.stream().noneMatch(in -> in.getId() == idInsumo)) {
+			Sanitizacion sani = new Sanitizacion();
+			StockInsumos stin = repositorioInsumos.findById(idInsumo).get();
+			sani.setInsumo(stin.getInsumo());
+			sani.setCosto(sani.getInsumo().getPrecioUnitario());
+			sani.setLoteInsumo(stin.getLote());
+			sani.setCantidad(cantidad);
+			sani.setFecha(LocalDate.now());
+			BigDecimal sumaCant = listSanitizacion.stream()
+					.filter(sanit -> sanit.getInsumo().getId() == stin.getInsumo().getId()
+							&& sanit.getLoteInsumo().equals(stin.getLote()))
+					.map(Sanitizacion::getCantidad).reduce(BigDecimal.ZERO, BigDecimal::add);
+			if (stin.getStock().compareTo(sumaCant.add(cantidad)) < 0) {
 				return "redirect:/sanitizacion?stockInsuf=true";
 			} else {
-				listSanitizacion.add(ali);
+				listSanitizacion.add(sani);
 			}
 		} else {
 			return "redirect:/sanitizacion?insuExist=true";
@@ -123,9 +136,11 @@ public class SanitizacionControlador {
 	}
 
 	@GetMapping("/quitar/{id}")
-	public String quitarAlimento(@PathVariable("id") Long idInsumo,
+	public String quitarInsumo(@PathVariable("id") Long idInsumo,
+			@RequestParam(value = "loteInsumo", defaultValue = "") String loteInsumo,
 			@ModelAttribute("listSanitizacion") ArrayList<Sanitizacion> listSanitizacion) {
-		listSanitizacion.removeIf(sani -> sani.getInsumo().getId() == idInsumo);
+		listSanitizacion
+				.removeIf(sani -> sani.getInsumo().getId() == idInsumo && sani.getLoteInsumo().equals(loteInsumo));
 		return "redirect:/sanitizacion";
 	}
 }

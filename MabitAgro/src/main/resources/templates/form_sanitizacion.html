@@ -82,15 +82,16 @@
 											<select class="form-select" id="alimentoSelect"
 												aria-label="Seleccionar Insumo" name="insumo">
 												<option th:each="insu : ${listInsumos}" th:value="${insu.id}"
-													th:text="${insu.descripcion+' ['+insu.codigo+']'}">
+													th:text="${insu.insumo.descripcion+' ['+insu.insumo.codigo+'] ('+insu.lote+' VENC.: '+insu.vencimiento+')  Stock: '+insu.stock}">
 												</option>
 											</select>
-											<label for="alimentoSelect"><i class="fas fa-seedling me-2"></i>Insumo</label>
+											<label for="alimentoSelect"><i
+													class="fa-solid fa-boxes-packing me-2"></i>Insumo</label>
 										</div>
 
 										<div class="form-floating mb-3">
-											<input required type="number" step="0.01" class="form-control" id="cantidadAlimento"
-												name="cantidad" placeholder="Cantidad">
+											<input required type="number" step="0.01" class="form-control"
+												id="cantidadAlimento" name="cantidad" placeholder="Cantidad">
 											<label for="cantidadAlimento"><i
 													class="fas fa-weight me-2"></i>Cantidad</label>
 										</div>
@@ -104,19 +105,23 @@
 										<div class="card-header bg-white">
 											<i class="fas fa-list-alt me-2 text-primary"></i>Insumos Asignados
 										</div>
-										<ul class="list-group list-group-flush" id="listaAlimentosAsignados">
+										<ul class="list-group list-group-flush" id="listaInsumosAsignados">
 											<li class="list-group-item feed-list-item d-flex justify-content-between align-items-center"
-												th:each="a : ${listInsumos}">
+												th:each="sani : ${listSanitizacion}">
 												<div>
-													<span th:text="${a.insumo.descripcion}"></span>
-												</div>
-												<div>
+													<span th:text="${sani.insumo.descripcion +' ('+sani.loteInsumo+')'}"></span>
 													<span th:class="'badge bg-primary'"
-														th:text="${a.cantidad% 1 == 0 ? #numbers.formatDecimal(a.cantidad, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(a.cantidad, 1, 'POINT', 2, 'COMMA')}+' '+${a.alimento.unidad_medida.siglas}"></span>
+														th:text="${sani.cantidad% 1 == 0 ? #numbers.formatDecimal(sani.cantidad, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(sani.cantidad, 1, 'POINT', 2, 'COMMA')}+' '+${sani.insumo.unidad_medida.siglas}"></span>
 													<span th:if="${loteObj.listAnimales.size>0}"
 														th:class="'badge bg-warning'"
-														th:text="${loteObj.listAnimales.size>0?a.cantidad/loteObj.listAnimales.size:''}+'xA'"></span>
-													<a th:href="@{/sanitizacion/quitar/{id}(id=${a.alimento.id})}"
+														th:text="${loteObj.listAnimales.size>0?sani.cantidad/loteObj.listAnimales.size:''}+'xA'"></span>
+												</div>
+												<div>
+													<span th:class="'badge bg-primary'" th:text="0"></span>
+													<span th:if="${loteObj.listAnimales.size>0}"
+														th:class="'badge bg-warning'"
+														th:text="${loteObj.listAnimales.size>0?sani.cantidad/loteObj.listAnimales.size:''}+'xA'"></span>
+													<a th:href="@{/sanitizacion/quitar/{id}(id=${sani.insumo.id},loteInsumo=${sani.loteInsumo})}"
 														class="btn btn-danger btn-sm me-2">
 														<i class="fas fa-trash"></i>
 													</a>
@@ -124,7 +129,8 @@
 											</li>
 										</ul>
 									</div>
-									<a th:href="@{/sanitizacion?limpiar=true}" type="reset" class="btn btn-outline-secondary w-100 mt-4 mb-4">
+									<a th:href="@{/sanitizacion?limpiar=true}" type="reset"
+										class="btn btn-outline-secondary w-100 mt-4 mb-4">
 										<i class="fas fa-eraser"></i> Limpiar lista
 									</a>
 									<h4 class="mb-4">
@@ -251,11 +257,11 @@
 										</div>
 									</div>
 
-									<!-- Distribución de Alimentos -->
+									<!-- Distribución de insumos-->
 									<div class="col-md-12">
 										<div class="p-4">
 											<h4 class="mb-4">
-												<i class="fa-solid fa-money-bill-wheat me-2"></i>Total de alimentos
+												<i class="fa-solid fas fa-syringe me-2"></i>Total de insumos
 												asignados y resumen de gastos
 											</h4>
 											<div class="card bg-light">
@@ -264,10 +270,9 @@
 														<div class="col-md-4">
 															<div class="text-center">
 																<h5><i
-																		class="fa-solid fa-plate-wheat me-2"></i></i>Total
-																	Alimentos</h5>
-																<p class="h3 text-primary"
-																	th:text="0">
+																		class="fa-solid fa-boxes-packing me-2"></i></i>Total
+																	Insumos</h5>
+																<p class="h3 text-primary" th:text="${listSanitizacion.size}">
 																	0 kg</p>
 															</div>
 														</div>
@@ -304,7 +309,7 @@
 												<a class="btn btn-success" th:if="${loteObj.id>0}"
 													id="registrarAlimentacion"
 													th:href="@{/sanitizacion(guardar=true, idLote=${loteObj.id})}">
-													<i class="fas fa-save me-2"></i>Registrar Alimentación
+													<i class="fas fa-save me-2"></i>Registrar Sanitización
 												</a>
 											</div>
 										</div>

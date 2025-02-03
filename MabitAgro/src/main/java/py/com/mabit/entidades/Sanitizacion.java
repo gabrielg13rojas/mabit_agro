@@ -1,5 +1,6 @@
 package py.com.mabit.entidades;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,14 +13,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Sanitizacion {
+public class Sanitizacion implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
 	private LocalDate fecha;
-	@Column(nullable = false)
-	private String detallesTrabajo;
 	@ManyToOne
 	@JoinColumn
 	private Animales animal;
@@ -27,12 +27,22 @@ public class Sanitizacion {
 	@JoinColumn
 	private Insumos insumo;
 	@Column(nullable = false)
-	private Double cantidad;
+	private BigDecimal cantidad;
 	@Column(nullable = false)
 	private BigDecimal costo;
+	@Column(nullable = false)
+	private String loteInsumo;
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getLoteInsumo() {
+		return loteInsumo;
+	}
+
+	public void setLoteInsumo(String loteInsumo) {
+		this.loteInsumo = loteInsumo;
 	}
 
 	public void setId(Long id) {
@@ -46,15 +56,6 @@ public class Sanitizacion {
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
-
-	public String getDetallesTrabajo() {
-		return detallesTrabajo;
-	}
-
-	public void setDetallesTrabajo(String detallesTrabajo) {
-		this.detallesTrabajo = detallesTrabajo;
-	}
-
 	public Animales getAnimal() {
 		return animal;
 	}
@@ -71,11 +72,11 @@ public class Sanitizacion {
 		this.insumo = insumo;
 	}
 
-	public Double getCantidad() {
+	public BigDecimal getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(Double cantidad) {
+	public void setCantidad(BigDecimal cantidad) {
 		this.cantidad = cantidad;
 	}
 

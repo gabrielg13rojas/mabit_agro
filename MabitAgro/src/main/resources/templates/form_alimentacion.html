@@ -82,7 +82,7 @@
 											<select class="form-select" id="alimentoSelect"
 												aria-label="Seleccionar Alimento" name="alimento">
 												<option th:each="ali : ${listAlimentos}" th:value="${ali.id}"
-													th:text="${ali.descripcion}">
+													th:text="${ali.descripcion +' (Stock: '+ali.stock+' '+ali.unidad_medida.siglas+')'}">
 												</option>
 											</select>
 											<label for="alimentoSelect"><i class="fas fa-seedling me-2"></i>Tipo de
