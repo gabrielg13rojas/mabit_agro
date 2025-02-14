@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sanitización</title>
+	<!-- Bootstrap 5 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+	body {
+		background-color: #f4f6f9;
+	}
+
+	.card {
+		border-radius: 15px;
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+	}
+
+	.bg-agro {
+		background-color: rgb(0, 255, 255);
+		color: rgb(0, 0, 0);
+	}
+
+	.table thead {
+		background-color: #2c3e50;
+		color: white;
+	}
+
+	.table-custom-small tr {
+		height: 15px;
+	}
+
+	.table-custom-small td,
+	.table-custom-small th {
+		padding: 0.1rem 0.5rem;
+		vertical-align: middle;
+	}
+
+	@media (max-width: 768px) {
+		.lot-selector-row {
+			flex-direction: column;
+		}
+
+		.lot-selector-row>.col-9,
+		.lot-selector-row>.col-3 {
+			width: 100%;
+			margin-bottom: 0.5rem;
+		}
+	}
+</style>
+
+<body>
+	<div class="container-fluid py-5">
+		<div class="row justify-content-center">
+			<div class="col-xl-12">
+				<div class="card card-feed border-0">
+					<div class="card-header bg-agro d-flex align-items-center">
+						<i class="fa-solid fas fa-syringe fa-2x"></i>
+						<h4 class="mb-0 ms-3">Sanitización animal</h4>
+					</div>
+
+					<div class="card-body p-0">
+						<div class="row g-0">
+							<!-- Panel Izquierdo: Gestión de Alimentos -->
+							<div class="col-md-4 bg-light border-end">
+								<div th:if="${msg}" class="alert alert-success mt-2" role="alert">
+									<span th:text="${msg}"></span>
+								</div>
+								<div class="p-4">
+									<h4 class="mb-4">
+										<i class="fas fa-boxes-stacked"></i> Insumos disponibles
+									</h4>
+									<div th:if="${error}" class="alert alert-danger mt-2" role="alert">
+										<span th:text="${error}"></span>
+									</div>
+									<form th:action="@{/sanitizacion/addInsu}" method="post">
+										<div class="form-floating mb-3">
+											<select class="form-select" id="alimentoSelect"
+												aria-label="Seleccionar Insumo" name="insumo">
+												<option th:each="insu : ${listInsumos}" th:value="${insu.id}"
+													th:text="${insu.insumo.descripcion+' ['+insu.insumo.codigo+'] ('+insu.lote+' VENC.: '+insu.vencimiento+')  Stock: '+insu.stock}">
+												</option>
+											</select>
+											<label for="alimentoSelect"><i
+													class="fa-solid fa-boxes-packing me-2"></i>Insumo</label>
+										</div>
+
+										<div class="form-floating mb-3">
+											<input required type="number" step="0.01" class="form-control"
+												id="cantidadAlimento" name="cantidad" placeholder="Cantidad">
+											<label for="cantidadAlimento"><i
+													class="fas fa-weight me-2"></i>Cantidad</label>
+										</div>
+
+										<button class="btn btn-success btn-sm w-100" type="submit" id="agregarAlimento">
+											<i class="fas fa-plus me-2"></i>Agregar insumo
+										</button>
+									</form>
+
+									<div class="card mt-3">
+										<div class="card-header bg-white">
+											<i class="fas fa-list-alt me-2 text-primary"></i>Insumos Asignados
+										</div>
+										<ul class="list-group list-group-flush" id="listaInsumosAsignados">
+											<li class="list-group-item feed-list-item d-flex justify-content-between align-items-center"
+												th:each="sani : ${listSanitizacion}">
+												<div>
+													<span th:text="${sani.insumo.descripcion +' ('+sani.loteInsumo+')'}"></span>
+													<span th:class="'badge bg-primary'"
+														th:text="${sani.cantidad% 1 == 0 ? #numbers.formatDecimal(sani.cantidad, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(sani.cantidad, 1, 'POINT', 2, 'COMMA')}+' '+${sani.insumo.unidad_medida.siglas}"></span>
+													<span th:if="${loteObj.listAnimales.size>0}"
+														th:class="'badge bg-warning'"
+														th:text="${loteObj.listAnimales.size>0?sani.cantidad/loteObj.listAnimales.size:''}+'xA'"></span>
+												</div>
+												<div>
+													<span th:class="'badge bg-primary'" th:text="0"></span>
+													<span th:if="${loteObj.listAnimales.size>0}"
+														th:class="'badge bg-warning'"
+														th:text="${loteObj.listAnimales.size>0?sani.cantidad/loteObj.listAnimales.size:''}+'xA'"></span>
+													<a th:href="@{/sanitizacion/quitar/{id}(id=${sani.insumo.id},loteInsumo=${sani.loteInsumo})}"
+														class="btn btn-danger btn-sm me-2">
+														<i class="fas fa-trash"></i>
+													</a>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<a th:href="@{/sanitizacion?limpiar=true}" type="reset"
+										class="btn btn-outline-secondary w-100 mt-4 mb-4">
+										<i class="fas fa-eraser"></i> Limpiar lista
+									</a>
+									<h4 class="mb-4">
+										<i class="fas fa-layer-group me-2 text-primary"></i>Lote donde se asigna
+									</h4>
+									<form th:action="@{/sanitizacion}" method="get">
+										<div class="form-floating mb-3">
+											<select class="form-select" id="lotesSelect" name="idLote"
+												aria-label="Seleccionar lote">
+												<option th:each="lot : ${listaLotes}" th:value="${lot.id}"
+													th:text="${lot.codigo+'-'+lot.nombre}"
+													th:selected="${lot.id}==${loteObj.id}">
+												</option>
+											</select>
+											<label for="lotesSelect"><i
+													class="fas fa-clipboard-list me-2"></i>Lote</label>
+										</div>
+										<button class="btn btn-primary w-100" type="submit" id="seleccionarLote">
+											<i class="fas fa-check me-2"></i>Seleccionar
+										</button>
+									</form>
+								</div>
+							</div>
+
+							<!-- Panel Derecho: Animales y Distribución -->
+							<div class="col-md-8">
+								<div class="row g-0">
+									<div class="col-md-12 border-bottom">
+										<div class="p-4">
+											<h4 class="mb-4">
+												<i class="fas fa-circle-info me-2 text-secondary"></i>Detalles del lote
+											</h4>
+											<div class="table-responsive">
+												<div class="row mb-3">
+													<div class="col-md-6">
+														<p class="mb-2">
+															<strong><i class="fa-solid fa-location-dot text-danger"></i>
+																Ubicación:</strong>
+															<span th:text="${loteObj.ubicacion}"></span>
+														</p>
+														<p class="mb-2">
+															<strong><i class="fa-solid fa-cloud-showers-water"></i>
+																Tipo:</strong>
+															<span th:text="${loteObj.tipo}"></span>
+														</p>
+
+													</div>
+													<div class="col-md-6">
+														<p class="mb-2"><strong><i
+																	class="fa-solid fa-road-barrier"></i></i>
+																Capacidad
+															</strong>
+															<span th:text="${loteObj.capacidad+' animales'}"></span>
+														</p>
+														<p class="mb-2"><strong><i
+																	class="fa-solid fa-chart-simple text-primary"></i>
+																Ocupación:</strong>
+															<span th:if="${loteObj.listAnimales!=null}"
+																th:text="${loteObj.listAnimales.size +' animales'}"></span>
+														</p>
+													</div>
+												</div>
+												<table class="table table-striped table-sm">
+													<thead class="table-dark">
+														<tr>
+															<th>ID</th>
+															<th>ANIMAL</th>
+															<th>IDENTIFICADOR</th>
+															<th>SEXO</th>
+															<th>COLOR</th>
+															<th>ALIAS</th>
+															<th>F. INGRESO</th>
+															<th>PRECIO</th>
+															<th>ESTADO</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="ltoc : ${loteObj.listAnimales}">
+															<td class="py-3" th:text="${ltoc.animal.id}">ID</td>
+															<td class="py-3"
+																th:text="${'('+ltoc.animal.raza.especie+') '+ltoc.animal.raza.descripcion}">
+																ESPECIE
+															</td>
+															<td class="py-3" th:text="${ltoc.animal.identificador}">
+																IDENTIFICADOR</td>
+															<td class="py-3" th:text="${ltoc.animal.sexo}">SEXO</td>
+															<td class="py-3" th:text="${ltoc.animal.color}">COLOR</td>
+															<td class="py-3" th:text="${ltoc.animal.alias}">ALIAS</td>
+															<td class="py-3" th:text="${ltoc.animal.fechaIngreso}">F.
+																INGRESO
+															</td>
+															<td class="text-end"
+																th:text="${ltoc.animal.precioCompra % 1 == 0 ? #numbers.formatDecimal(ltoc.animal.precioCompra, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(ltoc.animal.precioCompra, 1, 'POINT', 2, 'COMMA')}">
+															</td>
+															<td>
+																<div class="d-flex justify-content-center">
+																	<span class="badge bg-success"
+																		th:if="${ltoc.animal.estado.name() == 'VIVO'}"
+																		th:text="Vivo">
+																	</span>
+																	<span class="badge bg-warning"
+																		th:if="${ltoc.animal.estado.name() == 'ENFERMO'}"
+																		th:text="Enfermo">
+																	</span>
+																	<span class="badge bg-secondary"
+																		th:if="${ltoc.animal.estado.name() == 'FAENADO'}"
+																		th:text="Faenado">
+																	</span>
+																	<span class="badge bg-info"
+																		th:if="${ltoc.animal.estado.name() == 'VENDIDO'}"
+																		th:text="Vendido">
+																	</span>
+																	<span class="badge bg-danger"
+																		th:if="${ltoc.animal.estado.name() == 'MUERTO'}"
+																		th:text="Muerto">
+																	</span>
+																</div>
+															</td>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+									<!-- Distribución de insumos-->
+									<div class="col-md-12">
+										<div class="p-4">
+											<h4 class="mb-4">
+												<i class="fa-solid fas fa-syringe me-2"></i>Total de insumos
+												asignados y resumen de gastos
+											</h4>
+											<div class="card bg-light">
+												<div class="card-body">
+													<div class="row">
+														<div class="col-md-4">
+															<div class="text-center">
+																<h5><i
+																		class="fa-solid fa-boxes-packing me-2"></i></i>Total
+																	Insumos</h5>
+																<p class="h3 text-primary" th:text="${listSanitizacion.size}">
+																	0 kg</p>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="text-center">
+																<h5><i
+																		class="fa-solid fa-filter-circle-dollar me-2"></i></i>Gasto
+																	por Animal
+																</h5>
+																<p class="h3 text-danger" th:if="${gastoxanimal!=null}"
+																	th:text="${gastoxanimal% 1 == 0 ? #numbers.formatDecimal(gastoxanimal, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(gastoxanimal, 1, 'POINT', 2, 'COMMA')}">
+																	0</p>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="text-center">
+																<h5><i
+																		class="fa-solid fa-sack-dollar me-2"></i></i>Gasto
+																	total
+																</h5>
+																<p class="h3 text-danger" th:if="${gastoTotal!=null}"
+																	th:text="${gastoTotal% 1 == 0 ? #numbers.formatDecimal(gastoTotal, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(gastoTotal, 1, 'POINT', 2, 'COMMA')}">
+																	0</p>
+															</div>
+														</div>
+													</div>
+													<!-- Botón de Registro de Alimentación -->
+												</div>
+											</div>
+											<div class="text-center mt-3">
+												<a th:href="@{/}" class="btn btn-outline-danger">
+													<i class="fas fa-arrow-left"></i> Volver
+												</a>
+												<a class="btn btn-success" th:if="${loteObj.id>0}"
+													id="registrarAlimentacion"
+													th:href="@{/sanitizacion(guardar=true, idLote=${loteObj.id})}">
+													<i class="fas fa-save me-2"></i>Registrar Sanitización
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

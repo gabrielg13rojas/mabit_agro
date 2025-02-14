@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="'Gestión de '+${entidad}"></title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+	.estado-badge {
+		padding: 1px 3px;
+		border-radius: 2px;
+		font-weight: bold;
+	}
+
+	.estado-vivo {
+		background-color: #4CAF50;
+		color: white;
+	}
+
+	.estado-enfermo {
+		background-color: #FF9800;
+		color: white;
+	}
+
+	.estado-faenado {
+		background-color: #9C27B0;
+		color: white;
+	}
+
+	.estado-vendido {
+		background-color: #2196F3;
+		color: white;
+	}
+
+	.estado-muerto {
+		background-color: #F44336;
+		color: white;
+	}
+</style>
+
+<body class="bg-light">
+	<div class="container mt-4">
+		<!-- Título en recuadro -->
+		<div class="card mb-2 bg-success text-white border">
+			<div class="card-body py-2">
+				<h5 class="card-title text-center m-0" th:text="'Gestión de '+${entidad}"></h5>
+			</div>
+		</div>
+		<!-- Mensajes de alerta -->
+		<div th:if="${mensaje}" class="container py-4">
+			<div th:utext="${mensaje}" class="alert alert-dismissible fade show"
+				th:classappend="'alert-' + ${tipoMensaje}" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+		<!-- Formulario colapsable -->
+		<div class="collapse mb-2" id="collapseForm" th:classappend="${formColapsado ? ' show' : ''}">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del
+							registro</span></h5>
+					<form th:action="@{/animales}" th:object="${animal}" method="post">
+						<input type="hidden" name="id" th:value="${animal.id}">
+						<div class="row g-3">
+							<div class="col-md-6">
+								<div class="form-floating">
+									<input type="file" class="form-control" id="imageUpload" accept="image/*"
+										onchange="previewImage(event)">
+								</div>
+								<div class="mt-2">
+									<img id="imagePreview" th:src="${animal.foto}" alt="Vista previa"
+										style="max-width: 200px;">
+									<input type="hidden" id="foto" name="foto" th:field="*{foto}">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-dna"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="raza" th:field="*{raza}">
+											<th:block th:each="raz : ${razas}">
+												<option th:value="${raz.id}"
+													th:text="'('+${raz.especie+') '+raz.descripcion}"
+													th:selected="${raz.id} == animal.raza.id">
+												</option>
+											</th:block>
+										</select>
+										<label for="raza">Especie/Raza</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-fill-drip"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="color" th:field="*{color}">
+											<option th:each="col : ${T(py.com.mabit.enums.ColorAnimal).values()}"
+												th:value="${col}" th:text="${col}" th:selected="${col.name() == color}">
+											</option>
+										</select>
+										<label for="color">Color</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-ticket"></i></span>
+									<div class="form-floating">
+										<input required type="text" class="form-control" name="identificador"
+											id="identificador" th:value="${animal.identificador}" placeholder=" ">
+										<label for="identificador">Identificador</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-regular fa-file-lines"></i></span>
+									<div class="form-floating">
+										<input type="text" class="form-control"
+											th:value="${animal.alias}==null? '': ${animal.alias}" id="alias"
+											name="alias" placeholder=" ">
+										<label for="alias">Alias</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-regular fa-money-bill-1"></i></i></span>
+									<div class="form-floating">
+										<input type="number" step="0.01" class="form-control" name="precioCompra"
+											id="precioCompra" th:value="${animal.precioCompra}" placeholder=" "
+											required>
+										<label for="precioCompra">Precio de compra</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-weight-scale"></i></span>
+									<div class="form-floating">
+										<input required type="number" step="0.01" class="form-control" name="peso"
+											th:value="${animal.peso}" id="peso" placeholder=" ">
+										<label for="peso">Peso (kg)</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-heart"></i></span>
+									<div class="form-floating">
+										<input type="date" class="form-control" th:value="${animal.nacimiento}"
+											id="nacimiento" name="nacimiento" placeholder=" " required>
+										<label for="nacimiento">Fecha de nacimiento</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+									<div class="form-floating">
+										<input type="date" class="form-control" th:value="${animal.fechaIngreso}"
+											id="fechaIngreso" name="fechaIngreso" placeholder=" " required>
+										<label for="fechaIngreso">Fecha de ingreso</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-venus-mars"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="sexo" th:field="*{sexo}">
+											<option th:each="sex : ${T(py.com.mabit.enums.SexoAnimal).values()}"
+												th:value="${sex}" th:text="${sex}" th:selected="${sex.name() == sexo}">
+											</option>
+										</select>
+										<label for="sexo">Sexo</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-sliders"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="estado" th:field="*{estado}">
+											<option th:each="e : ${estados}" th:value="${e}" th:text="${e}"
+												th:selected="${e == animal.estado}">
+											</option>
+										</select>
+										<label for="estado">Estado del animal</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6" th:classappend="${animal.id == null ? 'show' : 'd-none'}">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i
+											class="fa-solid fa-location-dot text-danger"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="lote">
+											<option th:value="0">Seleccione la ubicación</option>
+											<th:block th:each="lot : ${lotes}">
+												<option th:value="${lot.id}"
+													th:text="${lot.nombre+' '+lot.codigo+' ['+lot.nombre+']'}">
+												</option>
+											</th:block>
+										</select>
+										<label for="lote">Ubicación del animal (lote)</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="input-group">
+									<span class="input-group-text align-items-start pt-2"><i
+											class="fa-solid fa-comment-medical"></i></span>
+									<div class="form-floating flex-grow-1">
+										<textarea class="form-control" name="observacionesLote"
+											id="observacionesLote" style="height: 100px; min-height: 100px;"
+											placeholder="Ingrese sus observaciones"></textarea>
+										<label for="observacionesLote">Observaciones (sobre la entrada del animal)</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4">
+							<div class="accordion accordion-flush border rounded bg-light" id="accordionDetalles">
+								<!-- Primer Accordion - Información Genealógica -->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button collapsed bg-secondary bg-opacity-10"
+											type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+											aria-expanded="false" aria-controls="flush-collapseOne">
+											<i class="fa-solid fa-dna text-primary" style="margin-right: 8px;"></i>
+											<span>Información
+												Genealógica (Padre y Madre del ternero)</span>
+										</button>
+									</h2>
+									<div id="flush-collapseOne" class="accordion-collapse collapse"
+										th:classappend="${madre}!=null ? 'show' : ''"
+										data-bs-parent="#accordionDetalles">
+										<div class="accordion-body bg-secondary bg-opacity-10">
+											<div class="row g-3">
+												<div class="col-md-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-text"><i
+																class="fa-solid fa-venus"></i></span>
+														<div class="form-floating">
+															<select class="form-select" name="madre">
+																<option th:value="0">Seleccione la madre</option>
+																<th:block th:each="mad : ${madres}"
+																	th:if="${mad.id != animal.id}">
+																	<option th:value="${mad.id}"
+																		th:text="${mad.identificador}+'-'+${mad.color}+' '+${mad.alias}"
+																		th:selected="${mad.id} == ${madre}">
+																	</option>
+																</th:block>
+															</select>
+															<label for="madre">Madre</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-text"><i
+																class="fa-solid fa-mars"></i></span>
+														<input type="hidden" name="idNacimiento"
+															th:value="${idNacimiento}">
+														<div class="form-floating">
+															<select class="form-select" name="padre">
+																<option th:value="0">Seleccione el padre</option>
+																<th:block th:each="pad : ${padres}"
+																	th:if="${pad.id != animal.id}">
+																	<option th:value="${pad.id}"
+																		th:text="${pad.identificador}+'-'+${pad.color}+' '+${pad.alias}"
+																		th:selected="${pad.id} == ${padre}">
+																	</option>
+																</th:block>
+															</select>
+															<label for="padre">Padre</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-12">
+													<div class="input-group">
+														<span class="input-group-text align-items-start pt-2"><i
+																class="fa-solid fa-comment-medical"></i></span>
+														<div class="form-floating flex-grow-1">
+															<textarea class="form-control" name="observaciones"
+																th:text="${observaciones}" id="observaciones"
+																style="height: 100px; min-height: 100px;"
+																placeholder="Ingrese sus observaciones"></textarea>
+															<label for="observaciones">Observaciones (sobre el
+																nacimiento)</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-4 text-end">
+							<button type="reset" class="btn btn-outline-secondary">
+								<i class="fas fa-eraser"></i> Limpiar
+							</button>
+							<button type="button" class="btn btn-outline-danger" data-bs-toggle="collapse"
+								data-bs-target="#collapseForm">
+								<i class="fas fa-times"></i> Cancelar
+							</button>
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-save"></i> Guardar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Barra de acciones -->
+		<div class="d-flex gap-3 mb-2 align-items-center w-100">
+			<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm"
+				aria-expanded="false" aria-controls="collapseForm">
+				<i class="fas fa-plus"></i> Nuevo
+			</button>
+
+			<!-- Formulario con flex-grow-1 para ocupar el espacio entre los botones -->
+			<form th:action="@{/animales}" method="get" class="flex-grow-1">
+				<div class="input-group">
+					<span class="input-group-text"><i class="fas fa-search"></i></span>
+					<input autofocus type="search" name="buscar" class="form-control" placeholder="Buscar usuario...">
+				</div>
+			</form>
+
+			<a th:href="@{/}" class="btn btn-secondary">
+				<i class="fas fa-arrow-left"></i> Volver
+			</a>
+		</div>
+
+		<!-- Tabla de usuarios -->
+		<div class="card shadow">
+			<div class="card-body">
+				<table class="table table-striped table-sm">
+					<thead class="table-dark">
+						<tr>
+							<th class="py-3">ID</th>
+							<th class="py-3">FOTO</th>
+							<th class="py-3">ESPECIE</th>
+							<th class="py-3">IDENTIFICADOR</th>
+							<th class="py-3">SEXO</th>
+							<th class="py-3">COLOR</th>
+							<th class="py-3">ALIAS</th>
+							<th class="py-3">F. INGRESO</th>
+							<th class="py-3">PRECIO</th>
+							<th class="py-3">ESTADO</th>
+							<th class="py-3">ACCIONES</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="animal : ${lista}">
+							<td class="py-3" th:text="${animal.id}">ID</td>
+							<td>
+								<img th:src="${animal.foto}" alt="Imagen"
+									style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+							</td>
+							<td class="py-3" th:text="${'('+animal.raza.especie+') '+animal.raza.descripcion}">ESPECIE
+							</td>
+							<td class="py-3" th:text="${animal.identificador}">IDENTIFICADOR</td>
+							<td class="py-3" th:text="${animal.sexo}">SEXO</td>
+							<td class="py-3" th:text="${animal.color}">COLOR</td>
+							<td class="py-3" th:text="${animal.alias}">ALIAS</td>
+							<td class="py-3" th:text="${animal.fechaIngreso}">F. INGRESO</td>
+							<td class="text-end"
+								th:text="${animal.precioCompra % 1 == 0 ? #numbers.formatDecimal(animal.precioCompra, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(animal.precioCompra, 1, 'POINT', 2, 'COMMA')}">
+							</td>
+							<td>
+								<div class="d-flex justify-content-center">
+									<span class="badge bg-success" th:if="${animal.estado.name() == 'VIVO'}"
+										th:text="Vivo">
+									</span>
+									<span class="badge bg-warning" th:if="${animal.estado.name() == 'ENFERMO'}"
+										th:text="Enfermo">
+									</span>
+									<span class="badge bg-secondary" th:if="${animal.estado.name() == 'FAENADO'}"
+										th:text="Faenado">
+									</span>
+									<span class="badge bg-info" th:if="${animal.estado.name() == 'VENDIDO'}"
+										th:text="Vendido">
+									</span>
+									<span class="badge bg-danger" th:if="${animal.estado.name() == 'MUERTO'}"
+										th:text="Muerto">
+									</span>
+								</div>
+							</td>
+							<td>
+								<a th:href="@{/animales/editar/{id}(id=${animal.id})}"
+									class="btn btn-warning btn-sm me-2">
+									<i class="fas fa-edit"></i>
+								</a>
+								<form class="d-inline" th:action="@{/animales/eliminar/{id}(id=${animal.id})}"
+									method="GET">
+									<input type="hidden" name="userId" value="1">
+									<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+										th:data-bs-target="'#deleteModal'+${animal.id}">
+										<i class="fas fa-trash"></i>
+									</button>
+									<!-- Modal específico para este usuario -->
+									<div class="modal fade" th:id="'deleteModal'+${animal.id}" tabindex="-1"
+										aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header bg-danger text-white">
+													<h5 class="modal-title">
+														<i class="fas fa-exclamation-triangle me-2"></i>
+														Confirmar Eliminación
+													</h5>
+													<button type="button" class="btn-close btn-close-white"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>¿Está seguro que desea eliminar este registro?</p>
+													<p class="text-danger mb-0">Esta acción no se puede deshacer.</p>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">
+														<i class="fas fa-times"></i> Cancelar
+													</button>
+													<button type="submit" class="btn btn-danger">
+														<i class="fas fa-trash"></i> Eliminar
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- Bootstrap Bundle con Popper -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
+	function previewImage(event) {
+		const file = event.target.files[0];
+		const reader = new FileReader();
+
+		reader.onload = function (e) {
+			const preview = document.getElementById('imagePreview');
+			const base64Input = document.getElementById('foto');
+
+			preview.src = e.target.result;
+			preview.style.display = 'block';
+
+			// Store base64 without data:image prefix
+			base64Input.value = e.target.result;
+		}
+
+		reader.readAsDataURL(file);
+	}
+</script>
+
+<style>
+	#imagePreview {
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 5px;
+	}
+</style>
+
+</html>

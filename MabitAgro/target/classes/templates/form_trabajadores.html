@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="'Gestión de '+${entidad}"></title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+	<div class="container mt-4">
+		<!-- Título en recuadro -->
+		<div class="card mb-2 bg-success text-white border">
+			<div class="card-body py-2">
+				<h5 class="card-title text-center m-0" th:text="'Gestión de '+${entidad}"></h5>
+			</div>
+		</div>
+		<!-- Mensajes de alerta -->
+		<div th:if="${mensaje}" class="container py-4">
+			<div th:utext="${mensaje}" class="alert alert-dismissible fade show"
+				th:classappend="'alert-' + ${tipoMensaje}" role="alert">
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		</div>
+		<!-- Formulario colapsable -->
+		<div class="collapse mb-2" id="collapseForm" th:classappend="${formColapsado ? ' show' : ''}">
+			<div class="card">
+				<div class="card-body">
+
+					<h5 class="card-title mb-2"><span class="badge bg-secondary">Formulario del
+							registro</span></h5>
+					<form th:action="@{/trabajadores}" th:object="${trabajadores}" method="post">
+						<input th:value="${trabajadores.id}" name="id" type="hidden" class="form-control" id="correo"
+							placeholder=" ">
+						<div class="row g-3">
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"> <i
+											class="fa-solid fa-person-circle-check"></i></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="funcion" th:field="*{funcion}">
+											<option th:each="fun : ${T(py.com.mabit.enums.CargoTrabajador).values()}"
+												th:value="${fun}" th:text="${fun}"
+												th:selected="${fun.name() == funcion}">
+											</option>
+										</select>
+										<label for="privilegio">Función</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-layer-group"></i></span>
+									<div class="form-floating">
+										<select class="form-select" name="regimen" th:field="*{regimen}">
+											<option th:each="reg : ${T(py.com.mabit.enums.RegimenTrabajador).values()}"
+												th:value="${reg}" th:text="${reg}"
+												th:selected="${reg.name() == regimen}">
+											</option>
+										</select>
+										<label for="privilegio">Régimen de cobro</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+									<div class="form-floating">
+										<input required th:value="${trabajadores.cedula}" name="cedula" type="text"
+											class="form-control" id="correo" placeholder=" ">
+										<label for="correo">Cedula</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-regular fa-id-badge"></i></span>
+									<div class="form-floating">
+										<input required th:value="${trabajadores.nombreApellido}" name="nombreApellido" type="text"
+											class="form-control" id="nombreApellido" placeholder=" ">
+										<label for="nombreApellido">Nombre y apellido</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-square-phone"></i></span>
+									<div class="form-floating">
+										<input th:value="${trabajadores.telefono}" name="telefono" type="text"
+											class="form-control" id="telefono" placeholder=" ">
+										<label for="telefono">Telefono</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+									<div class="form-floating">
+										<input required th:value="${trabajadores.fechaIngreso}" name="fechaIngreso" type="date"
+											class="form-control" id="fechaIngreso" placeholder=" ">
+										<label for="fechaIngreso">Fecha de Ingreso</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i
+											class="fa-solid fa-hand-holding-dollar"></i></span>
+									<div class="form-floating">
+										<input th:value="${trabajadores.salario_base}" min="0" name="salario_base" type="number"
+											class="form-control" id="salario_base" placeholder=" ">
+										<label for="salario_base">Salario Base</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="input-group input-group-sm">
+									<span class="input-group-text"><i class="fa-solid fa-money-check-dollar"></i></i></span>
+									<div class="form-floating">
+										<input th:value="${trabajadores.tarifa}" name="tarifa" type="number" min="0"
+											class="form-control" id="tarifa" placeholder=" ">
+										<label for="tarifa">Tarifa</label>
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+
+						<div class="mt-4 text-end">
+							<button type="reset" class="btn btn-outline-secondary">
+								<i class="fas fa-eraser"></i> Limpiar
+							</button>
+							<button type="button" class="btn btn-outline-danger" data-bs-toggle="collapse"
+								data-bs-target="#collapseForm">
+								<i class="fas fa-times"></i> Cancelar
+							</button>
+							<button type="submit" class="btn btn-primary">
+								<i class="fas fa-save"></i> Guardar
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Barra de acciones -->
+		<div class="d-flex gap-3 mb-2 align-items-center w-100">
+			<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseForm"
+				aria-expanded="false" aria-controls="collapseForm">
+				<i class="fas fa-plus"></i> Nuevo
+			</button>
+
+			<!-- Formulario con flex-grow-1 para ocupar el espacio entre los botones -->
+			<form th:action="@{/trabajadores}" method="get" class="flex-grow-1">
+				<div class="input-group">
+					<span class="input-group-text"><i class="fas fa-search"></i></span>
+					<input autofocus type="search" name="buscar" class="form-control"
+						placeholder="Buscar trabajadores...">
+				</div>
+			</form>
+
+			<a th:href="@{/}" class="btn btn-secondary">
+				<i class="fas fa-arrow-left"></i> Volver
+			</a>
+		</div>
+
+		<!-- Tabla de usuarios -->
+		<div class="card shadow">
+			<div class="card-body">
+				<table class="table table-striped table-sm">
+					<thead class="table-dark">
+						<tr>
+							<th class="py-3">ID</th>
+							<th class="py-3">Función</th>
+							<th class="py-3">Cédula</th>
+							<th class="py-3">Nombre y apellido</th>
+							<th class="py-3">Apellido</th>
+							<th class="py-3">Teléfono</th>
+							<th class="py-3">Fecha de Ingreso</th>
+							<th class="py-3">Salario Base</th>
+							<th class="py-3">Régimen de cobro</th>
+							<th class="py-3">Tarifa</th>
+							<th class="py-3">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="trab : ${lista}">
+							<td th:text="${trab.id}"></td>
+							<td th:text="${trab.funcion}"></td>
+							<td th:text="${trab.cedula}"></td>
+							<td th:text="${trab.nombreApellido}"></td>
+							<td th:text="${trab.telefono}"></td>
+							<td th:text="${trab.fechaIngreso}"></td>
+							<td th:text="${trab.salario_base % 1 == 0 ? #numbers.formatDecimal(trab.salario_base, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(trab.salario_base, 1, 'POINT', 2, 'COMMA')}"></td>
+							<td th:text="${trab.regimen}"></td>
+							<td th:text="${trab.tarifa % 1 == 0 ? #numbers.formatDecimal(trab.tarifa, 1, 'POINT', 0, 'COMMA') : #numbers.formatDecimal(trab.tarifa, 1, 'POINT', 2, 'COMMA')}"></td>
+							<td>
+							<a th:href="@{/trabajadores/editar/{id}(id=${trab.id})}"
+								class="btn btn-warning btn-sm me-2">
+								<i class="fas fa-edit"></i>
+							</a>
+							<form class="d-inline" th:action="@{/trabajadores/eliminar/{id}(id=${trab.id})}"
+								method="get">
+								<input type="hidden" name="userId" value="1">
+								<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+									th:data-bs-target="'#deleteModal' + ${trab.id}">
+									<i class="fas fa-trash"></i>
+								</button>
+
+								<!-- Modal específico para este usuario -->
+								<div class="modal fade" th:id="'deleteModal' + ${trab.id}" tabindex="-1"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered">
+										<div class="modal-content">
+											<div class="modal-header bg-danger text-white">
+												<h5 class="modal-title">
+													<i class="fas fa-exclamation-triangle me-2"></i>
+													Confirmar Eliminación
+												</h5>
+												<button type="button" class="btn-close btn-close-white"
+													data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<p>¿Está seguro que desea eliminar este registro?</p>
+												<p class="text-danger mb-0">Esta acción no se puede deshacer.</p>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+													<i class="fas fa-times"></i> Cancelar
+												</button>
+												<button type="submit" class="btn btn-danger">
+													<i class="fas fa-trash"></i> Eliminar
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- Bootstrap Bundle con Popper -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+</html>
