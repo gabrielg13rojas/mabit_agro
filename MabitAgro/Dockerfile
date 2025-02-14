@@ -1,15 +1,14 @@
-# Use the Eclipse alpine official image
-# https://hub.docker.com/_/eclipse-temurin
-FROM eclipse-temurin:17-jdk-alpine
+# Usar una imagen base con Java 17
+FROM openjdk:17-slim
 
-# Create and change to the app directory.
+# Directorio donde se colocará la aplicación en el contenedor
 WORKDIR /app
 
-# Copy files to the container image
-COPY . ./
+# Copiar el archivo jar del proyecto al directorio /app en el contenedor
+COPY target/py.com.mabit-1.0.jar.jar /app/py.com.mabit-1.0.jar.jar
 
-# Build the app.
-RUN ./mvnw -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
+# Exponer el puerto que usa la aplicación
+EXPOSE 8080
 
-# Run the app by dynamically finding the JAR file in the target directory
-CMD ["sh", "-c", "java -jar target/*.jar"]
+# Comando para ejecutar la aplicación
+CMD ["java", "-jar", "/app/py.com.mabit-1.0.jar.jar"]
