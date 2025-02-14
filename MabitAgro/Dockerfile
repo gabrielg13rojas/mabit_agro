@@ -5,10 +5,10 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copiar el archivo jar del proyecto al directorio /app en el contenedor
-COPY target/py.com.mabit-1.0.jar.jar /app/py.com.mabit-1.0.jar.jar
+COPY target/py.com.mabit-1.0.jar /app/py.com.mabit-1.0.jar
 
 # Exponer el puerto que usa la aplicación
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación
-CMD ["java", "-jar", "/app/py.com.mabit-1.0.jar.jar"]
+CMD ["java", "-jar", "/app/py.com.mabit-1.0.jar"]
