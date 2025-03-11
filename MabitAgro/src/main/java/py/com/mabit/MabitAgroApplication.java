@@ -25,5 +25,4 @@ public class MabitAgroApplication implements CommandLineRunner {
 			repPriv.save(p);
 		}
 	}
-
 }
